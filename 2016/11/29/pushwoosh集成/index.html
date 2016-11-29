@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="hexo,github,个人博客," />
+  <meta name="keywords" content="android,推送," />
 
 
 
@@ -86,25 +86,25 @@
 
 
 
-<meta name="description" content="前期准备
-下载安装Node.js  前往https://nodejs.org/en/下载并安装Node.js.
-
-下载并安装Git，安装完成后，在命令行窗口输入node -v,如果不能打印当前node版本号即不识别node命令，则请将node的安装目录添加到系统环境变量。 前往https://git-scm.com/downloads下载对应平台的git安装包，同理测试git –version ，">
+<meta name="description" content="Pushwoosh是境外的一个提供免费推送服务的公司，Android app当然也是基于Google Cloud Messaging 封装的。
+因为官方文档不太直观，也可能是之前不太了解过国外此类第三方服务的套路，使用过程也遇到了一些小问题，算是采坑了吧！
+添加依赖compile &amp;apos;com.pushwoosh:pushwoosh:+&amp;apos;
+compile &amp;apos;com.and">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Windows下使用hexo+github搭建个人博客">
-<meta property="og:url" content="http://yoursite.com/2016/11/29/hexo+github打造个人博客/index.html">
+<meta property="og:title" content="Pushwoosh集成-原生系统推送">
+<meta property="og:url" content="http://yoursite.com/2016/11/29/pushwoosh集成/index.html">
 <meta property="og:site_name" content="Metal626’s Notes">
-<meta property="og:description" content="前期准备
-下载安装Node.js  前往https://nodejs.org/en/下载并安装Node.js.
-
-下载并安装Git，安装完成后，在命令行窗口输入node -v,如果不能打印当前node版本号即不识别node命令，则请将node的安装目录添加到系统环境变量。 前往https://git-scm.com/downloads下载对应平台的git安装包，同理测试git –version ，">
-<meta property="og:updated_time" content="2016-11-29T08:48:45.849Z">
+<meta property="og:description" content="Pushwoosh是境外的一个提供免费推送服务的公司，Android app当然也是基于Google Cloud Messaging 封装的。
+因为官方文档不太直观，也可能是之前不太了解过国外此类第三方服务的套路，使用过程也遇到了一些小问题，算是采坑了吧！
+添加依赖compile &amp;apos;com.pushwoosh:pushwoosh:+&amp;apos;
+compile &amp;apos;com.and">
+<meta property="og:updated_time" content="2016-11-29T08:36:38.406Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Windows下使用hexo+github搭建个人博客">
-<meta name="twitter:description" content="前期准备
-下载安装Node.js  前往https://nodejs.org/en/下载并安装Node.js.
-
-下载并安装Git，安装完成后，在命令行窗口输入node -v,如果不能打印当前node版本号即不识别node命令，则请将node的安装目录添加到系统环境变量。 前往https://git-scm.com/downloads下载对应平台的git安装包，同理测试git –version ，">
+<meta name="twitter:title" content="Pushwoosh集成-原生系统推送">
+<meta name="twitter:description" content="Pushwoosh是境外的一个提供免费推送服务的公司，Android app当然也是基于Google Cloud Messaging 封装的。
+因为官方文档不太直观，也可能是之前不太了解过国外此类第三方服务的套路，使用过程也遇到了一些小问题，算是采坑了吧！
+添加依赖compile &amp;apos;com.pushwoosh:pushwoosh:+&amp;apos;
+compile &amp;apos;com.and">
 
 
 
@@ -132,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/11/29/hexo+github打造个人博客/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/11/29/pushwoosh集成/"/>
 
 
 
 
 
-  <title> Windows下使用hexo+github搭建个人博客 | Metal626’s Notes </title>
+  <title> Pushwoosh集成-原生系统推送 | Metal626’s Notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -269,7 +269,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/29/hexo+github打造个人博客/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/29/pushwoosh集成/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Metal626">
@@ -293,7 +293,7 @@
             
             
               
-                Windows下使用hexo+github搭建个人博客
+                Pushwoosh集成-原生系统推送
               
             
           </h1>
@@ -306,7 +306,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-29T09:58:05+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-29T15:16:16+08:00">
                 2016-11-29
               </time>
             
@@ -325,8 +325,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/hexo/" itemprop="url" rel="index">
-                    <span itemprop="name">hexo</span>
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
                   </a>
                 </span>
 
@@ -340,8 +340,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/11/29/hexo+github打造个人博客/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/29/hexo+github打造个人博客/" itemprop="commentCount"></span>
+                <a href="/2016/11/29/pushwoosh集成/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/29/pushwoosh集成/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -351,7 +351,7 @@
 
           
           
-             <span id="/2016/11/29/hexo+github打造个人博客/" class="leancloud_visitors" data-flag-title="Windows下使用hexo+github搭建个人博客">
+             <span id="/2016/11/29/pushwoosh集成/" class="leancloud_visitors" data-flag-title="Pushwoosh集成-原生系统推送">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -376,53 +376,127 @@
       
 
       
-        <h4 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h4><ul>
-<li><p>下载安装Node.js<br>  前往<a href="https://nodejs.org/en/" target="_blank" rel="external">https://nodejs.org/en/</a>下载并安装Node.js.</p>
-</li>
-<li><p>下载并安装Git，安装完成后，在命令行窗口输入node -v,如果不能打印当前node版本号即不识别node命令，则请将node的安装目录添加到系统环境变量。<br> 前往<a href="https://git-scm.com/downloads" target="_blank" rel="external">https://git-scm.com/downloads</a>下载对应平台的git安装包，同理测试git –version ，如果不识别命令，请将git安装目录添加至系统环境变量。</p>
-</li>
-<li><p>安装hexo<br>  在命令行输入 npm install hexo （npm是node的包管理工具，如果此处无法识别npm命令，请检查node的环境变量配置或命令行进入到node的安装目录执行次命令。）</p>
-</li>
+        <p><a href="https://www.pushwoosh.com/" target="_blank" rel="external">Pushwoosh</a>是境外的一个提供免费推送服务的公司，Android app当然也是基于Google Cloud Messaging 封装的。</p>
+<p>因为<a href="http://docs.pushwoosh.com/docs/fcm-configuration" target="_blank" rel="external">官方文档</a>不太直观，也可能是之前不太了解过国外此类第三方服务的套路，使用过程也遇到了一些小问题，算是采坑了吧！</p>
+<h3 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h3><pre><code>compile &apos;com.pushwoosh:pushwoosh:+&apos;
+compile &apos;com.android.support:support-v4:23.1.1+&apos;
+compile &apos;com.google.android.gms:play-services-gcm:8.4.0+&apos;
+compile &apos;com.google.android.gms:play-services-location:8.4.0+&apos;
+</code></pre><p>如果不使用Geozones push的话就不需要添加location依赖了。</p>
+<h3 id="XML"><a href="#XML" class="headerlink" title="XML"></a>XML</h3><p>在AndroidManifest.xml中application节点下添加：</p>
+<pre><code>&lt;meta-data android:name=&quot;PW_APPID&quot; android:value=&quot;XXXXX-XXXXX&quot; /&gt;
+&lt;meta-data android:name=&quot;PW_PROJECT_ID&quot; android:value=&quot;A123456789012&quot; /&gt;
+</code></pre><p>PW_APPID是在Pushwoosh创建应用的ID<br>PW_PROJECT_ID是从Google开发者控制台设置GCM拿来的工程号，<br><strong>notice:</strong> 你需要给这个工程号手动添加前缀“A”。</p>
+<h3 id="NotificationFactory"><a href="#NotificationFactory" class="headerlink" title="NotificationFactory"></a>NotificationFactory</h3><p>自定义NotificationFactory继承DefaultNotificationFactory，实现自己的通知样式。</p>
+<pre><code>public class CustomContentNotificationFactory extends DefaultNotificationFactory {
+
+    @Override
+    public Notification onGenerateNotification(PushData pushData) {
+        if (Build.VERSION.SDK_INT &lt; Build.VERSION_CODES.HONEYCOMB) {
+            return super.onGenerateNotification(pushData);
+        }
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getContext())
+                .setContentTitle(getContentFromHtml(pushData.getHeader()))
+                .setContentText(getContentFromHtml(pushData.getMessage()))
+                .setSmallIcon(R.drawable.ic_notification_small)
+                .setLargeIcon(BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.ic_launcher))
+                .setTicker(getContentFromHtml(pushData.getTicker()))
+                .setWhen(System.currentTimeMillis())
+                .setPriority(Notification.PRIORITY_HIGH);
+
+        final Notification notification = notificationBuilder.build();
+        addSound(notification, pushData.getSound());
+        addVibration(notification, pushData.getVibration());
+        addCancel(notification);
+
+        return notification;
+    }
+
+}
+</code></pre><p>这一步定义了通知的样式，这样我们收到推送后就会显示自定义的通知样式及数据，但一般我们需要在点击通知后跳转到app指定的页面，这里<strong>大家就不要想着给通知添加PendingIntent了，当然添加7.0的Action是可以的。</strong></p>
+<h3 id="PushReceiver"><a href="#PushReceiver" class="headerlink" title="PushReceiver"></a>PushReceiver</h3><ul>
+<li>自定义PushReceiver继承BroadcastReceiver，这样收到推送弹出通知，点击通知后就会进入PushReceiver的onReceive(),在这里实现跳转逻辑。</li>
 </ul>
-<h4 id="创建及配置博客"><a href="#创建及配置博客" class="headerlink" title="创建及配置博客"></a>创建及配置博客</h4><ul>
-<li>初始化<br>  命令行cd 进入到你要放置博客的目录，执行hexo init,此命令会下载相关依赖及配置。</li>
-<li><p>生成页面<br>  执行 hexo generate 或 hexo g, 查看当前目录，public 目录存放你的博客文件，包括html、css、js等，而source目录存放我们所要关注的markdown源文件，你可以在此目录创建你的博客页面，使用清爽的markdown语法书写你的个人博客，当然你也可以使用 hexo new page pagename创建新的页面，hexo g命令会将此目录下的markdo文件转换为网站页面。</p>
-</li>
-<li><p>本地测试<br>  执行hexo server,启动本地服务器，然后在浏览器地址栏输入localhost:4000,即可看到你的博客页，平时我们编辑完博客后可在本地查看，然后再提交到远端（马上会讲到）。</p>
-</li>
-<li><p>主题配置<br><a href="https://www.zhihu.com/question/24422335" target="_blank" rel="external">知乎问题</a>,下有人列出了很多主题及github star排名，你可以去选择你喜欢的主题并克隆到本地，然后将其放置到你的站点themes目录中，修改config.yml文件theme属性为你想使用的主题即可切换主题，详细设置请参照该主题的文档。</p>
-</li>
-</ul>
-<h4 id="将博客发布到github"><a href="#将博客发布到github" class="headerlink" title="将博客发布到github"></a>将博客发布到github</h4><ul>
-<li><p>创建github账号并创建名为your_user_name.github.io的仓库。</p>
-</li>
-<li><p>建立本地博客与远端仓库的联系<br>  进入你本地博客目录，打开_config.yml文件，将最后修改为：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">type: git</div><div class="line">repo: https://github.com/your_user_name/your_user_name.github.io.git</div><div class="line">branch: master</div></pre></td></tr></table></figure>
-<p>  注意：deploy等标签后都要有空格。</p>
-</li>
-<li><p>将博客发布到远端<br>  执行npm install hexo-deployer-git –save<br>  执行hexo clean;hexo g<br>  执行hexo deploy或hexo d，如果不出意外的话，会弹出输入用户名和密码的对话框，成功后控制台会打印Deploy done: git,然后打开浏览器输入<a href="https://your_user_name.github.io，即可打开你的个人博客站点。" target="_blank" rel="external">https://your_user_name.github.io，即可打开你的个人博客站点。</a></p>
-<p>  <strong>注意：</strong> Windows用户可能出现错误：</p>
-<pre><code>bash: /dev/tty: No such device or address
-error: failed to execute prompt script (exit code 1)
-fatal: could not read Username for &apos;https://github.com&apos;: Invalid argument
-FATAL Something&apos;s wrong. Maybe you can find the solution here: http://hexo.io/docs/troubleshooting.html
-</code></pre><p>  此时，你需要摒弃cmd命令行和git shell，打开git bash命令行，重新执行上述命令。</p>
-<p>  <strong>PS:</strong> </p>
+<pre><code>public class PushReceiver extends BroadcastReceiver {
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (intent == null)
+            return;
+        Bundle bundle = PushManagerImpl.preHandlePush(context, intent);
+        if (bundle == null)
+            return;
+        String type = bundle.getString(Constants.TYPE);
+        String id = bundle.getString(Constants.ID);
+        String sn = bundle.getString(Constants.SN);
+
+        if (TextUtils.isEmpty(type))
+            return;
+        switch (type) {
+
+            case Constants.PUSH_SCENE:
+                if (!TextUtils.isEmpty(id) &amp;&amp; !TextUtils.equals(&quot;0&quot;, id))
+                    intent = SceneActivity.newIntent(context, new Scene().setId(Integer.parseInt(id)));
+                break;
+            case Constants.PUSH_ORDER:
+                intent = new Intent(context, OrderActivity.class);
+                intent.putExtra(Constants.SN, sn);
+                break;
+            case Constants.PUSH_SHOP:
+                intent = new Intent(context, IndexActivity.class);
+                intent.putExtra(Constants.FROM_PUSH,true);
+                break;
+            case Constants.PUSH_CATALOG:
+                intent = defaultIntent(context,new Catalog().setId(Integer.parseInt(id)));
+                break;
+        }
+        if (intent == null)
+            return;
+        Intent mainIntent = new Intent(context, IndexActivity.class);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent[] intents = null;
+        if (SystemUtils.isAppAlive(context, Constants.PACKAGE_NAME)) {
+            LogUtils.logd(&quot;the app process is alive&quot;);
+            intents = new Intent[]{mainIntent,intent};
+        } else {
+            LogUtils.logd(&quot;the app process is dead&quot;);
+            Intent launchIntent = context.getPackageManager().
+                    getLaunchIntentForPackage(Constants.PACKAGE_NAME);
+            launchIntent.setFlags(
+                    Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+            intents = new Intent[]{launchIntent, mainIntent, intent};
+        }
+        context.startActivities(intents);
+    }
+}
+</code></pre><p><strong>注意：</strong></p>
+<pre><code>Bundle bundle = PushManagerImpl.preHandlePush(context, intent);
+</code></pre><p>这行代码千万别少了，如果直接从 intent.getExtras(); 拿到的bundle对象是没有数据的。<br>如果要从bundle中拿到json格式数据，控制台在发送消息时，在root params中要按照下面格式：</p>
+<pre><code>Android root params example : { &quot;my_actions&quot; : [ { &quot;title&quot; : &quot;Pushwoosh&quot;, &quot;url&quot; : &quot;https://www.pushwoosh.com&quot;  } ] }
+</code></pre><p>然后通过 String actions = bundle.getString(“my_actions”);拿到数据。</p>
 <ul>
-<li><p>此种方式在你每次执行hexo d部署代码到远端时，都会弹窗请求输入用户名和密码，如果想免密提交的话，请将config.yml文件中，deploy节点修改为：</p>
-<pre><code>deploy:
-  type: git
-  repo: git@github.com:your_user_name/your_user_name.github.io.git
-  branch: master
-</code></pre><p>此种为ssh的方式，所以当然需要你添加ssh公匙到你的github账户，具体操作请看<a href="https://help.github.com/categories/ssh/" target="_blank" rel="external">Github</a>文档。 </p>
-</li>
-<li><p>执行hexo d 无反应<br>此时请打开对应目录下的config.yml,查看文件最后deploy节点是否配置正确。</p>
-</li>
-<li><p>在config.yml文件中，可以配置你的站点的标题、描述、作者、主题及语言等一系列信息。</p>
-</li>
+<li>别忘了在xml中配置：</li>
 </ul>
-</li>
-</ul>
+<pre><code>&lt;receiver android:name=&quot;your.app.package.NotificationReceiver&quot; /&gt;
+&lt;meta-data android:name=&quot;PW_NOTIFICATION_RECEIVER&quot; android:value=&quot;your.app.package.NotificationReceiver&quot;/&gt;  
+</code></pre><p><em>ps:</em> 如果你没有定义PushReceiver的话，之前的自定义通知点击后默认跳入app主页，无论app进程是否还在，都会走一遍Splash页的。</p>
+<h3 id="推送服务注册"><a href="#推送服务注册" class="headerlink" title="推送服务注册"></a>推送服务注册</h3><p>在Application的onCreate()中：</p>
+<pre><code>final PushManager pushManager = PushManager.getInstance(context);
+
+    pushManager.setNotificationFactory(new CustomContentNotificationFactory());
+    try {
+        pushManager.onStartup(context);
+    } catch (Exception e) {
+        Log.e(&quot;Pushwoosh&quot;, e.getLocalizedMessage());
+    }
+    //Register for push!
+    pushManager.registerForPushNotifications();
+</code></pre><h4 id="ps"><a href="#ps" class="headerlink" title="ps:"></a>ps:</h4><pre><code>-keep class com.pushwoosh.** { *; }
+-keep class com.arellomobile.** { *; }
+-dontwarn com.pushwoosh.**
+-dontwarn com.arellomobile.**
+</code></pre><p>That’s all !    </p>
 
       
     </div>
@@ -451,11 +525,9 @@ FATAL Something&apos;s wrong. Maybe you can find the solution here: http://hexo.
       
         <div class="post-tags">
           
-            <a href="/tags/hexo/" rel="tag"># hexo</a>
+            <a href="/tags/android/" rel="tag"># android</a>
           
-            <a href="/tags/github/" rel="tag"># github</a>
-          
-            <a href="/tags/个人博客/" rel="tag"># 个人博客</a>
+            <a href="/tags/推送/" rel="tag"># 推送</a>
           
         </div>
       
@@ -464,14 +536,18 @@ FATAL Something&apos;s wrong. Maybe you can find the solution here: http://hexo.
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/11/29/as/" rel="next" title="关于AndroidStudio你可能不知道的几个奇巧淫技">
+                <i class="fa fa-chevron-left"></i> 关于AndroidStudio你可能不知道的几个奇巧淫技
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/11/29/dagger2详解/" rel="prev" title="Dagger2详解-从代码分析其原理">
-                Dagger2详解-从代码分析其原理 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/11/29/apk瘦身/" rel="prev" title="apk瘦身的几个技巧 - Optimize your app">
+                apk瘦身的几个技巧 - Optimize your app <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -498,8 +574,8 @@ FATAL Something&apos;s wrong. Maybe you can find the solution here: http://hexo.
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/11/29/hexo+github打造个人博客/"
-           data-title="Windows下使用hexo+github搭建个人博客" data-url="http://yoursite.com/2016/11/29/hexo+github打造个人博客/">
+      <div class="ds-thread" data-thread-key="2016/11/29/pushwoosh集成/"
+           data-title="Pushwoosh集成-原生系统推送" data-url="http://yoursite.com/2016/11/29/pushwoosh集成/">
       </div>
     
   </div>
@@ -641,7 +717,7 @@ FATAL Something&apos;s wrong. Maybe you can find the solution here: http://hexo.
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前期准备"><span class="nav-number">1.</span> <span class="nav-text">前期准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建及配置博客"><span class="nav-number">2.</span> <span class="nav-text">创建及配置博客</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将博客发布到github"><span class="nav-number">3.</span> <span class="nav-text">将博客发布到github</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加依赖"><span class="nav-number">1.</span> <span class="nav-text">添加依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XML"><span class="nav-number">2.</span> <span class="nav-text">XML</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NotificationFactory"><span class="nav-number">3.</span> <span class="nav-text">NotificationFactory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PushReceiver"><span class="nav-number">4.</span> <span class="nav-text">PushReceiver</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推送服务注册"><span class="nav-number">5.</span> <span class="nav-text">推送服务注册</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ps"><span class="nav-number">5.1.</span> <span class="nav-text">ps:</span></a></li></ol></li></ol></div>
             
 
           </div>
