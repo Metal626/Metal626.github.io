@@ -88,23 +88,20 @@
 
 <meta name="description" content="Pushwoosh是境外的一个提供免费推送服务的公司，Android app当然也是基于Google Cloud Messaging 封装的。
 因为官方文档不太直观，也可能是之前不太了解过国外此类第三方服务的套路，使用过程也遇到了一些小问题，算是采坑了吧！
-添加依赖compile &amp;apos;com.pushwoosh:pushwoosh:+&amp;apos;
-compile &amp;apos;com.and">
+添加依赖1234compile &apos;com.pushwoosh:pushwoosh:+&apos;compile &apos;com.android.support">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pushwoosh集成-原生系统推送">
 <meta property="og:url" content="http://yoursite.com/2016/11/29/pushwoosh集成/index.html">
 <meta property="og:site_name" content="Metal626’s Notes">
 <meta property="og:description" content="Pushwoosh是境外的一个提供免费推送服务的公司，Android app当然也是基于Google Cloud Messaging 封装的。
 因为官方文档不太直观，也可能是之前不太了解过国外此类第三方服务的套路，使用过程也遇到了一些小问题，算是采坑了吧！
-添加依赖compile &amp;apos;com.pushwoosh:pushwoosh:+&amp;apos;
-compile &amp;apos;com.and">
-<meta property="og:updated_time" content="2016-11-29T08:36:38.406Z">
+添加依赖1234compile &apos;com.pushwoosh:pushwoosh:+&apos;compile &apos;com.android.support">
+<meta property="og:updated_time" content="2016-11-30T04:35:47.709Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Pushwoosh集成-原生系统推送">
 <meta name="twitter:description" content="Pushwoosh是境外的一个提供免费推送服务的公司，Android app当然也是基于Google Cloud Messaging 封装的。
 因为官方文档不太直观，也可能是之前不太了解过国外此类第三方服务的套路，使用过程也遇到了一些小问题，算是采坑了吧！
-添加依赖compile &amp;apos;com.pushwoosh:pushwoosh:+&amp;apos;
-compile &amp;apos;com.and">
+添加依赖1234compile &apos;com.pushwoosh:pushwoosh:+&apos;compile &apos;com.android.support">
 
 
 
@@ -378,125 +375,27 @@ compile &amp;apos;com.and">
       
         <p><a href="https://www.pushwoosh.com/" target="_blank" rel="external">Pushwoosh</a>是境外的一个提供免费推送服务的公司，Android app当然也是基于Google Cloud Messaging 封装的。</p>
 <p>因为<a href="http://docs.pushwoosh.com/docs/fcm-configuration" target="_blank" rel="external">官方文档</a>不太直观，也可能是之前不太了解过国外此类第三方服务的套路，使用过程也遇到了一些小问题，算是采坑了吧！</p>
-<h3 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h3><pre><code>compile &apos;com.pushwoosh:pushwoosh:+&apos;
-compile &apos;com.android.support:support-v4:23.1.1+&apos;
-compile &apos;com.google.android.gms:play-services-gcm:8.4.0+&apos;
-compile &apos;com.google.android.gms:play-services-location:8.4.0+&apos;
-</code></pre><p>如果不使用Geozones push的话就不需要添加location依赖了。</p>
-<h3 id="XML"><a href="#XML" class="headerlink" title="XML"></a>XML</h3><p>在AndroidManifest.xml中application节点下添加：</p>
-<pre><code>&lt;meta-data android:name=&quot;PW_APPID&quot; android:value=&quot;XXXXX-XXXXX&quot; /&gt;
-&lt;meta-data android:name=&quot;PW_PROJECT_ID&quot; android:value=&quot;A123456789012&quot; /&gt;
-</code></pre><p>PW_APPID是在Pushwoosh创建应用的ID<br>PW_PROJECT_ID是从Google开发者控制台设置GCM拿来的工程号，<br><strong>notice:</strong> 你需要给这个工程号手动添加前缀“A”。</p>
-<h3 id="NotificationFactory"><a href="#NotificationFactory" class="headerlink" title="NotificationFactory"></a>NotificationFactory</h3><p>自定义NotificationFactory继承DefaultNotificationFactory，实现自己的通知样式。</p>
-<pre><code>public class CustomContentNotificationFactory extends DefaultNotificationFactory {
-
-    @Override
-    public Notification onGenerateNotification(PushData pushData) {
-        if (Build.VERSION.SDK_INT &lt; Build.VERSION_CODES.HONEYCOMB) {
-            return super.onGenerateNotification(pushData);
-        }
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getContext())
-                .setContentTitle(getContentFromHtml(pushData.getHeader()))
-                .setContentText(getContentFromHtml(pushData.getMessage()))
-                .setSmallIcon(R.drawable.ic_notification_small)
-                .setLargeIcon(BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.ic_launcher))
-                .setTicker(getContentFromHtml(pushData.getTicker()))
-                .setWhen(System.currentTimeMillis())
-                .setPriority(Notification.PRIORITY_HIGH);
-
-        final Notification notification = notificationBuilder.build();
-        addSound(notification, pushData.getSound());
-        addVibration(notification, pushData.getVibration());
-        addCancel(notification);
-
-        return notification;
-    }
-
-}
-</code></pre><p>这一步定义了通知的样式，这样我们收到推送后就会显示自定义的通知样式及数据，但一般我们需要在点击通知后跳转到app指定的页面，这里<strong>大家就不要想着给通知添加PendingIntent了，当然添加7.0的Action是可以的。</strong></p>
+<h3 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h3><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">compile</span> <span class="string">'com.pushwoosh:pushwoosh:+'</span></div><div class="line"><span class="keyword">compile</span> <span class="string">'com.android.support:support-v4:23.1.1+'</span></div><div class="line"><span class="keyword">compile</span> <span class="string">'com.google.android.gms:play-services-gcm:8.4.0+'</span></div><div class="line"><span class="keyword">compile</span> <span class="string">'com.google.android.gms:play-services-location:8.4.0+'</span></div></pre></td></tr></table></figure>
+<p>如果不使用Geozones push的话就不需要添加location依赖了。</p>
+<h3 id="XML"><a href="#XML" class="headerlink" title="XML"></a>XML</h3><p>在AndroidManifest.xml中application节点下添加：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta-data</span> <span class="attr">android:name</span>=<span class="string">"PW_APPID"</span> <span class="attr">android:value</span>=<span class="string">"XXXXX-XXXXX"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta-data</span> <span class="attr">android:name</span>=<span class="string">"PW_PROJECT_ID"</span> <span class="attr">android:value</span>=<span class="string">"A123456789012"</span> /&gt;</span></div></pre></td></tr></table></figure></p>
+<p>PW_APPID是在Pushwoosh创建应用的ID<br>PW_PROJECT_ID是从Google开发者控制台设置GCM拿来的工程号，<br><strong>notice:</strong> 你需要给这个工程号手动添加前缀“A”。</p>
+<h3 id="NotificationFactory"><a href="#NotificationFactory" class="headerlink" title="NotificationFactory"></a>NotificationFactory</h3><p>自定义NotificationFactory继承DefaultNotificationFactory，实现自己的通知样式。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomContentNotificationFactory</span> <span class="keyword">extends</span> <span class="title">DefaultNotificationFactory</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Notification <span class="title">onGenerateNotification</span><span class="params">(PushData pushData)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (Build.VERSION.SDK_INT &lt; Build.VERSION_CODES.HONEYCOMB) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">super</span>.onGenerateNotification(pushData);</div><div class="line">        &#125;</div><div class="line">        NotificationCompat.Builder notificationBuilder = <span class="keyword">new</span> NotificationCompat.Builder(getContext())</div><div class="line">                .setContentTitle(getContentFromHtml(pushData.getHeader()))</div><div class="line">                .setContentText(getContentFromHtml(pushData.getMessage()))</div><div class="line">                .setSmallIcon(R.drawable.ic_notification_small)</div><div class="line">                .setLargeIcon(BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.ic_launcher))</div><div class="line">                .setTicker(getContentFromHtml(pushData.getTicker()))</div><div class="line">                .setWhen(System.currentTimeMillis())</div><div class="line">                .setPriority(Notification.PRIORITY_HIGH);</div><div class="line"></div><div class="line">        <span class="keyword">final</span> Notification notification = notificationBuilder.build();</div><div class="line">        addSound(notification, pushData.getSound());</div><div class="line">        addVibration(notification, pushData.getVibration());</div><div class="line">        addCancel(notification);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> notification;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这一步定义了通知的样式，这样我们收到推送后就会显示自定义的通知样式及数据，但一般我们需要在点击通知后跳转到app指定的页面，这里<strong>大家就不要想着给通知添加PendingIntent了，当然添加7.0的Action是可以的。</strong></p>
 <h3 id="PushReceiver"><a href="#PushReceiver" class="headerlink" title="PushReceiver"></a>PushReceiver</h3><ul>
-<li>自定义PushReceiver继承BroadcastReceiver，这样收到推送弹出通知，点击通知后就会进入PushReceiver的onReceive(),在这里实现跳转逻辑。</li>
+<li>自定义PushReceiver继承BroadcastReceiver，这样收到推送弹出通知，点击通知后就会进入PushReceiver的onReceive(),在这里实现跳转逻辑。<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PushReceiver</span> <span class="keyword">extends</span> <span class="title">BroadcastReceiver</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (intent == <span class="keyword">null</span>)</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        Bundle bundle = PushManagerImpl.preHandlePush(context, intent);</div><div class="line">        <span class="keyword">if</span> (bundle == <span class="keyword">null</span>)</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        String type = bundle.getString(Constants.TYPE);</div><div class="line">        String id = bundle.getString(Constants.ID);</div><div class="line">        String sn = bundle.getString(Constants.SN);</div><div class="line">      </div><div class="line">        <span class="keyword">if</span> (TextUtils.isEmpty(type))</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        <span class="keyword">switch</span> (type) &#123;</div><div class="line">           </div><div class="line">            <span class="keyword">case</span> Constants.PUSH_SCENE:</div><div class="line">                <span class="keyword">if</span> (!TextUtils.isEmpty(id) &amp;&amp; !TextUtils.equals(<span class="string">"0"</span>, id))</div><div class="line">                    intent = SceneActivity.newIntent(context, <span class="keyword">new</span> Scene().setId(Integer.parseInt(id)));</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> Constants.PUSH_ORDER:</div><div class="line">                intent = <span class="keyword">new</span> Intent(context, OrderActivity.class);</div><div class="line">                intent.putExtra(Constants.SN, sn);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> Constants.PUSH_SHOP:</div><div class="line">                intent = <span class="keyword">new</span> Intent(context, IndexActivity.class);</div><div class="line">                intent.putExtra(Constants.FROM_PUSH,<span class="keyword">true</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> Constants.PUSH_CATALOG:</div><div class="line">                intent = defaultIntent(context,<span class="keyword">new</span> Catalog().setId(Integer.parseInt(id)));</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (intent == <span class="keyword">null</span>)</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        Intent mainIntent = <span class="keyword">new</span> Intent(context, IndexActivity.class);</div><div class="line">        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</div><div class="line">        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</div><div class="line">        Intent[] intents = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span> (SystemUtils.isAppAlive(context, Constants.PACKAGE_NAME)) &#123;</div><div class="line">            LogUtils.logd(<span class="string">"the app process is alive"</span>);</div><div class="line">            intents = <span class="keyword">new</span> Intent[]&#123;mainIntent,intent&#125;;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            LogUtils.logd(<span class="string">"the app process is dead"</span>);</div><div class="line">            Intent launchIntent = context.getPackageManager().</div><div class="line">                    getLaunchIntentForPackage(Constants.PACKAGE_NAME);</div><div class="line">            launchIntent.setFlags(</div><div class="line">                    Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);</div><div class="line">            intents = <span class="keyword">new</span> Intent[]&#123;launchIntent, mainIntent, intent&#125;;</div><div class="line">        &#125;</div><div class="line">        context.startActivities(intents);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
 </ul>
-<pre><code>public class PushReceiver extends BroadcastReceiver {
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        if (intent == null)
-            return;
-        Bundle bundle = PushManagerImpl.preHandlePush(context, intent);
-        if (bundle == null)
-            return;
-        String type = bundle.getString(Constants.TYPE);
-        String id = bundle.getString(Constants.ID);
-        String sn = bundle.getString(Constants.SN);
-
-        if (TextUtils.isEmpty(type))
-            return;
-        switch (type) {
-
-            case Constants.PUSH_SCENE:
-                if (!TextUtils.isEmpty(id) &amp;&amp; !TextUtils.equals(&quot;0&quot;, id))
-                    intent = SceneActivity.newIntent(context, new Scene().setId(Integer.parseInt(id)));
-                break;
-            case Constants.PUSH_ORDER:
-                intent = new Intent(context, OrderActivity.class);
-                intent.putExtra(Constants.SN, sn);
-                break;
-            case Constants.PUSH_SHOP:
-                intent = new Intent(context, IndexActivity.class);
-                intent.putExtra(Constants.FROM_PUSH,true);
-                break;
-            case Constants.PUSH_CATALOG:
-                intent = defaultIntent(context,new Catalog().setId(Integer.parseInt(id)));
-                break;
-        }
-        if (intent == null)
-            return;
-        Intent mainIntent = new Intent(context, IndexActivity.class);
-        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Intent[] intents = null;
-        if (SystemUtils.isAppAlive(context, Constants.PACKAGE_NAME)) {
-            LogUtils.logd(&quot;the app process is alive&quot;);
-            intents = new Intent[]{mainIntent,intent};
-        } else {
-            LogUtils.logd(&quot;the app process is dead&quot;);
-            Intent launchIntent = context.getPackageManager().
-                    getLaunchIntentForPackage(Constants.PACKAGE_NAME);
-            launchIntent.setFlags(
-                    Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-            intents = new Intent[]{launchIntent, mainIntent, intent};
-        }
-        context.startActivities(intents);
-    }
-}
-</code></pre><p><strong>注意：</strong></p>
-<pre><code>Bundle bundle = PushManagerImpl.preHandlePush(context, intent);
-</code></pre><p>这行代码千万别少了，如果直接从 intent.getExtras(); 拿到的bundle对象是没有数据的。<br>如果要从bundle中拿到json格式数据，控制台在发送消息时，在root params中要按照下面格式：</p>
+<p><strong>注意：</strong><br><code>Bundle bundle = PushManagerImpl.preHandlePush(context, intent);</code><br>这行代码千万别少了，如果直接从 intent.getExtras(); 拿到的bundle对象是没有数据的。<br>如果要从bundle中拿到json格式数据，控制台在发送消息时，在root params中要按照下面格式：</p>
 <pre><code>Android root params example : { &quot;my_actions&quot; : [ { &quot;title&quot; : &quot;Pushwoosh&quot;, &quot;url&quot; : &quot;https://www.pushwoosh.com&quot;  } ] }
-</code></pre><p>然后通过 String actions = bundle.getString(“my_actions”);拿到数据。</p>
+</code></pre><p>然后通过 <code>String actions = bundle.getString(&quot;my_actions&quot;);</code>拿到数据。</p>
 <ul>
-<li>别忘了在xml中配置：</li>
+<li>别忘了在xml中配置：<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">receiver</span> <span class="attr">android:name</span>=<span class="string">"your.app.package.NotificationReceiver"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta-data</span> <span class="attr">android:name</span>=<span class="string">"PW_NOTIFICATION_RECEIVER"</span> <span class="attr">android:value</span>=<span class="string">"your.app.package.NotificationReceiver"</span>/&gt;</span></div></pre></td></tr></table></figure>
+</li>
 </ul>
-<pre><code>&lt;receiver android:name=&quot;your.app.package.NotificationReceiver&quot; /&gt;
-&lt;meta-data android:name=&quot;PW_NOTIFICATION_RECEIVER&quot; android:value=&quot;your.app.package.NotificationReceiver&quot;/&gt;  
-</code></pre><p><em>ps:</em> 如果你没有定义PushReceiver的话，之前的自定义通知点击后默认跳入app主页，无论app进程是否还在，都会走一遍Splash页的。</p>
-<h3 id="推送服务注册"><a href="#推送服务注册" class="headerlink" title="推送服务注册"></a>推送服务注册</h3><p>在Application的onCreate()中：</p>
-<pre><code>final PushManager pushManager = PushManager.getInstance(context);
-
-    pushManager.setNotificationFactory(new CustomContentNotificationFactory());
-    try {
-        pushManager.onStartup(context);
-    } catch (Exception e) {
-        Log.e(&quot;Pushwoosh&quot;, e.getLocalizedMessage());
-    }
-    //Register for push!
-    pushManager.registerForPushNotifications();
-</code></pre><h4 id="ps"><a href="#ps" class="headerlink" title="ps:"></a>ps:</h4><pre><code>-keep class com.pushwoosh.** { *; }
--keep class com.arellomobile.** { *; }
--dontwarn com.pushwoosh.**
--dontwarn com.arellomobile.**
-</code></pre><p>That’s all !    </p>
+<p><em>ps:</em> 如果你没有定义PushReceiver的话，之前的自定义通知点击后默认跳入app主页，无论app进程是否还在，都会走一遍Splash页的。</p>
+<h3 id="推送服务注册"><a href="#推送服务注册" class="headerlink" title="推送服务注册"></a>推送服务注册</h3><p>在Application的onCreate()中：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">final</span> PushManager pushManager = PushManager.getInstance(context);</div><div class="line"></div><div class="line">pushManager.setNotificationFactory(<span class="keyword">new</span> CustomContentNotificationFactory());</div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    pushManager.onStartup(context);</div><div class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">    Log.e(<span class="string">"Pushwoosh"</span>, e.getLocalizedMessage());</div><div class="line">&#125;</div><div class="line"><span class="comment">//Register for push!</span></div><div class="line">pushManager.registerForPushNotifications();</div></pre></td></tr></table></figure></p>
+<h4 id="ps"><a href="#ps" class="headerlink" title="ps:"></a>ps:</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-keep class com.pushwoosh.** &#123; *; &#125;</div><div class="line">-keep class com.arellomobile.** &#123; *; &#125;</div><div class="line">-dontwarn com.pushwoosh.**</div><div class="line">-dontwarn com.arellomobile.**</div></pre></td></tr></table></figure>
+<p>That’s all !    </p>
 
       
     </div>

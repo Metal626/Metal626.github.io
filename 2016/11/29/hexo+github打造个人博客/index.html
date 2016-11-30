@@ -98,7 +98,7 @@
 下载安装Node.js  前往https://nodejs.org/en/下载并安装Node.js.
 
 下载并安装Git，安装完成后，在命令行窗口输入node -v,如果不能打印当前node版本号即不识别node命令，则请将node的安装目录添加到系统环境变量。 前往https://git-scm.com/downloads下载对应平台的git安装包，同理测试git –version ，">
-<meta property="og:updated_time" content="2016-11-29T08:48:45.849Z">
+<meta property="og:updated_time" content="2016-11-30T05:39:42.387Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Windows下使用hexo+github搭建个人博客">
 <meta name="twitter:description" content="前期准备
@@ -397,24 +397,18 @@
 <li><p>创建github账号并创建名为your_user_name.github.io的仓库。</p>
 </li>
 <li><p>建立本地博客与远端仓库的联系<br>  进入你本地博客目录，打开_config.yml文件，将最后修改为：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">type: git</div><div class="line">repo: https://github.com/your_user_name/your_user_name.github.io.git</div><div class="line">branch: master</div></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attr">deploy:</span></div><div class="line"><span class="attr">    type:</span> git</div><div class="line"><span class="attr">    repo:</span> https://github.com/your_user_name/your_user_name.github.io.git</div><div class="line"><span class="attr">    branch:</span> master</div></pre></td></tr></table></figure>
 <p>  注意：deploy等标签后都要有空格。</p>
 </li>
 <li><p>将博客发布到远端<br>  执行npm install hexo-deployer-git –save<br>  执行hexo clean;hexo g<br>  执行hexo deploy或hexo d，如果不出意外的话，会弹出输入用户名和密码的对话框，成功后控制台会打印Deploy done: git,然后打开浏览器输入<a href="https://your_user_name.github.io，即可打开你的个人博客站点。" target="_blank" rel="external">https://your_user_name.github.io，即可打开你的个人博客站点。</a></p>
 <p>  <strong>注意：</strong> Windows用户可能出现错误：</p>
-<pre><code>bash: /dev/tty: No such device or address
-error: failed to execute prompt script (exit code 1)
-fatal: could not read Username for &apos;https://github.com&apos;: Invalid argument
-FATAL Something&apos;s wrong. Maybe you can find the solution here: http://hexo.io/docs/troubleshooting.html
-</code></pre><p>  此时，你需要摒弃cmd命令行和git shell，打开git bash命令行，重新执行上述命令。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">bash: /dev/tty: No such device or address</div><div class="line">error: failed to execute prompt script (exit code 1)</div><div class="line">fatal: could not read Username for &apos;https://github.com&apos;: Invalid argument</div><div class="line">FATAL Something&apos;s wrong. Maybe you can find the solution here: http://hexo.io/docs/troubleshooting.html</div></pre></td></tr></table></figure>
+<p>  此时，你需要摒弃cmd命令行和git shell，打开git bash命令行，重新执行上述命令。</p>
 <p>  <strong>PS:</strong> </p>
 <ul>
 <li><p>此种方式在你每次执行hexo d部署代码到远端时，都会弹窗请求输入用户名和密码，如果想免密提交的话，请将config.yml文件中，deploy节点修改为：</p>
-<pre><code>deploy:
-  type: git
-  repo: git@github.com:your_user_name/your_user_name.github.io.git
-  branch: master
-</code></pre><p>此种为ssh的方式，所以当然需要你添加ssh公匙到你的github账户，具体操作请看<a href="https://help.github.com/categories/ssh/" target="_blank" rel="external">Github</a>文档。 </p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attr">deploy:</span></div><div class="line"><span class="attr">  type:</span> git</div><div class="line"><span class="attr">  repo:</span> git@github.com:your_user_name/your_user_name.github.io.git</div><div class="line"><span class="attr">  branch:</span> master</div></pre></td></tr></table></figure>
+<p>此种为ssh的方式，所以当然需要你添加ssh公匙到你的github账户，具体操作请看<a href="https://help.github.com/categories/ssh/" target="_blank" rel="external">Github</a>文档。 </p>
 </li>
 <li><p>执行hexo d 无反应<br>此时请打开对应目录下的config.yml,查看文件最后deploy节点是否配置正确。</p>
 </li>

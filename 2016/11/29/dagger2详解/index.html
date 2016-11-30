@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="android,依赖注入,Dagger2," />
+  <meta name="keywords" content="android,Dagger2,依赖注入," />
 
 
 
@@ -99,7 +99,7 @@ Dagger2是Dagger1的分支，由谷歌公司接手开发，目前的版本是2.0
 Dagger2是Dagger1的分支，由谷歌公司接手开发，目前的版本是2.0。Dagger2解决问题的基本思想是：利用生成和写的代码混合达到看似所有的产生和提供依赖的代码都是手写的样子。
 如果我们将Dagger2和">
 <meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/dagger2.png">
-<meta property="og:updated_time" content="2016-11-29T08:35:51.474Z">
+<meta property="og:updated_time" content="2016-11-30T02:32:56.605Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dagger2详解-从代码分析其原理">
 <meta name="twitter:description" content="Dagger2基本概念请移步官方文档,或者我的翻译。
@@ -394,28 +394,29 @@ Dagger2是Dagger1的分支，由谷歌公司接手开发，目前的版本是2.0
 <p>所以在<a href="http://www.jianshu.com/p/d727963e90b8" target="_blank" rel="external">Android UI框架快速搭建实践</a>这篇文章中，因为我将Presenter作为泛型成员变量抽取到BaseFragment中了，所以View层的Presenter无法使用Dagger2实现注入。如果要实现Presenter注入，则需要在每个View实现中注入对应的Presenter实例，这样就无法抽取到基类中了。这个在具体实践中，需要你自己权衡。</p>
 <p>本文就<a href="https://github.com/Metal626/Dagger2ForAndroid.git" target="_blank" rel="external">GitHub</a>项目，从生成的代码对Dagger2进行分析。</p>
 <p>使用Dagger2，在module的gradle中配置：</p>
-<pre><code>apply plugin: &apos;com.android.application&apos;
-apply plugin: &apos;com.neenbedankt.android-apt&apos;
+<pre><code class="gradle">apply plugin: <span class="string">'com.android.application'</span>
+apply plugin: <span class="string">'com.neenbedankt.android-apt'</span>
 
 android{
     ...
 }
-buildscript {
-    repositories {
+<span class="keyword">buildscript</span> {
+    <span class="keyword">repositories</span> {
         jcenter()
     }
-    dependencies {
-        //添加apt插件
-        classpath &apos;com.neenbedankt.gradle.plugins:android-apt:1.8&apos;
+    <span class="keyword">dependencies</span> {
+        <span class="comment">//添加apt插件</span>
+        <span class="keyword">classpath</span> <span class="string">'com.neenbedankt.gradle.plugins:android-apt:1.8'</span>
     }
 }
-dependencies {
-    compile fileTree(dir: &apos;libs&apos;, include: [&apos;*.jar&apos;])
-    compile &apos;com.google.dagger:dagger:2.4&apos;
-    apt &apos;com.google.dagger:dagger-compiler:2.4&apos;
+<span class="keyword">dependencies</span> {
+    <span class="keyword">compile</span> <span class="keyword">fileTree</span>(dir: <span class="string">'libs'</span>, <span class="keyword">include</span>: [<span class="string">'*.jar'</span>])
+    <span class="keyword">compile</span> <span class="string">'com.google.dagger:dagger:2.4'</span>
+    apt <span class="string">'com.google.dagger:dagger-compiler:2.4'</span>
     ...
  }
-</code></pre><p>使用时，定义好component及module后，build工程，Dagger2编译器就会生成对应代码，然后在需要注入的地方调用生成的component实现，名为Dagger前缀+component名称的类完成绑定。</p>
+</code></pre>
+<p>使用时，定义好component及module后，build工程，Dagger2编译器就会生成对应代码，然后在需要注入的地方调用生成的component实现，名为Dagger前缀+component名称的类完成绑定。</p>
 <p><strong>先看结构图：</strong><br><img src="http://ohe81rx2w.bkt.clouddn.com/dagger2.png" alt=""><br><strong>大概介绍一下基本概念：</strong></p>
 <ul>
 <li><p>Module：使用@Module注解，封装@Provides方法，@Provides注解方法提供依赖对象。</p>
@@ -433,228 +434,237 @@ dependencies {
 </ul>
 <p><strong>是时候上代码了（Dagger2生成的代码在build/generated/source/apt/目录下）：</strong></p>
 <p>DemoApplicationModule的定义：</p>
-<pre><code>@Module
-public class DemoApplicationModule {
-  private final Application application;
+<pre><code class="java"><span class="meta">@Module</span>
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplicationModule</span> </span>{
+  <span class="keyword">private</span> <span class="keyword">final</span> Application application;
 
-  public DemoApplicationModule(Application application) {
-    this.application = application;
+  <span class="function"><span class="keyword">public</span> <span class="title">DemoApplicationModule</span><span class="params">(Application application)</span> </span>{
+    <span class="keyword">this</span>.application = application;
   }
 
-  /**
+  <span class="comment">/**
    * Expose the application to the graph.
-   */
-  @Provides @Singleton Application application() {
-    return application;
+   */</span>
+  <span class="meta">@Provides</span> <span class="meta">@Singleton</span> <span class="function">Application <span class="title">application</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> application;
   }
 
-  @Provides @Singleton LocationManager provideLocationManager() {
-    return (LocationManager) application.getSystemService(LOCATION_SERVICE);
+  <span class="meta">@Provides</span> <span class="meta">@Singleton</span> <span class="function">LocationManager <span class="title">provideLocationManager</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> (LocationManager) application.getSystemService(LOCATION_SERVICE);
   }
 }
-</code></pre><p>来看生成的代码：</p>
-<pre><code>public final class DemoApplicationModule_ApplicationFactory implements Factory&lt;Application&gt; {
-  private final DemoApplicationModule module;
+</code></pre>
+<p>来看生成的代码：</p>
+<pre><code class="java"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplicationModule_ApplicationFactory</span> <span class="keyword">implements</span> <span class="title">Factory</span>&lt;<span class="title">Application</span>&gt; </span>{
+  <span class="keyword">private</span> <span class="keyword">final</span> DemoApplicationModule <span class="keyword">module</span>;
 
-  public DemoApplicationModule_ApplicationFactory(DemoApplicationModule module) {
-    assert module != null;
-    this.module = module;
+  <span class="function"><span class="keyword">public</span> <span class="title">DemoApplicationModule_ApplicationFactory</span><span class="params">(DemoApplicationModule <span class="keyword">module</span>)</span> </span>{
+    <span class="keyword">assert</span> <span class="keyword">module</span> != <span class="keyword">null</span>;
+    <span class="keyword">this</span>.<span class="keyword">module</span> = <span class="keyword">module</span>;
   }
 
-  @Override
-  public Application get() {
-    return Preconditions.checkNotNull(
-        module.application(), &quot;Cannot return null from a non-@Nullable @Provides method&quot;);
+  <span class="meta">@Override</span>
+  <span class="function"><span class="keyword">public</span> Application <span class="title">get</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> Preconditions.checkNotNull(
+        <span class="keyword">module</span>.application(), <span class="string">"Cannot return null from a non-@Nullable @Provides method"</span>);
   }
 
-  public static Factory&lt;Application&gt; create(DemoApplicationModule module) {
-    return new DemoApplicationModule_ApplicationFactory(module);
+  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Factory&lt;Application&gt; <span class="title">create</span><span class="params">(DemoApplicationModule <span class="keyword">module</span>)</span> </span>{
+    <span class="keyword">return</span> <span class="keyword">new</span> DemoApplicationModule_ApplicationFactory(<span class="keyword">module</span>);
   }
 }    
 ----------------
-public final class DemoApplicationModule_ProvideLocationManagerFactory
-    implements Factory&lt;LocationManager&gt; {
-  private final DemoApplicationModule module;
+<span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplicationModule_ProvideLocationManagerFactory</span>
+    <span class="keyword">implements</span> <span class="title">Factory</span>&lt;<span class="title">LocationManager</span>&gt; </span>{
+  <span class="keyword">private</span> <span class="keyword">final</span> DemoApplicationModule <span class="keyword">module</span>;
 
-  public DemoApplicationModule_ProvideLocationManagerFactory(DemoApplicationModule module) {
-    assert module != null;
-    this.module = module;
+  <span class="function"><span class="keyword">public</span> <span class="title">DemoApplicationModule_ProvideLocationManagerFactory</span><span class="params">(DemoApplicationModule <span class="keyword">module</span>)</span> </span>{
+    <span class="keyword">assert</span> <span class="keyword">module</span> != <span class="keyword">null</span>;
+    <span class="keyword">this</span>.<span class="keyword">module</span> = <span class="keyword">module</span>;
   }
 
-  @Override
-  public LocationManager get() {
-    return Preconditions.checkNotNull(
-        module.provideLocationManager(),
-        &quot;Cannot return null from a non-@Nullable @Provides method&quot;);
+  <span class="meta">@Override</span>
+  <span class="function"><span class="keyword">public</span> LocationManager <span class="title">get</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> Preconditions.checkNotNull(
+        <span class="keyword">module</span>.provideLocationManager(),
+        <span class="string">"Cannot return null from a non-@Nullable @Provides method"</span>);
   }
 
-  public static Factory&lt;LocationManager&gt; create(DemoApplicationModule module) {
-    return new DemoApplicationModule_ProvideLocationManagerFactory(module);
+  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Factory&lt;LocationManager&gt; <span class="title">create</span><span class="params">(DemoApplicationModule <span class="keyword">module</span>)</span> </span>{
+    <span class="keyword">return</span> <span class="keyword">new</span> DemoApplicationModule_ProvideLocationManagerFactory(<span class="keyword">module</span>);
   }
 }
-</code></pre><p>module中定义的@Provides方法会生成对应的工厂类，实现Factory<t>接口，复写get()方法，get()中实际调用了module的provide方法，那module实例从哪里来的呢，看工厂类的创建方法中，看来这个module对象是需要外部传入的。</t></p>
+</code></pre>
+<p>module中定义的@Provides方法会生成对应的工厂类，实现Factory<t>接口，复写get()方法，get()中实际调用了module的provide方法，那module实例从哪里来的呢，看工厂类的创建方法中，看来这个module对象是需要外部传入的。</t></p>
 <p>ApplicationComponent定义：</p>
-<pre><code>@Singleton     
-@Component(modules = DemoApplicationModule.class)
-public interface ApplicationComponent {
-  // Field injections of any dependencies of the DemoApplication
-  void inject(DemoApplication application);
+<pre><code class="java"><span class="meta">@Singleton</span>     
+<span class="meta">@Component</span>(modules = DemoApplicationModule.class)
+<span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ApplicationComponent</span> </span>{
+  <span class="comment">// Field injections of any dependencies of the DemoApplication</span>
+  <span class="function"><span class="keyword">void</span> <span class="title">inject</span><span class="params">(DemoApplication application)</span></span>;
 
-  // Exported for child-components.
-  Application application();
-  LocationManager locationManager();
+  <span class="comment">// Exported for child-components.</span>
+  <span class="function">Application <span class="title">application</span><span class="params">()</span></span>;
+  <span class="function">LocationManager <span class="title">locationManager</span><span class="params">()</span></span>;
 }
-</code></pre><p>生成的代码：</p>
-<pre><code>public final class DaggerApplicationComponent implements ApplicationComponent {
-  private Provider&lt;LocationManager&gt; provideLocationManagerProvider;
+</code></pre>
+<p>生成的代码：</p>
+<pre><code class="java"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">DaggerApplicationComponent</span> <span class="keyword">implements</span> <span class="title">ApplicationComponent</span> </span>{
+  <span class="keyword">private</span> Provider&lt;LocationManager&gt; provideLocationManagerProvider;
 
-  private MembersInjector&lt;DemoApplication&gt; demoApplicationMembersInjector;
+  <span class="keyword">private</span> MembersInjector&lt;DemoApplication&gt; demoApplicationMembersInjector;
 
-  private Provider&lt;Application&gt; applicationProvider;
+  <span class="keyword">private</span> Provider&lt;Application&gt; applicationProvider;
 
-  private DaggerApplicationComponent(Builder builder) {
-    assert builder != null;
+  <span class="function"><span class="keyword">private</span> <span class="title">DaggerApplicationComponent</span><span class="params">(Builder builder)</span> </span>{
+    <span class="keyword">assert</span> builder != <span class="keyword">null</span>;
     initialize(builder);
   }
 
-  public static Builder builder() {
-    return new Builder();
+  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Builder <span class="title">builder</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> <span class="keyword">new</span> Builder();
   }
 
-  @SuppressWarnings(&quot;unchecked&quot;)
-  private void initialize(final Builder builder) {
+  <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)
+  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(<span class="keyword">final</span> Builder builder)</span> </span>{
 
-    this.provideLocationManagerProvider =
+    <span class="keyword">this</span>.provideLocationManagerProvider =
         DoubleCheck.provider(
             DemoApplicationModule_ProvideLocationManagerFactory.create(
                 builder.demoApplicationModule));
 
-    this.demoApplicationMembersInjector =
+    <span class="keyword">this</span>.demoApplicationMembersInjector =
         DemoApplication_MembersInjector.create(provideLocationManagerProvider);
 
-    this.applicationProvider =
+    <span class="keyword">this</span>.applicationProvider =
         DoubleCheck.provider(
             DemoApplicationModule_ApplicationFactory.create(builder.demoApplicationModule));
   }
 
-  @Override
-  public void inject(DemoApplication application) {
+  <span class="meta">@Override</span>
+  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">inject</span><span class="params">(DemoApplication application)</span> </span>{
     demoApplicationMembersInjector.injectMembers(application);
   }
 
-  @Override
-  public Application application() {
-    return applicationProvider.get();
+  <span class="meta">@Override</span>
+  <span class="function"><span class="keyword">public</span> Application <span class="title">application</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> applicationProvider.get();
   }
 
-  @Override
-  public LocationManager locationManager() {
-    return provideLocationManagerProvider.get();
+  <span class="meta">@Override</span>
+  <span class="function"><span class="keyword">public</span> LocationManager <span class="title">locationManager</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> provideLocationManagerProvider.get();
   }
 
-  public static final class Builder {
-    private DemoApplicationModule demoApplicationModule;
+  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Builder</span> </span>{
+    <span class="keyword">private</span> DemoApplicationModule demoApplicationModule;
 
-    private Builder() {}
+    <span class="function"><span class="keyword">private</span> <span class="title">Builder</span><span class="params">()</span> </span>{}
 
-    public ApplicationComponent build() {
-      if (demoApplicationModule == null) {
-        throw new IllegalStateException(
-            DemoApplicationModule.class.getCanonicalName() + &quot; must be set&quot;);
+    <span class="function"><span class="keyword">public</span> ApplicationComponent <span class="title">build</span><span class="params">()</span> </span>{
+      <span class="keyword">if</span> (demoApplicationModule == <span class="keyword">null</span>) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(
+            DemoApplicationModule.class.getCanonicalName() + <span class="string">" must be set"</span>);
       }
-      return new DaggerApplicationComponent(this);
+      <span class="keyword">return</span> <span class="keyword">new</span> DaggerApplicationComponent(<span class="keyword">this</span>);
     }
 
-    public Builder demoApplicationModule(DemoApplicationModule demoApplicationModule) {
-      this.demoApplicationModule = Preconditions.checkNotNull(demoApplicationModule);
-      return this;
+    <span class="function"><span class="keyword">public</span> Builder <span class="title">demoApplicationModule</span><span class="params">(DemoApplicationModule demoApplicationModule)</span> </span>{
+      <span class="keyword">this</span>.demoApplicationModule = Preconditions.checkNotNull(demoApplicationModule);
+      <span class="keyword">return</span> <span class="keyword">this</span>;
     }
   }
-}    
-</code></pre><p>DaggerApplicationComponent内部生成了Builder类，通过Builder的build()可以得到DaggerApplicationComponent对象，但必须先传入DemoApplicationModule对象，这是当然的，Component本来就只是一个桥梁而已，别忘了之前定义ApplicationComponent的注解@Component(modules = DemoApplicationModule.class)，这样就好理解了吧。</p>
+}
+</code></pre>
+<p>DaggerApplicationComponent内部生成了Builder类，通过Builder的build()可以得到DaggerApplicationComponent对象，但必须先传入DemoApplicationModule对象，这是当然的，Component本来就只是一个桥梁而已，别忘了之前定义ApplicationComponent的注解@Component(modules = DemoApplicationModule.class)，这样就好理解了吧。</p>
 <p>调用了Builder的build()后，会走DaggerApplicationComponent的构造器方法，这里调用了initialize(builder), initialize(builder)又干了什么呢？这里初始化了待注入的依赖对象locationManager和application，通过之前的工厂类的create()方法得到工厂类对象，工厂类是实现Factory<t>接口的，Factory<t>又是继承Provider<t>的，所以这里相当于拿到的是封装了不同对象的Provider实例， DoubleCheck.provider(provider)又干了什么呢？DoubleCheck也实现了Provider<t>，它的provider(provider)方法实际上返回了本身实例，实际上也是一个Provider<t>,但为什么要这么做呢?看代码：</t></t></t></t></t></p>
-<pre><code>public static &lt;T&gt; Provider&lt;T&gt; provider(Provider&lt;T&gt; delegate) {
+<pre><code class="java">
+<span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">Provider&lt;T&gt; <span class="title">provider</span><span class="params">(Provider&lt;T&gt; delegate)</span> </span>{
 ...    
-    return new DoubleCheck&lt;T&gt;(delegate);
+    <span class="keyword">return</span> <span class="keyword">new</span> DoubleCheck&lt;T&gt;(delegate);
 }
 
-private DoubleCheck(Provider&lt;T&gt; provider) {
-    assert provider != null;
-    this.provider = provider;
+<span class="function"><span class="keyword">private</span> <span class="title">DoubleCheck</span><span class="params">(Provider&lt;T&gt; provider)</span> </span>{
+    <span class="keyword">assert</span> provider != <span class="keyword">null</span>;
+    <span class="keyword">this</span>.provider = provider;
 }
 
-public T get() {
+<span class="function"><span class="keyword">public</span> T <span class="title">get</span><span class="params">()</span> </span>{
     Object result = instance;
-    if (result == UNINITIALIZED) {
-      synchronized (this) {
+    <span class="keyword">if</span> (result == UNINITIALIZED) {
+      <span class="keyword">synchronized</span> (<span class="keyword">this</span>) {
         result = instance;
-        if (result == UNINITIALIZED) {
+        <span class="keyword">if</span> (result == UNINITIALIZED) {
           instance = result = provider.get();
-           provider = null;
+           provider = <span class="keyword">null</span>;
         }
       }
     }
-    return (T) result;
+    <span class="keyword">return</span> (T) result;
   }
-</code></pre><p>provider(Provider<t> delegate)调用了构造器方法，构造器中将传入的Provider对象保存起来了，调用get()时会调用保存的provider对象的get()，实际上就是调用工厂方法的get()拿到对象，这样就实现了懒加载，在需要的时候调用get()，这时才会调用工厂方法的get()，因为真正创建对象的细节是封装在工厂类的get()中的，同时，它会将得到的对象缓存起来，这样下次调用就不需要再调用工厂类创建对象了。</t></p>
+</code></pre>
+<p>provider(Provider<t> delegate)调用了构造器方法，构造器中将传入的Provider对象保存起来了，调用get()时会调用保存的provider对象的get()，实际上就是调用工厂方法的get()拿到对象，这样就实现了懒加载，在需要的时候调用get()，这时才会调用工厂方法的get()，因为真正创建对象的细节是封装在工厂类的get()中的，同时，它会将得到的对象缓存起来，这样下次调用就不需要再调用工厂类创建对象了。</t></p>
 <p>再看注入的地方：</p>
-<pre><code>public class DemoApplication extends Application {
-  private ApplicationComponent applicationComponent;
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplication</span> <span class="keyword">extends</span> <span class="title">Application</span> </span>{
+  <span class="keyword">private</span> ApplicationComponent applicationComponent;
 
-  @Inject LocationManager locationManager;    
-  @Override public void onCreate() {
-    super.onCreate();
+  <span class="meta">@Inject</span> LocationManager locationManager;    
+  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>{
+    <span class="keyword">super</span>.onCreate();
     applicationComponent = DaggerApplicationComponent.builder()
-        .demoApplicationModule(new DemoApplicationModule(this))
+        .demoApplicationModule(<span class="keyword">new</span> DemoApplicationModule(<span class="keyword">this</span>))
         .build();
   }
 
-  public ApplicationComponent component() {
-    return applicationComponent;
+  <span class="function"><span class="keyword">public</span> ApplicationComponent <span class="title">component</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> applicationComponent;
   }
 }
-</code></pre><p>这里需要注入locationMnager，我们再看根据@Inject生成的代码：</p>
-<pre><code>public final class DemoApplication_MembersInjector implements MembersInjector&lt;DemoApplication&gt; {
-  private final Provider&lt;LocationManager&gt; locationManagerProvider;
+</code></pre>
+<p>这里需要注入locationMnager，我们再看根据@Inject生成的代码：</p>
+<pre><code class="java"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplication_MembersInjector</span> <span class="keyword">implements</span> <span class="title">MembersInjector</span>&lt;<span class="title">DemoApplication</span>&gt; </span>{
+  <span class="keyword">private</span> <span class="keyword">final</span> Provider&lt;LocationManager&gt; locationManagerProvider;
 
-  public DemoApplication_MembersInjector(Provider&lt;LocationManager&gt; locationManagerProvider) {
-    assert locationManagerProvider != null;
-    this.locationManagerProvider = locationManagerProvider;
+  <span class="function"><span class="keyword">public</span> <span class="title">DemoApplication_MembersInjector</span><span class="params">(Provider&lt;LocationManager&gt; locationManagerProvider)</span> </span>{
+    <span class="keyword">assert</span> locationManagerProvider != <span class="keyword">null</span>;
+    <span class="keyword">this</span>.locationManagerProvider = locationManagerProvider;
   }
 
-  public static MembersInjector&lt;DemoApplication&gt; create(
-      Provider&lt;LocationManager&gt; locationManagerProvider) {
-    return new DemoApplication_MembersInjector(locationManagerProvider);
+  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> MembersInjector&lt;DemoApplication&gt; <span class="title">create</span><span class="params">(
+      Provider&lt;LocationManager&gt; locationManagerProvider)</span> </span>{
+    <span class="keyword">return</span> <span class="keyword">new</span> DemoApplication_MembersInjector(locationManagerProvider);
   }
 
-  @Override
-  public void injectMembers(DemoApplication instance) {
-    if (instance == null) {
-      throw new NullPointerException(&quot;Cannot inject members into a null reference&quot;);
+  <span class="meta">@Override</span>
+  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">injectMembers</span><span class="params">(DemoApplication instance)</span> </span>{
+    <span class="keyword">if</span> (instance == <span class="keyword">null</span>) {
+      <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">"Cannot inject members into a null reference"</span>);
     }
     instance.locationManager = locationManagerProvider.get();
   }
 
-  public static void injectLocationManager(
-      DemoApplication instance, Provider&lt;LocationManager&gt; locationManagerProvider) {
+  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">injectLocationManager</span><span class="params">(
+      DemoApplication instance, Provider&lt;LocationManager&gt; locationManagerProvider)</span> </span>{
     instance.locationManager = locationManagerProvider.get();
   }
 }
-</code></pre><p>injectMembers(DemoApplication instance)    方法将locationManager对象赋值给DemoApplication对象，DemoApplication和locationManagerProvider从哪里来呢？上面DaggerApplicationComponent的initialize(builder)中实例化了DemoApplication_MembersInjector并传入需要的参数。</p>
+</code></pre>
+<p>injectMembers(DemoApplication instance)    方法将locationManager对象赋值给DemoApplication对象，DemoApplication和locationManagerProvider从哪里来呢？上面DaggerApplicationComponent的initialize(builder)中实例化了DemoApplication_MembersInjector并传入需要的参数。</p>
 <p>DaggerApplicationComponent实现了ApplicationComponent,当然要复写其方法。<br>在DemoApplication中调用DaggerApplicationComponent的inject()方法，然后就会调用DemoApplication_MembersInjector的injectMembers(DemoApplication instance)，就实现了依赖注入。</p>
 <p>那DaggerApplicationComponent的其他方法呢？比如locationManager(),application()等呢，这些方法是在定义在ApplicationComponent中的，子component是共享父component中的绑定的，那子component怎么拿到父component中的依赖对象呢？</p>
-<pre><code>this.locationManagerProvider =
-       new Factory&lt;LocationManager&gt;() {
-         private final ApplicationComponent applicationComponent = builder.applicationComponent;
+<pre><code class="java"><span class="keyword">this</span>.locationManagerProvider =
+       <span class="keyword">new</span> Factory&lt;LocationManager&gt;() {
+         <span class="keyword">private</span> <span class="keyword">final</span> ApplicationComponent applicationComponent = builder.applicationComponent;
 
-         @Override
-         public LocationManager get() {
-           return Preconditions.checkNotNull(
+         <span class="meta">@Override</span>
+         <span class="function"><span class="keyword">public</span> LocationManager <span class="title">get</span><span class="params">()</span> </span>{
+           <span class="keyword">return</span> Preconditions.checkNotNull(
                applicationComponent.locationManager(),
-               &quot;Cannot return null from a non-@Nullable component method&quot;);
+               <span class="string">"Cannot return null from a non-@Nullable component method"</span>);
          }
        };
-</code></pre><p>在DaggerHomeComponent的initialize(final Builder builder)中通过applicationComponent.locationManager，子component就也有locationManager实例了。</p>
+</code></pre>
+<p>在DaggerHomeComponent的initialize(final Builder builder)中通过applicationComponent.locationManager，子component就也有locationManager实例了。</p>
 <p>Activity的依赖注入分析也是类似的，通过源码，我们可以清晰的跟踪其调用流程。</p>
 <p>That’s all!希望能帮到你。    </p>
 
@@ -687,9 +697,9 @@ public T get() {
           
             <a href="/tags/android/" rel="tag"># android</a>
           
-            <a href="/tags/依赖注入/" rel="tag"># 依赖注入</a>
-          
             <a href="/tags/Dagger2/" rel="tag"># Dagger2</a>
+          
+            <a href="/tags/依赖注入/" rel="tag"># 依赖注入</a>
           
         </div>
       
