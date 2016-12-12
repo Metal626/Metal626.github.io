@@ -208,9 +208,9 @@
     
       <category term="android" scheme="http://yoursite.com/tags/android/"/>
     
-      <category term="依赖注入" scheme="http://yoursite.com/tags/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/"/>
-    
       <category term="dagger2" scheme="http://yoursite.com/tags/dagger2/"/>
+    
+      <category term="依赖注入" scheme="http://yoursite.com/tags/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/"/>
     
   </entry>
   
@@ -829,9 +829,9 @@ android{
     
       <category term="android" scheme="http://yoursite.com/tags/android/"/>
     
-      <category term="Dagger2" scheme="http://yoursite.com/tags/Dagger2/"/>
-    
       <category term="依赖注入" scheme="http://yoursite.com/tags/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/"/>
+    
+      <category term="Dagger2" scheme="http://yoursite.com/tags/Dagger2/"/>
     
   </entry>
   
