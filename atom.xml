@@ -108,11 +108,11 @@
   </entry>
   
   <entry>
-    <title>DI框架Dagger2系统性学习</title>
+    <title>依赖注入框架Dagger2系统性学习</title>
     <link href="http://yoursite.com/2016/11/29/dagger2%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/"/>
     <id>http://yoursite.com/2016/11/29/dagger2文档翻译/</id>
     <published>2016-11-29T07:16:16.949Z</published>
-    <updated>2016-11-30T05:34:33.004Z</updated>
+    <updated>2016-12-12T07:41:36.745Z</updated>
     
     <content type="html"><![CDATA[<p><strong><span id="top">目录</span></strong></p>
 <blockquote>
@@ -295,14 +295,14 @@
     
     </summary>
     
-      <category term="Android" scheme="http://yoursite.com/categories/Android/"/>
+      <category term="android" scheme="http://yoursite.com/categories/android/"/>
     
     
       <category term="android" scheme="http://yoursite.com/tags/android/"/>
     
-      <category term="dagger2" scheme="http://yoursite.com/tags/dagger2/"/>
-    
       <category term="依赖注入" scheme="http://yoursite.com/tags/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/"/>
+    
+      <category term="dagger2" scheme="http://yoursite.com/tags/dagger2/"/>
     
   </entry>
   
@@ -399,9 +399,9 @@
       <category term="android" scheme="http://yoursite.com/categories/android/"/>
     
     
-      <category term="android" scheme="http://yoursite.com/tags/android/"/>
-    
       <category term="apk瘦身" scheme="http://yoursite.com/tags/apk%E7%98%A6%E8%BA%AB/"/>
+    
+      <category term="android" scheme="http://yoursite.com/tags/android/"/>
     
       <category term="优化" scheme="http://yoursite.com/tags/%E4%BC%98%E5%8C%96/"/>
     
@@ -606,9 +606,9 @@ org.gradle.daemon=true
       <category term="ReactNative" scheme="http://yoursite.com/categories/ReactNative/"/>
     
     
-      <category term="ReactNative" scheme="http://yoursite.com/tags/ReactNative/"/>
-    
       <category term="android" scheme="http://yoursite.com/tags/android/"/>
+    
+      <category term="ReactNative" scheme="http://yoursite.com/tags/ReactNative/"/>
     
   </entry>
   
@@ -921,9 +921,9 @@ android{
     
       <category term="android" scheme="http://yoursite.com/tags/android/"/>
     
-      <category term="依赖注入" scheme="http://yoursite.com/tags/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/"/>
-    
       <category term="Dagger2" scheme="http://yoursite.com/tags/Dagger2/"/>
+    
+      <category term="依赖注入" scheme="http://yoursite.com/tags/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/"/>
     
   </entry>
   
