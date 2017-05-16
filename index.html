@@ -261,6 +261,169 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/16/仿360市场下载按钮/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Metal626">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Metal626’s Notes">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Metal626’s Notes" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/05/16/仿360市场下载按钮/" itemprop="url">
+                  仿360市场下载按钮
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-16T10:40:11+08:00">
+                2017-05-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/05/16/仿360市场下载按钮/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/16/仿360市场下载按钮/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/05/16/仿360市场下载按钮/" class="leancloud_visitors" data-flag-title="仿360市场下载按钮">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>先看一下效果：<br><img src="http://ohe81rx2w.bkt.clouddn.com/360downloadView.gif" alt=""></p>
+<p>无论多复杂的动画我们都是可以分割成小单元的，然后分步来实现。这个动画大概分为收缩，准备，加载，完成几个部分。为此定义一个枚举类来描述view的状态。<br><code>public enum Status {
+        NORMAL, START, PRE, EXPAND, LOAD, END
+    }</code></p>
+<h3 id="收缩动画"><a href="#收缩动画" class="headerlink" title="收缩动画"></a>收缩动画</h3><p>使用动画不断改变圆角矩形的宽度，触发重绘。代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">private void initAnim() &#123;</div><div class="line">        Animation animation1 = new Animation() &#123;</div><div class="line">            @Override</div><div class="line">            protected void applyTransformation(float interpolatedTime, Transformation t) &#123;</div><div class="line">                mCurrLength = mWidth * (1 - interpolatedTime);</div><div class="line">                if (mCurrLength &lt; mHeight) &#123;</div><div class="line">                    mCurrLength = mHeight;</div><div class="line">                    clearAnimation();</div><div class="line">                    mAngleAnim.start();</div><div class="line">                &#125;</div><div class="line">                invalidate();</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line"></div><div class="line">        animation1.setDuration(mShrinkDuration);</div><div class="line">        animation1.setInterpolator(new LinearInterpolator());</div><div class="line">        animation1.setAnimationListener(new Animation.AnimationListener() &#123;</div><div class="line">            @Override</div><div class="line">            public void onAnimationStart(Animation animation) &#123;</div><div class="line">                mStatus = Status.START;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public void onAnimationEnd(Animation animation) &#123;</div><div class="line"></div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public void onAnimationRepeat(Animation animation) &#123;</div><div class="line"></div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        mShrinkAnim = animation1;</div><div class="line">		...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>onDraw中绘制：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">if (mStatus == Status.START || mStatus == Status.NORMAL) &#123;</div><div class="line">    float left = (mWidth - mCurrLength) / 2f;</div><div class="line">    float right = (mWidth + mCurrLength) / 2f;</div><div class="line">    float r = mHeight / 2f;</div><div class="line">    canvas.drawRoundRect(new RectF(left, 0, right, mHeight), r, r, mBgPaint);</div><div class="line">    if (mStatus == Status.NORMAL) &#123;</div><div class="line">        Paint.FontMetrics fm = mTextPaint.getFontMetrics();</div><div class="line">        float y = mHeight / 2 + (fm.descent - fm.ascent) / 2 - fm.descent;</div><div class="line">        canvas.drawText(&quot;下载&quot;, mWidth / 2, y, mTextPaint);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="准备动画"><a href="#准备动画" class="headerlink" title="准备动画"></a>准备动画</h3><p>此时旋转动画，是通过canvas绘制背景圆和三个小圆，然后不断旋转画布来实现的，具体求圆心坐标和角度动画我们直接看代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">ValueAnimator animator = ValueAnimator.ofFloat(0, 1);</div><div class="line">       animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() &#123;</div><div class="line">           @Override</div><div class="line">           public void onAnimationUpdate(ValueAnimator animation) &#123;</div><div class="line">               mAngle += mPreAnimSpeed;</div><div class="line">               invalidate();</div><div class="line">           &#125;</div><div class="line">       &#125;);</div><div class="line">       animator.addListener(new Animator.AnimatorListener() &#123;</div><div class="line">           @Override</div><div class="line">           public void onAnimationStart(Animator animation) &#123;</div><div class="line">               mStatus = Status.PRE;</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           @Override</div><div class="line">           public void onAnimationEnd(Animator animation) &#123;</div><div class="line">               mAngleAnim.cancel();</div><div class="line">               startAnimation(mTranslateAnim);</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           @Override</div><div class="line">           public void onAnimationCancel(Animator animation) &#123;</div><div class="line"></div><div class="line">           &#125;</div><div class="line"></div><div class="line">           @Override</div><div class="line">           public void onAnimationRepeat(Animator animation) &#123;</div><div class="line"></div><div class="line">           &#125;</div><div class="line">       &#125;);</div><div class="line"></div><div class="line">       animator.setDuration(mPreAnimDuration);</div><div class="line">       animator.setInterpolator(new LinearInterpolator());</div><div class="line">       mAngleAnim = animator;</div></pre></td></tr></table></figure></p>
+<p>onDraw中绘制代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">if (mStatus == Status.PRE) &#123;</div><div class="line">          canvas.drawCircle(mWidth / 2f, mHeight / 2f, mHeight / 2f, mBgPaint);</div><div class="line">          canvas.save();</div><div class="line">          mTextPaint.setStyle(Paint.Style.FILL);</div><div class="line">          canvas.rotate(mAngle, mWidth / 2, mHeight / 2);</div><div class="line">          //大圆的圆心 半径</div><div class="line">          float cX = mWidth / 2f;</div><div class="line">          float cY = mHeight / 2f;</div><div class="line">          float radius = mHeight / 2 / 3f;</div><div class="line">          canvas.drawCircle(cX, cY, radius, mTextPaint);</div><div class="line">          //上方小圆的参数</div><div class="line">          float rr = radius / 2f;</div><div class="line">          float cYY = mHeight / 2 - (radius + rr / 3);</div><div class="line">          canvas.drawCircle(cX, cYY, rr, mTextPaint);</div><div class="line">          //左下小圆参数</div><div class="line">          float cXX = (float) (cX - Math.sqrt(2) / 2f * (radius + rr / 3f));</div><div class="line">          cYY = (float) (mHeight / 2 + Math.sqrt(2) / 2f * (radius + rr / 3f));</div><div class="line">          canvas.drawCircle(cXX, cYY, rr, mTextPaint);</div><div class="line">          //右下小圆参数</div><div class="line">          cXX = (float) (cX + Math.sqrt(2) / 2f * (radius + rr / 3f));</div><div class="line">          canvas.drawCircle(cXX, cYY, rr, mTextPaint);</div><div class="line">          canvas.restore();</div><div class="line">      &#125;</div></pre></td></tr></table></figure></p>
+<h3 id="展开动画"><a href="#展开动画" class="headerlink" title="展开动画"></a>展开动画</h3><p>展开动画也是不断改变view的宽度并重绘圆角矩形，同时需要对准备动画的状态进行向右位移。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">Animation animator1 = new Animation() &#123;</div><div class="line">           @Override</div><div class="line">           protected void applyTransformation(float interpolatedTime, Transformation t) &#123;</div><div class="line">               mCurrLength = mHeight + (mWidth - mHeight) * interpolatedTime;</div><div class="line">               mTranslationX = (mWidth - mHeight) / 2 * interpolatedTime;</div><div class="line">               invalidate();</div><div class="line">           &#125;</div><div class="line">       &#125;;</div><div class="line">       animator1.setAnimationListener(new Animation.AnimationListener() &#123;</div><div class="line">           @Override</div><div class="line">           public void onAnimationStart(Animation animation) &#123;</div><div class="line">               mStatus = Status.EXPAND;</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           @Override</div><div class="line">           public void onAnimationEnd(Animation animation) &#123;</div><div class="line">               clearAnimation();</div><div class="line">               mLoadAngleAnim.start();</div><div class="line">               mMovePointAnim.start();</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           @Override</div><div class="line">           public void onAnimationRepeat(Animation animation) &#123;</div><div class="line"></div><div class="line">           &#125;</div><div class="line">       &#125;);</div><div class="line">       animator1.setDuration(mExpandAnimDuration);</div><div class="line">       animator1.setInterpolator(new LinearInterpolator());</div><div class="line">       mTranslateAnim = animator1;</div></pre></td></tr></table></figure></p>
+<p>onDraw中绘制代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">if (mStatus == Status.EXPAND) &#123;</div><div class="line">          float left = (mWidth - mCurrLength) / 2f;</div><div class="line">          float right = (mWidth + mCurrLength) / 2f;</div><div class="line">          float r = mHeight / 2f;</div><div class="line">          canvas.drawRoundRect(new RectF(left, 0, right, mHeight), r, r, mBgPaint);</div><div class="line">          canvas.save();</div><div class="line">          mTextPaint.setStyle(Paint.Style.FILL);</div><div class="line">          canvas.translate(mTranslationX, 0);</div><div class="line">          //大圆的圆心 半径</div><div class="line">          float cX = mWidth / 2f;</div><div class="line">          float cY = mHeight / 2f;</div><div class="line">          float radius = mHeight / 2 / 3f;</div><div class="line">          canvas.drawCircle(cX, cY, radius, mTextPaint);</div><div class="line">          //上方小圆的参数</div><div class="line">          float rr = radius / 2f;</div><div class="line">          float cYY = mHeight / 2 - (radius + rr / 3);</div><div class="line">          canvas.drawCircle(cX, cYY, rr, mTextPaint);</div><div class="line">          //左下小圆参数</div><div class="line">          float cXX = (float) (cX - Math.sqrt(2) / 2f * (radius + rr / 3f));</div><div class="line">          cYY = (float) (mHeight / 2 + Math.sqrt(2) / 2f * (radius + rr / 3f));</div><div class="line">          canvas.drawCircle(cXX, cYY, rr, mTextPaint);</div><div class="line">          //右下小圆参数</div><div class="line">          cXX = (float) (cX + Math.sqrt(2) / 2f * (radius + rr / 3f));</div><div class="line">          canvas.drawCircle(cXX, cYY, rr, mTextPaint);</div><div class="line">          canvas.restore();</div><div class="line">      &#125;</div></pre></td></tr></table></figure></p>
+<h3 id="加载动画"><a href="#加载动画" class="headerlink" title="加载动画"></a>加载动画</h3><p>加载动画分三部分，右侧的旋转动画，正弦轨迹运动的小球动画，进度更新的动画。正弦动画要求出正弦函数的周期，y轴偏移量，x轴偏移量。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">ValueAnimator animator2 = ValueAnimator.ofFloat(0, 1);</div><div class="line">       animator2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() &#123;</div><div class="line">           @Override</div><div class="line">           public void onAnimationUpdate(ValueAnimator animation) &#123;</div><div class="line">               mLoadAngle += mLoadRotateAnimSpeed;</div><div class="line">               invalidate();</div><div class="line">           &#125;</div><div class="line">       &#125;);</div><div class="line">       animator2.addListener(new Animator.AnimatorListener() &#123;</div><div class="line">           @Override</div><div class="line">           public void onAnimationStart(Animator animation) &#123;</div><div class="line">               mStatus = Status.LOAD;</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           @Override</div><div class="line">           public void onAnimationEnd(Animator animation) &#123;</div><div class="line">               mLoadAngleAnim.cancel();</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           @Override</div><div class="line">           public void onAnimationCancel(Animator animation) &#123;</div><div class="line"></div><div class="line">           &#125;</div><div class="line"></div><div class="line">           @Override</div><div class="line">           public void onAnimationRepeat(Animator animation) &#123;</div><div class="line"></div><div class="line">           &#125;</div><div class="line">       &#125;);</div><div class="line">       animator2.setDuration(Integer.MAX_VALUE);</div><div class="line">       animator2.setInterpolator(new LinearInterpolator());</div><div class="line">       mLoadAngleAnim = animator2;</div></pre></td></tr></table></figure></p>
+<p>onDraw中绘制代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">if (mStatus == Status.LOAD || mStatus == Status.END) &#123;</div><div class="line">           float left = (mWidth - mCurrLength) / 2f;</div><div class="line">           float right = (mWidth + mCurrLength) / 2f;</div><div class="line">           float r = mHeight / 2f;</div><div class="line">           mBgPaint.setColor(mProgressColor);</div><div class="line">           canvas.drawRoundRect(new RectF(left, 0, right, mHeight), r, r, mBgPaint);</div><div class="line">           if (mProgress != 100) &#123;</div><div class="line">               for (int i = 0; i &lt; mFourMovePoints.length; i++) &#123;</div><div class="line">                   if (mFourMovePoints[i].isDraw)</div><div class="line">                       canvas.drawCircle(mFourMovePoints[i].moveX, mFourMovePoints[i].moveY, mFourMovePoints[i].radius, mTextPaint);</div><div class="line">               &#125;</div><div class="line">           &#125;</div><div class="line">           float progressRight = mProgress * mWidth / 100f;</div><div class="line">           mBgPaint.setColor(mBgColor);</div><div class="line">           canvas.save();</div><div class="line">           canvas.clipRect(0, 0, progressRight, mHeight);</div><div class="line">           canvas.drawRoundRect(new RectF(left, 0, right, mHeight), r, r, mBgPaint);</div><div class="line">           canvas.restore();</div><div class="line"></div><div class="line">           if (mProgress != 100) &#123;</div><div class="line">               canvas.drawCircle(mWidth - mHeight / 2, mHeight / 2, mHeight / 2, mBgPaint);</div><div class="line">               canvas.save();</div><div class="line">               mTextPaint.setStyle(Paint.Style.FILL);</div><div class="line">               canvas.rotate(mLoadAngle, mWidth - mHeight / 2, mHeight / 2);</div><div class="line">               canvas.drawCircle(mWidth - mHeight + 30, getCenterY(mWidth - mHeight + 30, 5), 5, mTextPaint);</div><div class="line">               canvas.drawCircle(mWidth - mHeight + 45, getCenterY(mWidth - mHeight + 45, 8), 8, mTextPaint);</div><div class="line">               canvas.drawCircle(mWidth - mHeight + 68, getCenterY(mWidth - mHeight + 68, 11), 11, mTextPaint);</div><div class="line">               canvas.drawCircle(mWidth - mHeight + 98, getCenterY(mWidth - mHeight + 98, 14), 14, mTextPaint);</div><div class="line">               canvas.restore();</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           Paint.FontMetrics fm = mTextPaint.getFontMetrics();</div><div class="line">           float y = mHeight / 2 + (fm.descent - fm.ascent) / 2 - fm.descent;</div><div class="line">           canvas.drawText(mProgress + &quot;%&quot;, mWidth / 2, y, mTextPaint);</div><div class="line">       &#125;</div></pre></td></tr></table></figure></p>
+<p>完整代码见<a href="https://github.com/Metal626/360DownLoadView" target="_blank" rel="external">GitHub</a>。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/12/Retrofit+Rxjava服务器IP轮询重试机制实现/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2323,200 +2486,13 @@ android{
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/29/hexo+github打造个人博客/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Metal626">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Metal626’s Notes">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Metal626’s Notes" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/11/29/hexo+github打造个人博客/" itemprop="url">
-                  Windows下使用hexo+github搭建个人博客
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-29T09:58:05+08:00">
-                2016-11-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/hexo/" itemprop="url" rel="index">
-                    <span itemprop="name">hexo</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2016/11/29/hexo+github打造个人博客/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/29/hexo+github打造个人博客/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/11/29/hexo+github打造个人博客/" class="leancloud_visitors" data-flag-title="Windows下使用hexo+github搭建个人博客">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h4><ul>
-<li><p>下载安装Node.js<br>  前往<a href="https://nodejs.org/en/" target="_blank" rel="external">https://nodejs.org/en/</a>下载并安装Node.js.</p>
-</li>
-<li><p>下载并安装Git，安装完成后，在命令行窗口输入node -v,如果不能打印当前node版本号即不识别node命令，则请将node的安装目录添加到系统环境变量。<br> 前往<a href="https://git-scm.com/downloads" target="_blank" rel="external">https://git-scm.com/downloads</a>下载对应平台的git安装包，同理测试git –version ，如果不识别命令，请将git安装目录添加至系统环境变量。</p>
-</li>
-<li><p>安装hexo<br>  在命令行输入 npm install hexo （npm是node的包管理工具，如果此处无法识别npm命令，请检查node的环境变量配置或命令行进入到node的安装目录执行次命令。）</p>
-</li>
-</ul>
-<h4 id="创建及配置博客"><a href="#创建及配置博客" class="headerlink" title="创建及配置博客"></a>创建及配置博客</h4><ul>
-<li>初始化<br>  命令行cd 进入到你要放置博客的目录，执行hexo init,此命令会下载相关依赖及配置。</li>
-<li><p>生成页面<br>  执行 hexo generate 或 hexo g, 查看当前目录，public 目录存放你的博客文件，包括html、css、js等，而source目录存放我们所要关注的markdown源文件，你可以在此目录创建你的博客页面，使用清爽的markdown语法书写你的个人博客，当然你也可以使用 hexo new page pagename创建新的页面，hexo g命令会将此目录下的markdo文件转换为网站页面。</p>
-</li>
-<li><p>本地测试<br>  执行hexo server,启动本地服务器，然后在浏览器地址栏输入localhost:4000,即可看到你的博客页，平时我们编辑完博客后可在本地查看，然后再提交到远端（马上会讲到）。</p>
-</li>
-<li><p>主题配置<br><a href="https://www.zhihu.com/question/24422335" target="_blank" rel="external">知乎问题</a>,下有人列出了很多主题及github star排名，你可以去选择你喜欢的主题并克隆到本地，然后将其放置到你的站点themes目录中，修改config.yml文件theme属性为你想使用的主题即可切换主题，详细设置请参照该主题的文档。</p>
-</li>
-</ul>
-<h4 id="将博客发布到github"><a href="#将博客发布到github" class="headerlink" title="将博客发布到github"></a>将博客发布到github</h4><ul>
-<li><p>创建github账号并创建名为your_user_name.github.io的仓库。</p>
-</li>
-<li><p>建立本地博客与远端仓库的联系<br>  进入你本地博客目录，打开_config.yml文件，将最后修改为：</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attr">deploy:</span></div><div class="line"><span class="attr">    type:</span> git</div><div class="line"><span class="attr">    repo:</span> https://github.com/your_user_name/your_user_name.github.io.git</div><div class="line"><span class="attr">    branch:</span> master</div></pre></td></tr></table></figure>
-<p>  注意：deploy等标签后都要有空格。</p>
-</li>
-<li><p>将博客发布到远端<br>  执行npm install hexo-deployer-git –save<br>  执行hexo clean;hexo g<br>  执行hexo deploy或hexo d，如果不出意外的话，会弹出输入用户名和密码的对话框，成功后控制台会打印Deploy done: git,然后打开浏览器输入<a href="https://your_user_name.github.io，即可打开你的个人博客站点。" target="_blank" rel="external">https://your_user_name.github.io，即可打开你的个人博客站点。</a></p>
-<p>  <strong>注意：</strong> Windows用户可能出现错误：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">bash: /dev/tty: No such device or address</div><div class="line">error: failed to execute prompt script (exit code 1)</div><div class="line">fatal: could not read Username for &apos;https://github.com&apos;: Invalid argument</div><div class="line">FATAL Something&apos;s wrong. Maybe you can find the solution here: http://hexo.io/docs/troubleshooting.html</div></pre></td></tr></table></figure>
-<p>  此时，你需要摒弃cmd命令行和git shell，打开git bash命令行，重新执行上述命令。</p>
-<p>  <strong>PS:</strong> </p>
-<ul>
-<li><p>此种方式在你每次执行hexo d部署代码到远端时，都会弹窗请求输入用户名和密码，如果想免密提交的话，请将config.yml文件中，deploy节点修改为：</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attr">deploy:</span></div><div class="line"><span class="attr">  type:</span> git</div><div class="line"><span class="attr">  repo:</span> git@github.com:your_user_name/your_user_name.github.io.git</div><div class="line"><span class="attr">  branch:</span> master</div></pre></td></tr></table></figure>
-<p>此种为ssh的方式，所以当然需要你添加ssh公匙到你的github账户，具体操作请看<a href="https://help.github.com/categories/ssh/" target="_blank" rel="external">Github</a>文档。 </p>
-</li>
-<li><p>执行hexo d 无反应<br>此时请打开对应目录下的config.yml,查看文件最后deploy节点是否配置正确。</p>
-</li>
-<li><p>在config.yml文件中，可以配置你的站点的标题、描述、作者、主题及语言等一系列信息。</p>
-</li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -2555,7 +2531,7 @@ android{
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-count">11</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2572,7 +2548,7 @@ android{
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -2657,7 +2633,7 @@ android{
         <div class="copyright" >
   
   &copy;  2016-11 - 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
