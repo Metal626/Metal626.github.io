@@ -74,7 +74,7 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="Metal626’s Notes" type="application/atom+xml" />
+  <link rel="alternate" href="/atom.xml" title="Proton626’s Notes" type="application/atom+xml" />
 
 
 
@@ -88,12 +88,12 @@
 
 <meta name="description" content="Learning is a gift , even when pain is your teacher.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Metal626’s Notes">
+<meta property="og:title" content="Proton626’s Notes">
 <meta property="og:url" content="http://yoursite.com/page/2/index.html">
-<meta property="og:site_name" content="Metal626’s Notes">
+<meta property="og:site_name" content="Proton626’s Notes">
 <meta property="og:description" content="Learning is a gift , even when pain is your teacher.">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Metal626’s Notes">
+<meta name="twitter:title" content="Proton626’s Notes">
 <meta name="twitter:description" content="Learning is a gift , even when pain is your teacher.">
 
 
@@ -128,7 +128,7 @@
 
 
 
-  <title> Metal626’s Notes </title>
+  <title> Proton626’s Notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -171,7 +171,7 @@
   <div class="custom-logo-site-title">
     <a href="/"  class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <span class="site-title">Metal626’s Notes</span>
+      <span class="site-title">Proton626’s Notes</span>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -261,18 +261,457 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/29/hexo+github打造个人博客/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/29/dagger2详解/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Metal626">
+    <meta itemprop="name" content="Proton626">
     <meta itemprop="description" content="">
     <meta itemprop="image" content="/images/avatar.gif">
   </span>
 
   <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Metal626’s Notes">
+    <meta itemprop="name" content="Proton626’s Notes">
     <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Metal626’s Notes" src="">
+      <img style="display:none;" itemprop="url image" alt="Proton626’s Notes" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/11/29/dagger2详解/" itemprop="url">
+                  Dagger2详解-从代码分析其原理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-29T15:16:16+08:00">
+                2016-11-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/11/29/dagger2详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/29/dagger2详解/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/11/29/dagger2详解/" class="leancloud_visitors" data-flag-title="Dagger2详解-从代码分析其原理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><em>Dagger2基本概念请移步<a href="http://google.github.io/dagger/" target="_blank" rel="external">官方文档</a>,或者我的<a href="http://www.jianshu.com/p/d8dd55956e74" target="_blank" rel="external">翻译</a></em>。</p>
+<p><em>架构方面请关注<a href="https://github.com/Metal626/MVP-Dagger2-Rxjava-Retrofit.git" target="_blank" rel="external">GitHub（MVP+Retrofit+Dagger2+Okhttp）</a>及我的文章<a href="http://www.jianshu.com/p/d727963e90b8" target="_blank" rel="external">Android UI框架快速搭建实践</a></em></p>
+<p>Dagger2是Dagger1的分支，由谷歌公司接手开发，目前的版本是2.0。Dagger2解决问题的基本思想是：利用生成和写的代码混合达到看似所有的产生和提供依赖的代码都是手写的样子。</p>
+<p>如果我们将Dagger2和1比较，他们两个在很多方面都非常相似，但也有很重要的区别，如下：</p>
+<blockquote>
+<ol>
+<li>再也没有使用反射：图的验证、配置和预先设置都在编译的时候执行。  </li>
+<li>容易调试和可跟踪：完全具体地调用提供和创建的堆栈  </li>
+<li>更好的性能：谷歌声称他们提高了13%的处理性能  </li>
+<li>代码混淆：使用派遣方法，就如同自己写的代码一样</li>
+</ol>
+</blockquote>
+<p>当然所有这些很棒的特点都需要付出一个代价，那就是缺乏灵活性，例如：Dagger2没用反射所以没有动态机制。</p>
+<p>所以在<a href="http://www.jianshu.com/p/d727963e90b8" target="_blank" rel="external">Android UI框架快速搭建实践</a>这篇文章中，因为我将Presenter作为泛型成员变量抽取到BaseFragment中了，所以View层的Presenter无法使用Dagger2实现注入。如果要实现Presenter注入，则需要在每个View实现中注入对应的Presenter实例，这样就无法抽取到基类中了。这个在具体实践中，需要你自己权衡。</p>
+<p>本文就<a href="https://github.com/Metal626/Dagger2ForAndroid.git" target="_blank" rel="external">GitHub</a>项目，从生成的代码对Dagger2进行分析。</p>
+<p>使用Dagger2，在module的gradle中配置：</p>
+<pre><code class="gradle">apply plugin: <span class="string">'com.android.application'</span>
+apply plugin: <span class="string">'com.neenbedankt.android-apt'</span>
+
+android{
+    ...
+}
+<span class="keyword">buildscript</span> {
+    <span class="keyword">repositories</span> {
+        jcenter()
+    }
+    <span class="keyword">dependencies</span> {
+        <span class="comment">//添加apt插件</span>
+        <span class="keyword">classpath</span> <span class="string">'com.neenbedankt.gradle.plugins:android-apt:1.8'</span>
+    }
+}
+<span class="keyword">dependencies</span> {
+    <span class="keyword">compile</span> <span class="keyword">fileTree</span>(dir: <span class="string">'libs'</span>, <span class="keyword">include</span>: [<span class="string">'*.jar'</span>])
+    <span class="keyword">compile</span> <span class="string">'com.google.dagger:dagger:2.4'</span>
+    apt <span class="string">'com.google.dagger:dagger-compiler:2.4'</span>
+    ...
+ }
+</code></pre>
+<p>使用时，定义好component及module后，build工程，Dagger2编译器就会生成对应代码，然后在需要注入的地方调用生成的component实现，名为Dagger前缀+component名称的类完成绑定。</p>
+<p><strong>先看结构图：</strong><br><img src="http://ohe81rx2w.bkt.clouddn.com/dagger2.png" alt=""><br><strong>大概介绍一下基本概念：</strong></p>
+<ul>
+<li><p>Module：使用@Module注解，封装@Provides方法，@Provides注解方法提供依赖对象。</p>
+</li>
+<li><p>@Inject：在需要依赖注入的地方使用。Dagger2提供3种方式：</p>
+<ul>
+<li>构造方法注入：在类的构造方法前面注释@Inject</li>
+<li>成员变量注入：在类的成员变量（非私有）前面注释@Inject</li>
+<li>函数方法注入：在函数前面注释@Inject</li>
+</ul>
+</li>
+<li>@Peractivity：自定义scope注解，约束依赖对象的生命周期。</li>
+<li>@Singleton：api提供的scope注解，保证对象在对象图中唯一。</li>
+<li>Component:使用@Component注解的接口，是@Inject和@Module联系的桥梁，子component可以使用@Subcomponent也可以指定@Component的dependency参数。</li>
+</ul>
+<p><strong>是时候上代码了（Dagger2生成的代码在build/generated/source/apt/目录下）：</strong></p>
+<p>DemoApplicationModule的定义：</p>
+<pre><code class="java"><span class="meta">@Module</span>
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplicationModule</span> </span>{
+  <span class="keyword">private</span> <span class="keyword">final</span> Application application;
+
+  <span class="function"><span class="keyword">public</span> <span class="title">DemoApplicationModule</span><span class="params">(Application application)</span> </span>{
+    <span class="keyword">this</span>.application = application;
+  }
+
+  <span class="comment">/**
+   * Expose the application to the graph.
+   */</span>
+  <span class="meta">@Provides</span> <span class="meta">@Singleton</span> <span class="function">Application <span class="title">application</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> application;
+  }
+
+  <span class="meta">@Provides</span> <span class="meta">@Singleton</span> <span class="function">LocationManager <span class="title">provideLocationManager</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> (LocationManager) application.getSystemService(LOCATION_SERVICE);
+  }
+}
+</code></pre>
+<p>来看生成的代码：</p>
+<pre><code class="java"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplicationModule_ApplicationFactory</span> <span class="keyword">implements</span> <span class="title">Factory</span>&lt;<span class="title">Application</span>&gt; </span>{
+  <span class="keyword">private</span> <span class="keyword">final</span> DemoApplicationModule <span class="keyword">module</span>;
+
+  <span class="function"><span class="keyword">public</span> <span class="title">DemoApplicationModule_ApplicationFactory</span><span class="params">(DemoApplicationModule <span class="keyword">module</span>)</span> </span>{
+    <span class="keyword">assert</span> <span class="keyword">module</span> != <span class="keyword">null</span>;
+    <span class="keyword">this</span>.<span class="keyword">module</span> = <span class="keyword">module</span>;
+  }
+
+  <span class="meta">@Override</span>
+  <span class="function"><span class="keyword">public</span> Application <span class="title">get</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> Preconditions.checkNotNull(
+        <span class="keyword">module</span>.application(), <span class="string">"Cannot return null from a non-@Nullable @Provides method"</span>);
+  }
+
+  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Factory&lt;Application&gt; <span class="title">create</span><span class="params">(DemoApplicationModule <span class="keyword">module</span>)</span> </span>{
+    <span class="keyword">return</span> <span class="keyword">new</span> DemoApplicationModule_ApplicationFactory(<span class="keyword">module</span>);
+  }
+}    
+----------------
+<span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplicationModule_ProvideLocationManagerFactory</span>
+    <span class="keyword">implements</span> <span class="title">Factory</span>&lt;<span class="title">LocationManager</span>&gt; </span>{
+  <span class="keyword">private</span> <span class="keyword">final</span> DemoApplicationModule <span class="keyword">module</span>;
+
+  <span class="function"><span class="keyword">public</span> <span class="title">DemoApplicationModule_ProvideLocationManagerFactory</span><span class="params">(DemoApplicationModule <span class="keyword">module</span>)</span> </span>{
+    <span class="keyword">assert</span> <span class="keyword">module</span> != <span class="keyword">null</span>;
+    <span class="keyword">this</span>.<span class="keyword">module</span> = <span class="keyword">module</span>;
+  }
+
+  <span class="meta">@Override</span>
+  <span class="function"><span class="keyword">public</span> LocationManager <span class="title">get</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> Preconditions.checkNotNull(
+        <span class="keyword">module</span>.provideLocationManager(),
+        <span class="string">"Cannot return null from a non-@Nullable @Provides method"</span>);
+  }
+
+  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Factory&lt;LocationManager&gt; <span class="title">create</span><span class="params">(DemoApplicationModule <span class="keyword">module</span>)</span> </span>{
+    <span class="keyword">return</span> <span class="keyword">new</span> DemoApplicationModule_ProvideLocationManagerFactory(<span class="keyword">module</span>);
+  }
+}
+</code></pre>
+<p>module中定义的@Provides方法会生成对应的工厂类，实现Factory<t>接口，复写get()方法，get()中实际调用了module的provide方法，那module实例从哪里来的呢，看工厂类的创建方法中，看来这个module对象是需要外部传入的。</t></p>
+<p>ApplicationComponent定义：</p>
+<pre><code class="java"><span class="meta">@Singleton</span>     
+<span class="meta">@Component</span>(modules = DemoApplicationModule.class)
+<span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ApplicationComponent</span> </span>{
+  <span class="comment">// Field injections of any dependencies of the DemoApplication</span>
+  <span class="function"><span class="keyword">void</span> <span class="title">inject</span><span class="params">(DemoApplication application)</span></span>;
+
+  <span class="comment">// Exported for child-components.</span>
+  <span class="function">Application <span class="title">application</span><span class="params">()</span></span>;
+  <span class="function">LocationManager <span class="title">locationManager</span><span class="params">()</span></span>;
+}
+</code></pre>
+<p>生成的代码：</p>
+<pre><code class="java"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">DaggerApplicationComponent</span> <span class="keyword">implements</span> <span class="title">ApplicationComponent</span> </span>{
+  <span class="keyword">private</span> Provider&lt;LocationManager&gt; provideLocationManagerProvider;
+
+  <span class="keyword">private</span> MembersInjector&lt;DemoApplication&gt; demoApplicationMembersInjector;
+
+  <span class="keyword">private</span> Provider&lt;Application&gt; applicationProvider;
+
+  <span class="function"><span class="keyword">private</span> <span class="title">DaggerApplicationComponent</span><span class="params">(Builder builder)</span> </span>{
+    <span class="keyword">assert</span> builder != <span class="keyword">null</span>;
+    initialize(builder);
+  }
+
+  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Builder <span class="title">builder</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> <span class="keyword">new</span> Builder();
+  }
+
+  <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)
+  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(<span class="keyword">final</span> Builder builder)</span> </span>{
+
+    <span class="keyword">this</span>.provideLocationManagerProvider =
+        DoubleCheck.provider(
+            DemoApplicationModule_ProvideLocationManagerFactory.create(
+                builder.demoApplicationModule));
+
+    <span class="keyword">this</span>.demoApplicationMembersInjector =
+        DemoApplication_MembersInjector.create(provideLocationManagerProvider);
+
+    <span class="keyword">this</span>.applicationProvider =
+        DoubleCheck.provider(
+            DemoApplicationModule_ApplicationFactory.create(builder.demoApplicationModule));
+  }
+
+  <span class="meta">@Override</span>
+  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">inject</span><span class="params">(DemoApplication application)</span> </span>{
+    demoApplicationMembersInjector.injectMembers(application);
+  }
+
+  <span class="meta">@Override</span>
+  <span class="function"><span class="keyword">public</span> Application <span class="title">application</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> applicationProvider.get();
+  }
+
+  <span class="meta">@Override</span>
+  <span class="function"><span class="keyword">public</span> LocationManager <span class="title">locationManager</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> provideLocationManagerProvider.get();
+  }
+
+  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Builder</span> </span>{
+    <span class="keyword">private</span> DemoApplicationModule demoApplicationModule;
+
+    <span class="function"><span class="keyword">private</span> <span class="title">Builder</span><span class="params">()</span> </span>{}
+
+    <span class="function"><span class="keyword">public</span> ApplicationComponent <span class="title">build</span><span class="params">()</span> </span>{
+      <span class="keyword">if</span> (demoApplicationModule == <span class="keyword">null</span>) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(
+            DemoApplicationModule.class.getCanonicalName() + <span class="string">" must be set"</span>);
+      }
+      <span class="keyword">return</span> <span class="keyword">new</span> DaggerApplicationComponent(<span class="keyword">this</span>);
+    }
+
+    <span class="function"><span class="keyword">public</span> Builder <span class="title">demoApplicationModule</span><span class="params">(DemoApplicationModule demoApplicationModule)</span> </span>{
+      <span class="keyword">this</span>.demoApplicationModule = Preconditions.checkNotNull(demoApplicationModule);
+      <span class="keyword">return</span> <span class="keyword">this</span>;
+    }
+  }
+}
+</code></pre>
+<p>DaggerApplicationComponent内部生成了Builder类，通过Builder的build()可以得到DaggerApplicationComponent对象，但必须先传入DemoApplicationModule对象，这是当然的，Component本来就只是一个桥梁而已，别忘了之前定义ApplicationComponent的注解@Component(modules = DemoApplicationModule.class)，这样就好理解了吧。</p>
+<p>调用了Builder的build()后，会走DaggerApplicationComponent的构造器方法，这里调用了initialize(builder), initialize(builder)又干了什么呢？这里初始化了待注入的依赖对象locationManager和application，通过之前的工厂类的create()方法得到工厂类对象，工厂类是实现Factory<t>接口的，Factory<t>又是继承Provider<t>的，所以这里相当于拿到的是封装了不同对象的Provider实例， DoubleCheck.provider(provider)又干了什么呢？DoubleCheck也实现了Provider<t>，它的provider(provider)方法实际上返回了本身实例，实际上也是一个Provider<t>,但为什么要这么做呢?看代码：</t></t></t></t></t></p>
+<pre><code class="java">
+<span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">Provider&lt;T&gt; <span class="title">provider</span><span class="params">(Provider&lt;T&gt; delegate)</span> </span>{
+...    
+    <span class="keyword">return</span> <span class="keyword">new</span> DoubleCheck&lt;T&gt;(delegate);
+}
+
+<span class="function"><span class="keyword">private</span> <span class="title">DoubleCheck</span><span class="params">(Provider&lt;T&gt; provider)</span> </span>{
+    <span class="keyword">assert</span> provider != <span class="keyword">null</span>;
+    <span class="keyword">this</span>.provider = provider;
+}
+
+<span class="function"><span class="keyword">public</span> T <span class="title">get</span><span class="params">()</span> </span>{
+    Object result = instance;
+    <span class="keyword">if</span> (result == UNINITIALIZED) {
+      <span class="keyword">synchronized</span> (<span class="keyword">this</span>) {
+        result = instance;
+        <span class="keyword">if</span> (result == UNINITIALIZED) {
+          instance = result = provider.get();
+           provider = <span class="keyword">null</span>;
+        }
+      }
+    }
+    <span class="keyword">return</span> (T) result;
+  }
+</code></pre>
+<p>provider(Provider<t> delegate)调用了构造器方法，构造器中将传入的Provider对象保存起来了，调用get()时会调用保存的provider对象的get()，实际上就是调用工厂方法的get()拿到对象，这样就实现了懒加载，在需要的时候调用get()，这时才会调用工厂方法的get()，因为真正创建对象的细节是封装在工厂类的get()中的，同时，它会将得到的对象缓存起来，这样下次调用就不需要再调用工厂类创建对象了。</t></p>
+<p>再看注入的地方：</p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplication</span> <span class="keyword">extends</span> <span class="title">Application</span> </span>{
+  <span class="keyword">private</span> ApplicationComponent applicationComponent;
+
+  <span class="meta">@Inject</span> LocationManager locationManager;    
+  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>{
+    <span class="keyword">super</span>.onCreate();
+    applicationComponent = DaggerApplicationComponent.builder()
+        .demoApplicationModule(<span class="keyword">new</span> DemoApplicationModule(<span class="keyword">this</span>))
+        .build();
+  }
+
+  <span class="function"><span class="keyword">public</span> ApplicationComponent <span class="title">component</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> applicationComponent;
+  }
+}
+</code></pre>
+<p>这里需要注入locationMnager，我们再看根据@Inject生成的代码：</p>
+<pre><code class="java"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplication_MembersInjector</span> <span class="keyword">implements</span> <span class="title">MembersInjector</span>&lt;<span class="title">DemoApplication</span>&gt; </span>{
+  <span class="keyword">private</span> <span class="keyword">final</span> Provider&lt;LocationManager&gt; locationManagerProvider;
+
+  <span class="function"><span class="keyword">public</span> <span class="title">DemoApplication_MembersInjector</span><span class="params">(Provider&lt;LocationManager&gt; locationManagerProvider)</span> </span>{
+    <span class="keyword">assert</span> locationManagerProvider != <span class="keyword">null</span>;
+    <span class="keyword">this</span>.locationManagerProvider = locationManagerProvider;
+  }
+
+  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> MembersInjector&lt;DemoApplication&gt; <span class="title">create</span><span class="params">(
+      Provider&lt;LocationManager&gt; locationManagerProvider)</span> </span>{
+    <span class="keyword">return</span> <span class="keyword">new</span> DemoApplication_MembersInjector(locationManagerProvider);
+  }
+
+  <span class="meta">@Override</span>
+  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">injectMembers</span><span class="params">(DemoApplication instance)</span> </span>{
+    <span class="keyword">if</span> (instance == <span class="keyword">null</span>) {
+      <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">"Cannot inject members into a null reference"</span>);
+    }
+    instance.locationManager = locationManagerProvider.get();
+  }
+
+  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">injectLocationManager</span><span class="params">(
+      DemoApplication instance, Provider&lt;LocationManager&gt; locationManagerProvider)</span> </span>{
+    instance.locationManager = locationManagerProvider.get();
+  }
+}
+</code></pre>
+<p>injectMembers(DemoApplication instance)    方法将locationManager对象赋值给DemoApplication对象，DemoApplication和locationManagerProvider从哪里来呢？上面DaggerApplicationComponent的initialize(builder)中实例化了DemoApplication_MembersInjector并传入需要的参数。</p>
+<p>DaggerApplicationComponent实现了ApplicationComponent,当然要复写其方法。<br>在DemoApplication中调用DaggerApplicationComponent的inject()方法，然后就会调用DemoApplication_MembersInjector的injectMembers(DemoApplication instance)，就实现了依赖注入。</p>
+<p>那DaggerApplicationComponent的其他方法呢？比如locationManager(),application()等呢，这些方法是在定义在ApplicationComponent中的，子component是共享父component中的绑定的，那子component怎么拿到父component中的依赖对象呢？</p>
+<pre><code class="java"><span class="keyword">this</span>.locationManagerProvider =
+       <span class="keyword">new</span> Factory&lt;LocationManager&gt;() {
+         <span class="keyword">private</span> <span class="keyword">final</span> ApplicationComponent applicationComponent = builder.applicationComponent;
+
+         <span class="meta">@Override</span>
+         <span class="function"><span class="keyword">public</span> LocationManager <span class="title">get</span><span class="params">()</span> </span>{
+           <span class="keyword">return</span> Preconditions.checkNotNull(
+               applicationComponent.locationManager(),
+               <span class="string">"Cannot return null from a non-@Nullable component method"</span>);
+         }
+       };
+</code></pre>
+<p>在DaggerHomeComponent的initialize(final Builder builder)中通过applicationComponent.locationManager，子component就也有locationManager实例了。</p>
+<p>Activity的依赖注入分析也是类似的，通过源码，我们可以清晰的跟踪其调用流程。</p>
+<p>That’s all!希望能帮到你。    </p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/29/hexo+github打造个人博客/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Proton626">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Proton626’s Notes">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Proton626’s Notes" src="">
     </span>
   </span>
 
@@ -481,14 +920,14 @@
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
-               alt="Metal626" />
-          <p class="site-author-name" itemprop="name">Metal626</p>
+               alt="Proton626" />
+          <p class="site-author-name" itemprop="name">Proton626</p>
           <p class="site-description motion-element" itemprop="description">Learning is a gift , even when pain is your teacher.</p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -496,7 +935,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -505,7 +944,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -594,7 +1033,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Metal626</span>
+  <span class="author" itemprop="copyrightHolder">Proton626</span>
 </div>
 
 
