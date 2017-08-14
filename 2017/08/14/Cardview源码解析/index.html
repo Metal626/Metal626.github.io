@@ -1,0 +1,1026 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android,view,shadow,cardview," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="子质’s Notes" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="CardView 扩展 FrameLayout 类并让您能够显示卡片内的信息，这些信息在整个平台中拥有一致的呈现方式。CardView 小部件可拥有阴影和圆角。如果要使用阴影创建卡片，请使用 card_view:cardElevation 属性。CardView 在 Android 5.0（API 级别 21）及更高版本中使用真实高度与动态阴影，而在早期的 Android 版本中则返回编程阴影实">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CardView源码解析-View阴影">
+<meta property="og:url" content="http://yoursite.com/2017/08/14/Cardview源码解析/index.html">
+<meta property="og:site_name" content="子质’s Notes">
+<meta property="og:description" content="CardView 扩展 FrameLayout 类并让您能够显示卡片内的信息，这些信息在整个平台中拥有一致的呈现方式。CardView 小部件可拥有阴影和圆角。如果要使用阴影创建卡片，请使用 card_view:cardElevation 属性。CardView 在 Android 5.0（API 级别 21）及更高版本中使用真实高度与动态阴影，而在早期的 Android 版本中则返回编程阴影实">
+<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/1-UFEQBK-ovYrbSkv-F9v5mw.png">
+<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/overlap_false.png">
+<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/overlap_true_%E7%9C%8B%E5%9B%BE%E7%8E%8B.png">
+<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/5.0_compat_padding_false.png">
+<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/5.0_compat_padding_true.png">
+<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/compat_padding_1.png">
+<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/compat_padding_2.png">
+<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/exct_width_height.png">
+<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/exct_width_height_compat_padding_true.png">
+<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/cardview_uml.png">
+<meta property="og:updated_time" content="2017-08-14T13:12:51.431Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CardView源码解析-View阴影">
+<meta name="twitter:description" content="CardView 扩展 FrameLayout 类并让您能够显示卡片内的信息，这些信息在整个平台中拥有一致的呈现方式。CardView 小部件可拥有阴影和圆角。如果要使用阴影创建卡片，请使用 card_view:cardElevation 属性。CardView 在 Android 5.0（API 级别 21）及更高版本中使用真实高度与动态阴影，而在早期的 Android 版本中则返回编程阴影实">
+<meta name="twitter:image" content="http://ohe81rx2w.bkt.clouddn.com/1-UFEQBK-ovYrbSkv-F9v5mw.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/14/Cardview源码解析/"/>
+
+
+
+
+
+  <title> CardView源码解析-View阴影 | 子质’s Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?6f9256e19b7a628fa2646bc35feb03de";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">子质’s Notes</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/14/Cardview源码解析/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="子质">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="子质’s Notes">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="子质’s Notes" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                CardView源码解析-View阴影
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-14T21:13:09+08:00">
+                2017-08-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/随心记/" itemprop="url" rel="index">
+                    <span itemprop="name">随心记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/08/14/Cardview源码解析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/14/Cardview源码解析/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/08/14/Cardview源码解析/" class="leancloud_visitors" data-flag-title="CardView源码解析-View阴影">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>CardView 扩展 FrameLayout 类并让您能够显示卡片内的信息，这些信息在整个平台中拥有一致的呈现方式。CardView 小部件可拥有阴影和圆角。<br><br><br>如果要使用阴影创建卡片，请使用 card_view:cardElevation 属性。CardView 在 Android 5.0（API 级别 21）及更高版本中使用真实高度与动态阴影，而在早期的 Android 版本中则返回编程阴影实现</p>
+</blockquote>
+<p><img src="http://ohe81rx2w.bkt.clouddn.com/1-UFEQBK-ovYrbSkv-F9v5mw.png" alt=""></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span>&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">android.support.v7.widget.CardView</span></span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_margin</span>=<span class="string">"16dp"</span>&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">            <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">            <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</div><div class="line">            <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line">                <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">                <span class="attr">android:layout_height</span>=<span class="string">"160dp"</span></div><div class="line">                <span class="attr">android:scaleType</span>=<span class="string">"centerCrop"</span></div><div class="line">                <span class="attr">android:src</span>=<span class="string">"@drawable/balon"</span> /&gt;</div><div class="line">            <span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">                <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">                <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">                <span class="attr">android:orientation</span>=<span class="string">"vertical"</span></div><div class="line">                <span class="attr">android:padding</span>=<span class="string">"16dp"</span>&gt;</div><div class="line">                <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">                    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">                    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">                    <span class="attr">android:layout_marginBottom</span>=<span class="string">"8dp"</span></div><div class="line">                    <span class="attr">android:text</span>=<span class="string">"@string/card_title"</span></div><div class="line">                    <span class="attr">android:textColor</span>=<span class="string">"#000"</span></div><div class="line">                    <span class="attr">android:textSize</span>=<span class="string">"18sp"</span> /&gt;</div><div class="line">                <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">                    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">                    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">                    <span class="attr">android:text</span>=<span class="string">"@string/card_content"</span></div><div class="line">                    <span class="attr">android:textColor</span>=<span class="string">"#555"</span> /&gt;</div><div class="line">            <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">                <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">                <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span>&gt;</div><div class="line">                <span class="tag">&lt;<span class="name">Button</span></span></div><div class="line">                    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">                    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">                    <span class="attr">android:text</span>=<span class="string">"@string/action_share"</span></div><div class="line">                    <span class="attr">android:theme</span>=<span class="string">"@style/PrimaryFlatButton"</span> /&gt;</div><div class="line">                <span class="tag">&lt;<span class="name">Button</span></span></div><div class="line">                    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">                    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">                    <span class="attr">android:text</span>=<span class="string">"@string/action_explore"</span></div><div class="line">                    <span class="attr">android:theme</span>=<span class="string">"@style/PrimaryFlatButton"</span> /&gt;</div><div class="line">            <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">android.support.v7.widget.CardView</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="CardView的常用属性："><a href="#CardView的常用属性：" class="headerlink" title="CardView的常用属性："></a>CardView的常用属性：</h2><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>card_view:cardElevation</td>
+<td>阴影的大小</td>
+</tr>
+<tr>
+<td>card_view:cardMaxElevation</td>
+<td>阴影最大高度</td>
+</tr>
+<tr>
+<td>card_view:cardBackgroundColor</td>
+<td>卡片的背景色</td>
+</tr>
+<tr>
+<td>card_view:cardCornerRadius</td>
+<td>卡片的圆角大小</td>
+</tr>
+<tr>
+<td>card_view:contentPadding</td>
+<td>卡片内容于边距的间隔</td>
+</tr>
+<tr>
+<td>card_view:contentPaddingBottom</td>
+<td>卡片内容与底部的边距</td>
+</tr>
+<tr>
+<td>card_view:contentPaddingTop</td>
+<td>卡片内容与顶部的边距</td>
+</tr>
+<tr>
+<td>card_view:contentPaddingLeft</td>
+<td>卡片内容与左边的边距</td>
+</tr>
+<tr>
+<td>card_view:contentPaddingRight</td>
+<td>卡片内容与右边的边距</td>
+</tr>
+<tr>
+<td>card_view:contentPaddingStart</td>
+<td>卡片内容于边距的间隔起始</td>
+</tr>
+<tr>
+<td>card_view:contentPaddingEnd</td>
+<td>卡片内容于边距的间隔终止</td>
+</tr>
+<tr>
+<td>card_view:cardUseCompatPadding</td>
+<td>设置内边距，android5.0(代号：Lollipop，API level 21)及以上的版本和之前的版本仍旧具有一样的计算方式</td>
+</tr>
+<tr>
+<td>card_view:cardPreventConrerOverlap</td>
+<td>在android5.0之前的版本中添加内边距，这个属性为了防止内容和边角的重叠</td>
+</tr>
+</tbody>
+</table>
+<p>CardView的使用比较简单，网上也有相当多的文章可以参考，本文在此不做过多的阐述。<br>CardView的兼容性考虑，在不同版本的系统上实现有差异，大家在使用时要考虑到这一点，我们先看几个小Demo。</p>
+<h3 id="cardPreventConrerOverlap属性："><a href="#cardPreventConrerOverlap属性：" class="headerlink" title="cardPreventConrerOverlap属性："></a>cardPreventConrerOverlap属性：</h3><p>Lollipop以下版本，cardPreventConrerOverlap = false,不设置contentPadding,如图，内容和圆角重叠。</p>
+<div align="center"><br><img src="http://ohe81rx2w.bkt.clouddn.com/overlap_false.png" alt=""><br></div>
+
+<p>Lollipop以下版本，cardPreventConrerOverlap = true,不设置contentPadding,如图，添加了额外padding防止内容和圆角为重叠。</p>
+<div align="center"><br><img src="http://ohe81rx2w.bkt.clouddn.com/overlap_true_%E7%9C%8B%E5%9B%BE%E7%8E%8B.png" alt=""><br></div>
+
+<p><br></p>
+<h3 id="cardUseCompatPadding属性："><a href="#cardUseCompatPadding属性：" class="headerlink" title="cardUseCompatPadding属性："></a>cardUseCompatPadding属性：</h3><p>为了展示出效果，我将elevation设置的比较大，测试设备nexus4 768x1280。<br>下图左侧为Lollipop以下版本，右侧为Lollipop版本，cardUseCompatPadding = false。</p>
+<div align="center"><br><img src="http://ohe81rx2w.bkt.clouddn.com/5.0_compat_padding_false.png" alt=""><br></div>
+
+<p><br><br>下图左侧为Lollipop以下版本，右侧为Lollipop版本，cardUseCompatPadding = true。<br><br></p>
+<div align="center"><br><img src="http://ohe81rx2w.bkt.clouddn.com/5.0_compat_padding_true.png" alt=""><br></div>
+
+<p>可见，如果想让Lollipop版本及以上的内边距和Lollipop版本以下相同，就需要把该属性设置为true.。</p>
+<p>但该属性的影响没你想的那么简单。<br>我们再往布局中添加一个控件，cardUseCompatPadding= false。   </p>
+<div align="center"><br><img src="http://ohe81rx2w.bkt.clouddn.com/compat_padding_1.png" alt=""><br></div><br> <br><br>这差距够明显吧！那我们怎样保证各个版本的显示效果相同呢？设置cardUseCompatPadding=true。<br><br><br><br><div align="center"><br><img src="http://ohe81rx2w.bkt.clouddn.com/compat_padding_2.png" alt=""><br></div><br><br><br>这下就ok了，其实导致这种问题出现的根本原因是view的阴影效果在不同版本实现方式存在差异，下文分析源码时会讲到。<br><br>这个问题还有一种解决方式。不设置cardUseCompatPadding属性为true,在Lollipop版本以下对应的dimens.xml中填写cardview的margin = 0dp，在Lollipop版本下（即values-21文件夹）的dimens.xml设置需要的值。<br><br>如果你想给CardView指定明确的宽高呢？<br><br><div align="center"><br><img src="http://ohe81rx2w.bkt.clouddn.com/exct_width_height.png" alt=""><br></div>
+
+<p>什么内容区域大小居然不一样！这种问题要被测试美眉发现岂不是太没面子，怎么解决呢？设置cardUseCompatPadding属性为true。</p>
+<div align="center"><br><img src="http://ohe81rx2w.bkt.clouddn.com/exct_width_height_compat_padding_true.png" alt=""><br></div>
+
+<p>同理这这个问题也可以通过不同系统版本dimens.xml来适配。</p>
+<h3 id="总结一下"><a href="#总结一下" class="headerlink" title="总结一下"></a>总结一下</h3><ul>
+<li><p>CardView通过elevation属性来设置view的阴影，但Lollipop之前的版本是模拟实现，即实现方式不同。</p>
+</li>
+<li><p>因为裁剪比较耗费性能，所以Lollipop之前的版本不对内部View进行裁剪，通过添加padding的方式避免内部View和圆角重叠。使用setPreventCornerOverlap方法或对应xml card_view:cardPreventConrerOverlap属性可更改这一行为，该属性默认为true。</p>
+</li>
+<li><p>Lollipop之前的版本，CardView和内容之间添加边距，并在该区域绘制阴影，两边的间距为maxCardElevation + (1 - cos45) <em> cornerRadius，上下的间距为maxCardElevation </em> 1.5 + (1 - cos45) * cornerRadius。</p>
+</li>
+<li><p>因为padding属性被用来做偏移绘制阴影，所以不能使用CardView的padding属性，如果想设置CardView和其子View之间的边距，可使用setContentPadding(int, int, int, int)方法或对应的xml属性。</p>
+</li>
+<li><p>如果对CardView设置了明确的尺寸，因为阴影的缘故，其内容区域在Lollipop版本和之前的版本上显示不同，你可以通过不同系统版本使用不同资源值或设置useCompatPadding属性为true的方式来避免此问题。</p>
+</li>
+<li><p>通过setCardElevation(float)以兼容的方式设置CardView的elevation,CardView会使用Lollipop下或之前版本下的elevation API，进而改变阴影的尺寸。为防止改变阴影尺寸时，view发生移动，阴影大小不会超过MaxCardElevation，如果想在CardView初始化后动态改变阴影大小，应使用setMaxCardElevation(float)方法。</p>
+</li>
+</ul>
+<h2 id="解剖源码。"><a href="#解剖源码。" class="headerlink" title="解剖源码。"></a>解剖源码。</h2><p>结构图如下：</p>
+<div align="center"><br><img src="http://ohe81rx2w.bkt.clouddn.com/cardview_uml.png" alt=""><br></div>
+
+<p>CardView内部根据不同版本系统实例化对应的CardViewImpl对象，CardViewImpl对象通过CardViewDelegate对象与CardView交互。</p>
+<p>CardView的静态代码块中根据系统版本实例化对应的实现。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> &#123;</div><div class="line">       <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= <span class="number">21</span>) &#123;</div><div class="line">           IMPL = <span class="keyword">new</span> CardViewApi21();</div><div class="line">       &#125; <span class="keyword">else</span> <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= <span class="number">17</span>) &#123;</div><div class="line">           IMPL = <span class="keyword">new</span> CardViewJellybeanMr1();</div><div class="line">       &#125; <span class="keyword">else</span> &#123;</div><div class="line">           IMPL = <span class="keyword">new</span> CardViewGingerbread();</div><div class="line">       &#125;</div><div class="line">       IMPL.initStatic();</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>这里调用了initStatic()，API21中即CardViewApi21类中是空实现，API17中实现如下（CardViewJellybeanMr1）：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initStatic</span><span class="params">()</span> </span>&#123;</div><div class="line">        RoundRectDrawableWithShadow.sRoundRectHelper</div><div class="line">                = <span class="keyword">new</span> RoundRectDrawableWithShadow.RoundRectHelper() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">drawRoundRect</span><span class="params">(Canvas canvas, RectF bounds, <span class="keyword">float</span> cornerRadius,</span></span></div><div class="line">                    Paint paint) &#123;</div><div class="line">                canvas.drawRoundRect(bounds, cornerRadius, cornerRadius, paint);</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>API17之前的版本实现如下（CardViewGingerbread）：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initStatic</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//使用7步绘制操作来绘制出圆角矩形，在API17之前的版本此种方式要比canvas.drawRoundRect快,</span></div><div class="line">        <span class="comment">//因为API 11-16使用了alpha蒙版纹理去绘制</span></div><div class="line">        RoundRectDrawableWithShadow.sRoundRectHelper =</div><div class="line">                <span class="keyword">new</span> RoundRectDrawableWithShadow.RoundRectHelper() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">drawRoundRect</span><span class="params">(Canvas canvas, RectF bounds, <span class="keyword">float</span> cornerRadius,</span></span></div><div class="line">                    Paint paint) &#123;</div><div class="line">                <span class="keyword">final</span> <span class="keyword">float</span> twoRadius = cornerRadius * <span class="number">2</span>;</div><div class="line">                <span class="keyword">final</span> <span class="keyword">float</span> innerWidth = bounds.width() - twoRadius - <span class="number">1</span>;</div><div class="line">                <span class="keyword">final</span> <span class="keyword">float</span> innerHeight = bounds.height() - twoRadius - <span class="number">1</span>;</div><div class="line">                <span class="keyword">if</span> (cornerRadius &gt;= <span class="number">1f</span>) &#123;</div><div class="line">                    <span class="comment">// increment corner radius to account for half pixels.</span></div><div class="line">                    <span class="keyword">float</span> roundedCornerRadius = cornerRadius + .<span class="number">5f</span>;</div><div class="line">                    sCornerRect.set(-roundedCornerRadius, -roundedCornerRadius, roundedCornerRadius,</div><div class="line">                            roundedCornerRadius);</div><div class="line">                    <span class="keyword">int</span> saved = canvas.save();</div><div class="line">                    canvas.translate(bounds.left + roundedCornerRadius,</div><div class="line">                            bounds.top + roundedCornerRadius);</div><div class="line">                    canvas.drawArc(sCornerRect, <span class="number">180</span>, <span class="number">90</span>, <span class="keyword">true</span>, paint);</div><div class="line">                    canvas.translate(innerWidth, <span class="number">0</span>);</div><div class="line">                    canvas.rotate(<span class="number">90</span>);</div><div class="line">                    canvas.drawArc(sCornerRect, <span class="number">180</span>, <span class="number">90</span>, <span class="keyword">true</span>, paint);</div><div class="line">                    canvas.translate(innerHeight, <span class="number">0</span>);</div><div class="line">                    canvas.rotate(<span class="number">90</span>);</div><div class="line">                    canvas.drawArc(sCornerRect, <span class="number">180</span>, <span class="number">90</span>, <span class="keyword">true</span>, paint);</div><div class="line">                    canvas.translate(innerWidth, <span class="number">0</span>);</div><div class="line">                    canvas.rotate(<span class="number">90</span>);</div><div class="line">                    canvas.drawArc(sCornerRect, <span class="number">180</span>, <span class="number">90</span>, <span class="keyword">true</span>, paint);</div><div class="line">                    canvas.restoreToCount(saved);</div><div class="line">                    <span class="comment">//绘制上下两部分</span></div><div class="line">                    canvas.drawRect(bounds.left + roundedCornerRadius - <span class="number">1f</span>, bounds.top,</div><div class="line">                            bounds.right - roundedCornerRadius + <span class="number">1f</span>,</div><div class="line">                            bounds.top + roundedCornerRadius, paint);</div><div class="line"></div><div class="line">                    canvas.drawRect(bounds.left + roundedCornerRadius - <span class="number">1f</span>,</div><div class="line">                            bounds.bottom - roundedCornerRadius,</div><div class="line">                            bounds.right - roundedCornerRadius + <span class="number">1f</span>, bounds.bottom, paint);</div><div class="line">                &#125;</div><div class="line">                <span class="comment">// 绘制中间部分</span></div><div class="line">                canvas.drawRect(bounds.left, bounds.top + cornerRadius,</div><div class="line">                        bounds.right, bounds.bottom - cornerRadius , paint);</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>API17和之前版本的阴影实现差异主要在这里，因为效率问题，API17之前的版本使用分步绘制测方式绘制圆角矩形。</p>
+<p>CardView的构造器中会调用initialize(…),该方法中主要拿到各属性，然后调用具体实现的初始化方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</div><div class="line">        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CardView, defStyleAttr,</div><div class="line">                R.style.CardView);</div><div class="line">        ColorStateList backgroundColor;</div><div class="line">        <span class="keyword">if</span> (a.hasValue(R.styleable.CardView_cardBackgroundColor)) &#123;</div><div class="line">            backgroundColor = a.getColorStateList(R.styleable.CardView_cardBackgroundColor);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="comment">// 没有设置背景则从当前主题中提取</span></div><div class="line">            <span class="keyword">final</span> TypedArray aa = getContext().obtainStyledAttributes(COLOR_BACKGROUND_ATTR);</div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> themeColorBackground = aa.getColor(<span class="number">0</span>, <span class="number">0</span>);</div><div class="line">            aa.recycle();</div><div class="line"></div><div class="line">            <span class="comment">//若主题中的colorBackground是浅色,使用cardview_light_background,否则使用cardview_dark_background</span></div><div class="line">            <span class="keyword">final</span> <span class="keyword">float</span>[] hsv = <span class="keyword">new</span> <span class="keyword">float</span>[<span class="number">3</span>];</div><div class="line">            Color.colorToHSV(themeColorBackground, hsv);</div><div class="line">            backgroundColor = ColorStateList.valueOf(hsv[<span class="number">2</span>] &gt; <span class="number">0.5f</span></div><div class="line">                    ? getResources().getColor(R.color.cardview_light_background)</div><div class="line">                    : getResources().getColor(R.color.cardview_dark_background));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">float</span> radius = a.getDimension(R.styleable.CardView_cardCornerRadius, <span class="number">0</span>);</div><div class="line">      	...</div><div class="line">        mUserSetMinHeight = a.getDimensionPixelSize(R.styleable.CardView_android_minHeight, <span class="number">0</span>);</div><div class="line">        a.recycle();</div><div class="line"></div><div class="line">        IMPL.initialize(mCardViewDelegate, context, backgroundColor, radius,</div><div class="line">                elevation, maxElevation);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>接下来我们带着问题来看源码。</p>
+<ol>
+<li>API19之前版本如何实现阴影？</li>
+<li>API19及以上版本如何实现View裁切？</li>
+<li>API19及之后版本如何实现阴影？</li>
+<li>API19之前版本cardPreventConrerOverlap属性的影响？</li>
+<li>API19及以上版本受cardUseCompatPadding属性的影响？</li>
+<li>为什么阴影在在x轴方向和y轴方向发生了位移，而不是均匀分布在view四周？</li>
+</ol>
+<h3 id="问题1：API19之前版本如何实现阴影？"><a href="#问题1：API19之前版本如何实现阴影？" class="headerlink" title="问题1：API19之前版本如何实现阴影？"></a>问题1：API19之前版本如何实现阴影？</h3><p>接下来我们先看API19之前是怎么实现阴影的(CardViewGingerbread类)。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(CardViewDelegate cardView, Context context,</span></span></div><div class="line">           ColorStateList backgroundColor, <span class="keyword">float</span> radius, <span class="keyword">float</span> elevation, <span class="keyword">float</span> maxElevation) &#123;</div><div class="line">       RoundRectDrawableWithShadow background = createBackground(context, backgroundColor, radius,</div><div class="line">               elevation, maxElevation);</div><div class="line">       background.setAddPaddingForCorners(cardView.getPreventCornerOverlap());</div><div class="line">       cardView.setCardBackground(background);</div><div class="line">       updatePadding(cardView);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>看来它的阴影是由RoundRectDrawableWithShadow类来实现的。<br>我们来看看来它的阴影是由RoundRectDrawableWithShadow类来实现的onDraw,第一次调用要走buildComponents方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mDirty) &#123;</div><div class="line">            buildComponents(getBounds());</div><div class="line">            mDirty = <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        canvas.translate(<span class="number">0</span>, mRawShadowSize / <span class="number">2</span>);</div><div class="line">        drawShadow(canvas);</div><div class="line">        canvas.translate(<span class="number">0</span>, -mRawShadowSize / <span class="number">2</span>);</div><div class="line">        sRoundRectHelper.drawRoundRect(canvas, mCardBounds, mCornerRadius, mPaint);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>buildComponents方法中，mRawMaxShadowSize其实就是maxElevation，此处确定了cardview的边界，上下左右都进行了偏移，空出来的区域是为了绘制阴影。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">buildComponents</span><span class="params">(Rect bounds)</span> </span>&#123;</div><div class="line">      <span class="comment">// Card is offset SHADOW_MULTIPLIER * maxShadowSize to account for the shadow shift.</span></div><div class="line">      <span class="comment">// We could have different top-bottom offsets to avoid extra gap above but in that case</span></div><div class="line">      <span class="comment">// center aligning Views inside the CardView would be problematic.</span></div><div class="line">      <span class="keyword">final</span> <span class="keyword">float</span> verticalOffset = mRawMaxShadowSize * SHADOW_MULTIPLIER;</div><div class="line">      mCardBounds.set(bounds.left + mRawMaxShadowSize, bounds.top+verticalOffset,</div><div class="line">              bounds.right - mRawMaxShadowSize, bounds.bottom - verticalOffset);</div><div class="line"></div><div class="line">      buildShadowCorners();</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p>buildShadowCorners方法中初始化了绘制边阴影和角阴影的path。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">buildShadowCorners</span><span class="params">()</span> </span>&#123;</div><div class="line">        RectF innerBounds = <span class="keyword">new</span> RectF(-mCornerRadius, -mCornerRadius, mCornerRadius, mCornerRadius);</div><div class="line">        RectF outerBounds = <span class="keyword">new</span> RectF(innerBounds);</div><div class="line">        outerBounds.inset(-mShadowSize, -mShadowSize);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (mCornerShadowPath == <span class="keyword">null</span>) &#123;</div><div class="line">            mCornerShadowPath = <span class="keyword">new</span> Path();</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            mCornerShadowPath.reset();</div><div class="line">        &#125;</div><div class="line">        mCornerShadowPath.setFillType(Path.FillType.EVEN_ODD);</div><div class="line">        mCornerShadowPath.moveTo(-mCornerRadius, <span class="number">0</span>);</div><div class="line">        mCornerShadowPath.rLineTo(-mShadowSize, <span class="number">0</span>);</div><div class="line">        <span class="comment">// outer arc</span></div><div class="line">        mCornerShadowPath.arcTo(outerBounds, <span class="number">180f</span>, <span class="number">90f</span>, <span class="keyword">false</span>);</div><div class="line">        <span class="comment">// inner arc</span></div><div class="line">        mCornerShadowPath.arcTo(innerBounds, <span class="number">270f</span>, -<span class="number">90f</span>, <span class="keyword">false</span>);</div><div class="line">        mCornerShadowPath.close();</div><div class="line">        <span class="keyword">float</span> startRatio = mCornerRadius / (mCornerRadius + mShadowSize);</div><div class="line">        mCornerShadowPaint.setShader(<span class="keyword">new</span> RadialGradient(<span class="number">0</span>, <span class="number">0</span>, mCornerRadius + mShadowSize,</div><div class="line">                <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;mShadowStartColor, mShadowStartColor, mShadowEndColor&#125;,</div><div class="line">                <span class="keyword">new</span> <span class="keyword">float</span>[]&#123;<span class="number">0f</span>, startRatio, <span class="number">1f</span>&#125;</div><div class="line">                , Shader.TileMode.CLAMP));</div><div class="line"></div><div class="line">        <span class="comment">// we offset the content shadowSize/2 pixels up to make it more realistic.</span></div><div class="line">        <span class="comment">// this is why edge shadow shader has some extra space</span></div><div class="line">        <span class="comment">// When drawing bottom edge shadow, we use that extra space.</span></div><div class="line">        mEdgeShadowPaint.setShader(<span class="keyword">new</span> LinearGradient(<span class="number">0</span>, -mCornerRadius + mShadowSize, <span class="number">0</span>,</div><div class="line">                -mCornerRadius - mShadowSize,</div><div class="line">                <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;mShadowStartColor, mShadowStartColor, mShadowEndColor&#125;,</div><div class="line">                <span class="keyword">new</span> <span class="keyword">float</span>[]&#123;<span class="number">0f</span>, .<span class="number">5f</span>, <span class="number">1f</span>&#125;, Shader.TileMode.CLAMP));</div><div class="line">        mEdgeShadowPaint.setAntiAlias(<span class="keyword">false</span>);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>接下来看drawShadow方法，这里基本的canvas操作。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawShadow</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">        <span class="keyword">final</span> <span class="keyword">float</span> edgeShadowTop = -mCornerRadius - mShadowSize;</div><div class="line">        <span class="keyword">final</span> <span class="keyword">float</span> inset = mCornerRadius + mInsetShadow + mRawShadowSize / <span class="number">2</span>;</div><div class="line">        <span class="keyword">final</span> <span class="keyword">boolean</span> drawHorizontalEdges = mCardBounds.width() - <span class="number">2</span> * inset &gt; <span class="number">0</span>;</div><div class="line">        <span class="keyword">final</span> <span class="keyword">boolean</span> drawVerticalEdges = mCardBounds.height() - <span class="number">2</span> * inset &gt; <span class="number">0</span>;</div><div class="line">        <span class="comment">// LT</span></div><div class="line">        <span class="keyword">int</span> saved = canvas.save();</div><div class="line">        canvas.translate(mCardBounds.left + inset, mCardBounds.top + inset);</div><div class="line">        canvas.drawPath(mCornerShadowPath, mCornerShadowPaint);</div><div class="line">        <span class="keyword">if</span> (drawHorizontalEdges) &#123;</div><div class="line">            canvas.drawRect(<span class="number">0</span>, edgeShadowTop,</div><div class="line">                    mCardBounds.width() - <span class="number">2</span> * inset, -mCornerRadius,</div><div class="line">                    mEdgeShadowPaint);</div><div class="line">        &#125;</div><div class="line">        canvas.restoreToCount(saved);</div><div class="line">        <span class="comment">// RB</span></div><div class="line">        saved = canvas.save();</div><div class="line">        canvas.translate(mCardBounds.right - inset, mCardBounds.bottom - inset);</div><div class="line">        canvas.rotate(<span class="number">180f</span>);</div><div class="line">        canvas.drawPath(mCornerShadowPath, mCornerShadowPaint);</div><div class="line">        <span class="keyword">if</span> (drawHorizontalEdges) &#123;</div><div class="line">            canvas.drawRect(<span class="number">0</span>, edgeShadowTop,</div><div class="line">                    mCardBounds.width() - <span class="number">2</span> * inset, -mCornerRadius + mShadowSize,</div><div class="line">                    mEdgeShadowPaint);</div><div class="line">        &#125;</div><div class="line">        canvas.restoreToCount(saved);</div><div class="line">        <span class="comment">// LB</span></div><div class="line">        saved = canvas.save();</div><div class="line">        canvas.translate(mCardBounds.left + inset, mCardBounds.bottom - inset);</div><div class="line">        canvas.rotate(<span class="number">270f</span>);</div><div class="line">        canvas.drawPath(mCornerShadowPath, mCornerShadowPaint);</div><div class="line">        <span class="keyword">if</span> (drawVerticalEdges) &#123;</div><div class="line">            canvas.drawRect(<span class="number">0</span>, edgeShadowTop,</div><div class="line">                    mCardBounds.height() - <span class="number">2</span> * inset, -mCornerRadius, mEdgeShadowPaint);</div><div class="line">        &#125;</div><div class="line">        canvas.restoreToCount(saved);</div><div class="line">        <span class="comment">// RT</span></div><div class="line">        saved = canvas.save();</div><div class="line">        canvas.translate(mCardBounds.right - inset, mCardBounds.top + inset);</div><div class="line">        canvas.rotate(<span class="number">90f</span>);</div><div class="line">        canvas.drawPath(mCornerShadowPath, mCornerShadowPaint);</div><div class="line">        <span class="keyword">if</span> (drawVerticalEdges) &#123;</div><div class="line">            canvas.drawRect(<span class="number">0</span>, edgeShadowTop,</div><div class="line">                    mCardBounds.height() - <span class="number">2</span> * inset, -mCornerRadius, mEdgeShadowPaint);</div><div class="line">        &#125;</div><div class="line">        canvas.restoreToCount(saved);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>可见API19之前阴影的实现是由canvas+path+RadialGradient绘制角阴影,canvas+path+LinearGradient绘制边阴影。</p>
+<h3 id="问题2：API19及以上版本如何实现View裁切？"><a href="#问题2：API19及以上版本如何实现View裁切？" class="headerlink" title="问题2：API19及以上版本如何实现View裁切？"></a>问题2：API19及以上版本如何实现View裁切？</h3><p>进入CardViewApi21类，<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(CardViewDelegate cardView, Context context,</span></span></div><div class="line">                           ColorStateList backgroundColor, <span class="keyword">float</span> radius, <span class="keyword">float</span> elevation, <span class="keyword">float</span> maxElevation) &#123;</div><div class="line">        <span class="keyword">final</span> RoundRectDrawable background = <span class="keyword">new</span> RoundRectDrawable(backgroundColor, radius);</div><div class="line">        cardView.setCardBackground(background);</div><div class="line"></div><div class="line">        View view = cardView.getCardView();</div><div class="line">        view.setClipToOutline(<span class="keyword">true</span>);</div><div class="line">        view.setElevation(elevation);</div><div class="line">        setMaxElevation(cardView, maxElevation);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>这里实例化了RoundRectDrawable作为cardview的背景。RoundRectDrawable是用来绘制背景圆角矩形，<br> cardView.getCardView()拿到了CardView对象，前面我们说了CardView是继承自FrameLayout的，所以CardView即是ViewGroup也是View,view.setClipToOutline(true)是什么意思呢？</p>
+<p><strong>android5.0之后允许自定义视图阴影与轮廓</strong><br>视图的背景可绘制对象的边界将决定其阴影的默认形状。轮廓代表图形对象的外形并定义触摸反馈的波纹区域。</p>
+<p>下面举一个以背景可绘制对象定义的视图示例：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/myview"</span></div><div class="line">    <span class="attr">...</span></div><div class="line">    <span class="attr">android:elevation</span>=<span class="string">"2dp"</span></div><div class="line">    <span class="attr">android:background</span>=<span class="string">"@drawable/myrect"</span> /&gt;</div></pre></td></tr></table></figure></p>
+<p>背景可绘制对象被定义为一个拥有圆角的矩形：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- res/drawable/myrect.xml --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">shape</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">       <span class="attr">android:shape</span>=<span class="string">"rectangle"</span>&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">solid</span> <span class="attr">android:color</span>=<span class="string">"#42000000"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">corners</span> <span class="attr">android:radius</span>=<span class="string">"5dp"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">shape</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>视图将投射一个带有圆角的阴影，因为背景可绘制对象将定义视图的轮廓。 如果提供一个自定义轮廓，则此轮廓将替换视图阴影的默认形状。</p>
+<p>如果要为代码中的视图定义自定义轮廓：<br>扩展 ViewOutlineProvider 类别。<br>替代 getOutline() 方法。<br>利用 View.setOutlineProvider() 方法向您的视图指定新的轮廓提供程序。<br>您可使用 Outline 类别中的方法创建带有圆角的椭圆形和矩形轮廓。视图的默认轮廓提供程序将从视图背景取得轮廓。 如果要防止视图投射阴影，请将其轮廓提供程序设置为 null。</p>
+<p><strong>裁剪视图</strong><br>裁剪视图让您能够轻松改变视图形状。您可以裁剪视图，以便与其他设计元素保持一致，也可以根据用户输入改变视图形状。您可使用 View.setClipToOutline() 方法或 android:clipToOutline 属性将视图裁剪至其轮廓区域。 由 Outline.canClip() 方法所决定，仅有矩形、圆形和圆角矩形轮廓支持裁剪。</p>
+<p>如果要将视图裁剪至可绘制对象的形状，请将可绘制对象设置为视图背景（如上所示）并调用 View.setClipToOutline() 方法。</p>
+<h3 id="问题3：-API19及之后版本如何实现阴影？"><a href="#问题3：-API19及之后版本如何实现阴影？" class="headerlink" title="问题3： API19及之后版本如何实现阴影？"></a>问题3： API19及之后版本如何实现阴影？</h3><p>CardViewApi21的initialize方法中调用了view.setElevation(elevation),<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setElevation</span><span class="params">(<span class="keyword">float</span> elevation)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (elevation != getElevation()) &#123;</div><div class="line">            invalidateViewProperty(<span class="keyword">true</span>, <span class="keyword">false</span>);</div><div class="line">            mRenderNode.setElevation(elevation);</div><div class="line">            invalidateViewProperty(<span class="keyword">false</span>, <span class="keyword">true</span>);</div><div class="line"></div><div class="line">            invalidateParentIfNeededAndWasQuickRejected();</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>再看mRenderNode.setElevation(elevation);<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">	 public boolean setElevation(float lift) &#123;</div><div class="line">        return nSetElevation(mNativeRenderNode, lift);</div><div class="line">    &#125;</div><div class="line">```	</div><div class="line">nSetElevation(mNativeRenderNode, lift)是个native方法，由此可见android5.0开始所有的view都可以显示阴影，而且是根据elevation属性直接有native方法来实现。</div><div class="line"></div><div class="line">android5.0开始因为加入了Material Design,Material Design 为 UI 元素引入高度，为View加上了Z属性。</div><div class="line"></div><div class="line">由 Z 属性所表示的视图高度将决定其阴影的视觉外观：拥有较高 Z 值的视图将投射更大且更柔和的阴影。 拥有较高 Z 值的视图将挡住拥有较低 Z 值的视图；不过视图的 Z 值并不影响视图的大小。</div><div class="line"></div><div class="line">视图的 Z 值包含两个组件：</div><div class="line"></div><div class="line">高度：静态组件。</div><div class="line">转换：用于动画的动态组件。</div><div class="line">Z = elevation + translationZ</div><div class="line"></div><div class="line">所以影响View阴影的因素有两个elevation和translationZ.</div><div class="line">在 Material Design Guidelines 中有建议卡片、按钮这类元素触摸时应当有一个浮起的效果，也就是增大 Z 轴位移,我们怎么实现这个效果呢？</div><div class="line">&lt;div align=center&gt;</div><div class="line">&lt;img src="http://ohe81rx2w.bkt.clouddn.com/1445743952107919.gif"  alt=""/&gt;</div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">只需要借助 Lollipop 的一个新属性 android:stateListAnimator，创建一个 TranslationZ 的变换动画放在 /res/anim,自己取一个名（如 touch_raise.xml），加入以下内容：</div><div class="line">```xml</div><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line">&lt;selector xmlns:android="http://schemas.android.com/apk/res/android"&gt;</div><div class="line">	&lt;item android:state_enabled="true" android:state_pressed="true"&gt;</div><div class="line">		&lt;objectAnimator</div><div class="line">		android:duration="@android:integer/config_shortAnimTime"</div><div class="line">		android:propertyName="translationZ"</div><div class="line">		android:valueTo="@dimen/touch_raise"</div><div class="line">		android:valueType="floatType" /&gt;</div><div class="line">	&lt;/item&gt;</div><div class="line">	&lt;item&gt;</div><div class="line">		&lt;objectAnimator</div><div class="line">		android:duration="@android:integer/config_shortAnimTime"</div><div class="line">		android:propertyName="translationZ"</div><div class="line">		android:valueTo="0dp"</div><div class="line">		android:valueType="floatType" /&gt;</div><div class="line">	&lt;/item&gt;</div><div class="line">&lt;/selector&gt;</div></pre></td></tr></table></figure></p>
+<p>然后为你需要添加效果的 CardView（其他 View 同理）所在的 Layout XML 复制多一份到 /res/layout-v21，然后在新的那份 XML 的 CardView 中加入属性 android:stateListAnimator=”@anim/touch_raise”。这样，你的卡片按住时就会有浮起（阴影加深）的效果了。<br>至于波纹效果只需要给CardView加上android:foreground=”?attr/selectableItemBackground” 属性即可。</p>
+<h3 id="问题4：API19之前版本cardPreventConrerOverlap属性的影响？"><a href="#问题4：API19之前版本cardPreventConrerOverlap属性的影响？" class="headerlink" title="问题4：API19之前版本cardPreventConrerOverlap属性的影响？"></a>问题4：API19之前版本cardPreventConrerOverlap属性的影响？</h3><p>CardView的setPreventCornerOverlap方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPreventCornerOverlap</span><span class="params">(<span class="keyword">boolean</span> preventCornerOverlap)</span> </span>&#123;</div><div class="line">      <span class="keyword">if</span> (preventCornerOverlap != mPreventCornerOverlap) &#123;</div><div class="line">          mPreventCornerOverlap = preventCornerOverlap;</div><div class="line">          IMPL.onPreventCornerOverlapChanged(mCardViewDelegate);</div><div class="line">      &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p>然后看CardViewGingerbread的onPreventCornerOverlapChanged方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPreventCornerOverlapChanged</span><span class="params">(CardViewDelegate cardView)</span> </span>&#123;</div><div class="line">       getShadowBackground(cardView).setAddPaddingForCorners(cardView.getPreventCornerOverlap());</div><div class="line">       updatePadding(cardView);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>一路跟踪下来，发现关键点在RoundRectDrawableWithShadow中，addPaddingForCorners即为传过来的preventCornerOverlap，当preventCornerOverlap为true时，内边距增加了(1 - COS_45) * cornerRadius)，这样CardView的子View就不会和圆角重叠了。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">float</span> <span class="title">calculateVerticalPadding</span><span class="params">(<span class="keyword">float</span> maxShadowSize, <span class="keyword">float</span> cornerRadius,</span></span></div><div class="line">                                          <span class="keyword">boolean</span> addPaddingForCorners) &#123;</div><div class="line">        <span class="keyword">if</span> (addPaddingForCorners) &#123;</div><div class="line">            <span class="keyword">return</span> (<span class="keyword">float</span>) (maxShadowSize * SHADOW_MULTIPLIER + (<span class="number">1</span> - COS_45) * cornerRadius);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> maxShadowSize * SHADOW_MULTIPLIER;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<h3 id="问题5-API19及以上版本受cardUseCompatPadding属性的影响？"><a href="#问题5-API19及以上版本受cardUseCompatPadding属性的影响？" class="headerlink" title="问题5  API19及以上版本受cardUseCompatPadding属性的影响？"></a>问题5  API19及以上版本受cardUseCompatPadding属性的影响？</h3><p>CardView的setUseCompatPadding方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUseCompatPadding</span><span class="params">(<span class="keyword">boolean</span> useCompatPadding)</span> </span>&#123;</div><div class="line">      <span class="keyword">if</span> (mCompatPadding != useCompatPadding) &#123;</div><div class="line">          mCompatPadding = useCompatPadding;</div><div class="line">          IMPL.onCompatPaddingChanged(mCardViewDelegate);</div><div class="line">      &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p>进入CardViewApi21。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCompatPaddingChanged</span><span class="params">(CardViewDelegate cardView)</span> </span>&#123;</div><div class="line">       setMaxElevation(cardView, getMaxElevation(cardView));</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>最后跟踪到RoundRectDrawable,这里的mInsetForPadding就是cardUseCompatPadding属性的值，当cardUseCompatPadding属性为true时，会设置内边距，calculateVerticalPadding和calculateHorizontalPadding方法是RoundRectDrawableWithShadow的静态方法，如此5.0和之前版本就具有相同的内边距计算方式了。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">updateBounds</span><span class="params">(Rect bounds)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (bounds == <span class="keyword">null</span>) &#123;</div><div class="line">            bounds = getBounds();</div><div class="line">        &#125;</div><div class="line">        mBoundsF.set(bounds.left, bounds.top, bounds.right, bounds.bottom);</div><div class="line">        mBoundsI.set(bounds);</div><div class="line">        <span class="keyword">if</span> (mInsetForPadding) &#123;</div><div class="line">            <span class="keyword">float</span> vInset = calculateVerticalPadding(mPadding, mRadius, mInsetForRadius);</div><div class="line">            <span class="keyword">float</span> hInset = calculateHorizontalPadding(mPadding, mRadius, mInsetForRadius);</div><div class="line">            mBoundsI.inset((<span class="keyword">int</span>) Math.ceil(hInset), (<span class="keyword">int</span>) Math.ceil(vInset));</div><div class="line">            <span class="comment">// to make sure they have same bounds.</span></div><div class="line">            mBoundsF.set(mBoundsI);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>在CardViewApi21的updatePadding方法也可以看到，如果不设置cardUseCompatPadding,其阴影内边距为0，这也就解释了前文中的现象。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updatePadding</span><span class="params">(CardViewDelegate cardView)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (!cardView.getUseCompatPadding()) &#123;</div><div class="line">            cardView.setShadowPadding(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">float</span> elevation = getMaxElevation(cardView);</div><div class="line">        <span class="keyword">final</span> <span class="keyword">float</span> radius = getRadius(cardView);</div><div class="line">        <span class="keyword">int</span> hPadding = (<span class="keyword">int</span>) Math.ceil(RoundRectDrawableWithShadow</div><div class="line">                .calculateHorizontalPadding(elevation, radius, cardView.getPreventCornerOverlap()));</div><div class="line">        <span class="keyword">int</span> vPadding = (<span class="keyword">int</span>) Math.ceil(RoundRectDrawableWithShadow</div><div class="line">                .calculateVerticalPadding(elevation, radius, cardView.getPreventCornerOverlap()));</div><div class="line">        cardView.setShadowPadding(hPadding, vPadding, hPadding, vPadding);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<h3 id="问题6-为什么阴影在在x轴方向和y轴方向发生了位移，而不是均匀分布在view四周？"><a href="#问题6-为什么阴影在在x轴方向和y轴方向发生了位移，而不是均匀分布在view四周？" class="headerlink" title="问题6  为什么阴影在在x轴方向和y轴方向发生了位移，而不是均匀分布在view四周？"></a>问题6  为什么阴影在在x轴方向和y轴方向发生了位移，而不是均匀分布在view四周？</h3><p>在RoundRectDrawableWithShadow的draw方法中，我们看到，在绘制阴影前，画布向y轴正方向进行了位移，这就使得阴影的方向发生了变化。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">       <span class="keyword">if</span> (mDirty) &#123;</div><div class="line">           buildComponents(getBounds());</div><div class="line">           mDirty = <span class="keyword">false</span>;</div><div class="line">       &#125;</div><div class="line">       canvas.translate(<span class="number">0</span>, mRawShadowSize / <span class="number">2</span>);</div><div class="line">       drawShadow(canvas);</div><div class="line">       canvas.translate(<span class="number">0</span>, -mRawShadowSize / <span class="number">2</span>);</div><div class="line">       sRoundRectHelper.drawRoundRect(canvas, mCardBounds, mCornerRadius, mPaint);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>如果项目的设计符合Material Design，那最好，如果设计有一天让你实现四周带相同尺寸阴影的效果呢？我们也知道怎么做了吧！<br>这里我把实现方式放到<a href="https://github.com/Proton626/FakeCardView" target="_blank" rel="external">Github</a>上了，有需要欢迎关注。</p>
+<p> 参考资料：<br><a href="https://developer.android.com/training/material/lists-cards.html#Dependencies" target="_blank" rel="external">https://developer.android.com/training/material/lists-cards.html#Dependencies</a><br><a href="http://www.jianshu.com/p/33b1d21d6ba6" target="_blank" rel="external">http://www.jianshu.com/p/33b1d21d6ba6</a><br><a href="https://developer.android.com/training/material/shadows-clipping.html#Shadows" target="_blank" rel="external">https://developer.android.com/training/material/shadows-clipping.html#Shadows</a><br><a href="https://android.jlelse.eu/android-card-view-edb905e67cd6" target="_blank" rel="external">https://android.jlelse.eu/android-card-view-edb905e67cd6</a><br><a href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/1025/3621.html" target="_blank" rel="external">http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/1025/3621.html</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.png" alt="子质 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+            <a href="/tags/view/" rel="tag"># view</a>
+          
+            <a href="/tags/shadow/" rel="tag"># shadow</a>
+          
+            <a href="/tags/cardview/" rel="tag"># cardview</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/17/aboutme/" rel="next" title="人生就像一盒巧克力：About me.">
+                <i class="fa fa-chevron-left"></i> 人生就像一盒巧克力：About me.
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/08/14/Cardview源码解析/"
+           data-title="CardView源码解析-View阴影" data-url="http://yoursite.com/2017/08/14/Cardview源码解析/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="子质" />
+          <p class="site-author-name" itemprop="name">子质</p>
+          <p class="site-description motion-element" itemprop="description">Learning is a gift , even when pain is your teacher.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/proton626" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/6069776913/profile?topnav=1&wvr=6&is_all=1" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/victheo" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/ff6ebd9b5d53/latest_articles" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CardView的常用属性："><span class="nav-number">1.</span> <span class="nav-text">CardView的常用属性：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cardPreventConrerOverlap属性："><span class="nav-number">1.1.</span> <span class="nav-text">cardPreventConrerOverlap属性：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cardUseCompatPadding属性："><span class="nav-number">1.2.</span> <span class="nav-text">cardUseCompatPadding属性：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结一下"><span class="nav-number">1.3.</span> <span class="nav-text">总结一下</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解剖源码。"><span class="nav-number">2.</span> <span class="nav-text">解剖源码。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题1：API19之前版本如何实现阴影？"><span class="nav-number">2.1.</span> <span class="nav-text">问题1：API19之前版本如何实现阴影？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题2：API19及以上版本如何实现View裁切？"><span class="nav-number">2.2.</span> <span class="nav-text">问题2：API19及以上版本如何实现View裁切？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题3：-API19及之后版本如何实现阴影？"><span class="nav-number">2.3.</span> <span class="nav-text">问题3： API19及之后版本如何实现阴影？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题4：API19之前版本cardPreventConrerOverlap属性的影响？"><span class="nav-number">2.4.</span> <span class="nav-text">问题4：API19之前版本cardPreventConrerOverlap属性的影响？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题5-API19及以上版本受cardUseCompatPadding属性的影响？"><span class="nav-number">2.5.</span> <span class="nav-text">问题5  API19及以上版本受cardUseCompatPadding属性的影响？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题6-为什么阴影在在x轴方向和y轴方向发生了位移，而不是均匀分布在view四周？"><span class="nav-number">2.6.</span> <span class="nav-text">问题6  为什么阴影在在x轴方向和y轴方向发生了位移，而不是均匀分布在view四周？</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016-11 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">子质</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"Metal626"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("Y8y93MXpcqOE9wb5HAQs6lqf-gzGzoHsz", "YdeEwg5y5si4gx2QxCN6qjPe");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>
