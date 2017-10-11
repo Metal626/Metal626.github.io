@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-08-14T13:51:26.263Z</updated>
+  <updated>2017-10-11T08:25:19.861Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,83 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Learning Node.js</title>
+    <link href="http://yoursite.com/2017/10/11/learnyounode/"/>
+    <id>http://yoursite.com/2017/10/11/learnyounode/</id>
+    <published>2017-10-11T08:03:54.618Z</published>
+    <updated>2017-10-11T08:25:19.861Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="HELLO-WORLD-Exercise-1-of-13"><a href="#HELLO-WORLD-Exercise-1-of-13" class="headerlink" title="HELLO WORLD (Exercise 1 of 13)"></a>HELLO WORLD (Exercise 1 of 13)</h3><p>  Write a program that prints the text “HELLO WORLD” to the console<br>  (stdout).<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">console.log(&quot;HELLO WORLD&quot;)</div></pre></td></tr></table></figure></p>
+<h3 id="BABY-STEPS-Exercise-2-of-13"><a href="#BABY-STEPS-Exercise-2-of-13" class="headerlink" title="BABY STEPS (Exercise 2 of 13)"></a>BABY STEPS (Exercise 2 of 13)</h3><p>  Write a program that accepts one or more numbers as command-line arguments<br>  and prints the sum of those numbers to the console (stdout). </p>
+<figure class="highlight irpf90"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">let <span class="built_in">sum</span> = <span class="number">0</span></div><div class="line"></div><div class="line">process.argv.forEach((item,<span class="built_in">index</span>) =&gt; &#123;</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">index</span>&gt;<span class="number">1</span>)</div><div class="line">        <span class="built_in">sum</span>+=<span class="keyword">Number</span>(item)</div><div class="line">&#125;);</div><div class="line">console.<span class="built_in">log</span>(<span class="built_in">sum</span>)</div></pre></td></tr></table></figure>
+<h3 id="MY-FIRST-I-O-Exercise-3-of-13"><a href="#MY-FIRST-I-O-Exercise-3-of-13" class="headerlink" title="MY FIRST I/O! (Exercise 3 of 13)"></a>MY FIRST I/O! (Exercise 3 of 13)</h3><p>  Write a program that uses a single synchronous filesystem operation to<br>  read a file and print the number of newlines (\n) it contains to the<br>  console (stdout), similar to running cat file | wc -l.</p>
+<p>  The full path to the file to read will be provided as the first<br>  command-line argument (i.e., process.argv[2]). You do not need to make<br>  your own test file.<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">  let fs = require(&quot;fs&quot;)</div><div class="line"></div><div class="line">let data = fs.readFileSync(process.argv[2],&quot;utf-8&quot;);</div><div class="line">console.log(data.split(&quot;\n&quot;).length -1);</div></pre></td></tr></table></figure></p>
+<h3 id="MY-FIRST-ASYNC-I-O-Exercise-4-of-13"><a href="#MY-FIRST-ASYNC-I-O-Exercise-4-of-13" class="headerlink" title="MY FIRST ASYNC I/O! (Exercise 4 of 13)"></a>MY FIRST ASYNC I/O! (Exercise 4 of 13)</h3><p>  Write a program that uses a single asynchronous filesystem operation to<br>  read a file and print the number of newlines it contains to the console<br>  (stdout), similar to running cat file | wc -l.</p>
+<p>  The full path to the file to read will be provided as the first<br>  command-line argument.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">var fs = require(&quot;fs&quot;)</div><div class="line"></div><div class="line">fs.readFile(process.argv[2],&quot;utf-8&quot;,(err,data) =&gt; &#123;</div><div class="line">    let newlines = 0</div><div class="line">    if(err) console.error(err)</div><div class="line">    for (let codepoint of data)&#123;</div><div class="line"></div><div class="line">        if(codepoint===&quot;\n&quot;)</div><div class="line">            newlines++;</div><div class="line">    &#125;</div><div class="line">    console.log(newlines)</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h3 id="FILTERED-LS-Exercise-5-of-13"><a href="#FILTERED-LS-Exercise-5-of-13" class="headerlink" title="FILTERED LS (Exercise 5 of 13)"></a>FILTERED LS (Exercise 5 of 13)</h3><p>  Create a program that prints a list of files in a given directory,<br>  filtered by the extension of the files. You will be provided a directory<br>  name as the first argument to your program (e.g. ‘/path/to/dir/‘) and a<br>  file extension to filter by as the second argument.</p>
+<p>  For example, if you get ‘txt’ as the second argument then you will need to<br>  filter the list to only files that end with .txt. Note that the second<br>  argument will not come prefixed with a ‘.’.</p>
+<p>  Keep in mind that the first arguments of your program are not the first<br>  values of the process.argv array, as the first two values are reserved for<br>  system info by Node.</p>
+<p>  The list of files should be printed to the console, one file per line. You<br>  must use asynchronous I/O.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">let fs = require(&quot;fs&quot;)</div><div class="line"></div><div class="line">fs.readdir(process.argv[2], (err, list) =&gt; &#123;</div><div class="line">    if (err) return console.error(err)</div><div class="line">    list.forEach((item) =&gt; &#123;</div><div class="line">        if (item.endsWith(&quot;.&quot; + process.argv[3]))</div><div class="line">            console.log(item)</div><div class="line">    &#125;)</div><div class="line"></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h3 id="MAKE-IT-MODULAR-Exercise-6-of-13"><a href="#MAKE-IT-MODULAR-Exercise-6-of-13" class="headerlink" title="MAKE IT MODULAR (Exercise 6 of 13)"></a>MAKE IT MODULAR (Exercise 6 of 13)</h3><p>  This problem is the same as the previous but introduces the concept of<br>  modules. You will need to create two files to solve this.</p>
+<p>  Create a program that prints a list of files in a given directory,<br>  filtered by the extension of the files. The first argument is the<br>  directory name and the second argument is the extension filter. Print the<br>  list of files (one file per line) to the console. You must use<br>  asynchronous I/O.</p>
+<p>  You must write a module file to do most of the work. The module must<br>  export a single function that takes three arguments: the directory name,<br>  the filename extension string and a callback function, in that order. The<br>  filename extension argument must be the same as what was passed to your<br>  program. Don’t turn it into a RegExp or prefix with “.” or do anything<br>  except pass it to your module where you can do what you need to make your<br>  filter work.</p>
+<p>  The callback function must be called using the idiomatic node(err, data)<br>  convention. This convention stipulates that unless there’s an error, the<br>  first argument passed to the callback will be null, and the second will be<br>  your data. In this exercise, the data will be your filtered list of files,<br>  as an Array. If you receive an error, e.g. from your call to<br>  fs.readdir(), the callback must be called with the error, and only the<br>  error, as the first argument.</p>
+<p>  You must not print directly to the console from your module file, only<br>  from your original program.</p>
+<p>  In the case of an error bubbling up to your original program file, simply<br>  check for it and print an informative message to the console.</p>
+<p>  These four things are the contract that your module must follow.</p>
+<ol>
+<li>Export a single function that takes exactly the arguments described.</li>
+<li>Call the callback exactly once with an error or some data as described.</li>
+<li>Don’t change anything else, like global variables or stdout.</li>
+<li>Handle all the errors that may occur and pass them to the callback.</li>
+</ol>
+<p>The benefit of having a contract is that your module can be used by anyone<br>who expects this contract. So your module could be used by anyone else who<br>does learnyounode, or the verifier, and just work.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">let fs = require(&quot;fs&quot;)</div><div class="line"></div><div class="line">module.exports =  function foo(dir,ext,callback) &#123;</div><div class="line">    fs.readdir(dir, (err, data) =&gt; &#123;</div><div class="line">        if(err)  return callback(err)</div><div class="line">        let list = []</div><div class="line">        data.forEach((item) =&gt; &#123;</div><div class="line">            if (item.endsWith(&quot;.&quot; + ext))</div><div class="line">                list.push(item)</div><div class="line">        &#125;)</div><div class="line">        callback(null,list)</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">let foo = require(&apos;./module2.js&apos;);</div><div class="line"></div><div class="line">foo(process.argv[2],process.argv[3],(err,data) =&gt;&#123;</div><div class="line">    if(err)</div><div class="line">        return console.error(err)</div><div class="line">    data.forEach((item)=&gt;&#123;</div><div class="line">        console.log(item)</div><div class="line">    &#125;)</div><div class="line"></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="HTTP-CLIENT-Exercise-7-of-13"><a href="#HTTP-CLIENT-Exercise-7-of-13" class="headerlink" title="HTTP CLIENT (Exercise 7 of 13)"></a>HTTP CLIENT (Exercise 7 of 13)</h3><p> Write a program that performs an HTTP GET request to a URL provided to you<br>  as the first command-line argument. Write the String contents of each<br>  “data” event from the response to a new line on the console (stdout).<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">  let http = require(&apos;http&apos;)</div><div class="line"></div><div class="line">http.get(process.argv[2],(res)=&gt;&#123;</div><div class="line">    res.setEncoding(&apos;utf-8&apos;)</div><div class="line">    res.on(&apos;error&apos;,(error)=&gt;&#123;</div><div class="line">        return console.error(error)</div><div class="line">    &#125;)</div><div class="line">    res.on(&quot;data&quot;,(data)=&gt;&#123;</div><div class="line">        console.log(data)</div><div class="line">    &#125;)</div><div class="line">&#125;).on(&quot;error&quot;,console.error)</div></pre></td></tr></table></figure></p>
+<h3 id="HTTP-COLLECT-Exercise-8-of-13"><a href="#HTTP-COLLECT-Exercise-8-of-13" class="headerlink" title="HTTP COLLECT (Exercise 8 of 13)"></a>HTTP COLLECT (Exercise 8 of 13)</h3><p> Write a program that performs an HTTP GET request to a URL provided to you<br>  as the first command-line argument. Collect all data from the server (not<br>  just the first “data” event) and then write two lines to the console<br>  (stdout).</p>
+<p>  The first line you write should just be an integer representing the number<br>  of characters received from the server. The second line should contain the<br>  complete String of characters sent by the server.<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">  let http = require(&quot;http&quot;)</div><div class="line">let concatstream = require(&quot;concat-stream&quot;)</div><div class="line"></div><div class="line">http.get(process.argv[2], (res) =&gt; &#123;</div><div class="line"></div><div class="line">    res.on(&quot;error&quot;, console.error)</div><div class="line">    res.on(&quot;data&quot;, (data) =&gt; &#123;</div><div class="line"></div><div class="line">    &#125;)</div><div class="line">    res.pipe(concatstream((data) =&gt; &#123;</div><div class="line">        console.log(data.toString().length)</div><div class="line">        console.log(data.toString())</div><div class="line">    &#125;))</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<h3 id="JUGGLING-ASYNC-Exercise-9-of-13"><a href="#JUGGLING-ASYNC-Exercise-9-of-13" class="headerlink" title="JUGGLING ASYNC (Exercise 9 of 13)"></a>JUGGLING ASYNC (Exercise 9 of 13)</h3><p> This problem is the same as the previous problem (HTTP COLLECT) in that<br>  you need to use http.get(). However, this time you will be provided with<br>  three URLs as the first three command-line arguments.</p>
+<p>  You must collect the complete content provided to you by each of the URLs<br>  and print it to the console (stdout). You don’t need to print out the<br>  length, just the data as a String; one line per URL. The catch is that you<br>  must print them out in the same order as the URLs are provided to you as<br>  command-line arguments.  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">let http = require(&apos;http&apos;)</div><div class="line"></div><div class="line">const list = []</div><div class="line">list.push(process.argv[2])</div><div class="line">list.push(process.argv[3])</div><div class="line">list.push(process.argv[4])</div><div class="line">const data = []</div><div class="line"></div><div class="line"></div><div class="line">function fetch(url, callback) &#123;</div><div class="line">    http.get(url, res =&gt; &#123;</div><div class="line">        let buff = []</div><div class="line">        res.on(&quot;data&quot;, data =&gt; &#123;</div><div class="line">            buff += data</div><div class="line">        &#125;)</div><div class="line">        res.on(&quot;end&quot;, () =&gt; &#123;</div><div class="line">            data.push(buff.toString())</div><div class="line">            callback()</div><div class="line">        &#125;)</div><div class="line">    &#125;)</div><div class="line">&#125;</div><div class="line"></div><div class="line">fetch(list[0], () =&gt; &#123;</div><div class="line">    fetch(list[1], () =&gt; &#123;</div><div class="line">        fetch(list[2], () =&gt; &#123;</div><div class="line">            data.forEach(item =&gt; &#123;</div><div class="line">                console.log(item)</div><div class="line">            &#125;)</div><div class="line">        &#125;)</div><div class="line">    &#125;)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h3 id="TIME-SERVER-Exercise-10-of-13"><a href="#TIME-SERVER-Exercise-10-of-13" class="headerlink" title="TIME SERVER (Exercise 10 of 13)"></a>TIME SERVER (Exercise 10 of 13)</h3><p> Write a TCP time server!</p>
+<p> Your server should listen to TCP connections on the port provided by the<br> first argument to your program. For each connection you must write the<br> current date &amp; 24 hour time in the format:</p>
+<pre><code>&quot;YYYY-MM-DD hh:mm&quot;
+</code></pre><p> followed by a newline character. Month, day, hour and minute must be<br> zero-filled to 2 integers. For example:</p>
+<pre><code>&quot;2013-07-06 17:42&quot;
+</code></pre><p> After sending the string, close the connection.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">let net = require(&apos;net&apos;)</div><div class="line"></div><div class="line">net.createServer(socket =&gt; &#123;</div><div class="line">    let date = new Date()</div><div class="line">    &quot;x&quot;.padStart(3, &quot;0&quot;)</div><div class="line">    socket.end(date.getFullYear() + &quot;-&quot; + ((date.getMonth() + 1).toString().padStart(2, &quot;0&quot;))</div><div class="line">        + &quot;-&quot; + (date.getDate().toString().padStart(2, &quot;0&quot;)) + &quot; &quot; + date.getHours() + &quot;:&quot; + date.getMinutes()+&quot;\n&quot;)</div><div class="line">&#125;).listen(process.argv[2])</div></pre></td></tr></table></figure></p>
+<h3 id="HTTP-FILE-SERVER-Exercise-11-of-13"><a href="#HTTP-FILE-SERVER-Exercise-11-of-13" class="headerlink" title="HTTP FILE SERVER (Exercise 11 of 13)"></a>HTTP FILE SERVER (Exercise 11 of 13)</h3><p>Write an HTTP server that serves the same text file for each request it<br>receives.</p>
+<p>Your server should listen on the port provided by the first argument to<br>your program.</p>
+<p>You will be provided with the location of the file to serve as the second<br>command-line argument. You must use the fs.createReadStream() method to<br>stream the file contents to the response.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">let http = require(&quot;http&quot;)</div><div class="line">let fs = require(&quot;fs&quot;)</div><div class="line">const file = process.argv[3]</div><div class="line">console.log(file)</div><div class="line">http.createServer((req,res) =&gt; &#123;</div><div class="line">    fs.createReadStream(file).pipe(res)</div><div class="line">&#125;).listen(process.argv[2])</div></pre></td></tr></table></figure></p>
+<h3 id="HTTP-UPPERCASERER-Exercise-12-of-13"><a href="#HTTP-UPPERCASERER-Exercise-12-of-13" class="headerlink" title="HTTP UPPERCASERER (Exercise 12 of 13)"></a>HTTP UPPERCASERER (Exercise 12 of 13)</h3><p> Write an HTTP server that receives only POST requests and converts<br> incoming POST body characters to upper-case and returns it to the client.</p>
+<p> Your server should listen on the port provided by the first argument to<br> your program.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">let http = require(&quot;http&quot;)</div><div class="line">let map = require(&quot;through2-map&quot;)</div><div class="line"></div><div class="line">http.createServer((req, res) =&gt; &#123;</div><div class="line">    if (req.method == &quot;POST&quot;) &#123;</div><div class="line">        req.pipe(map(chunk =&gt; &#123;</div><div class="line">            return chunk.toString().toUpperCase()</div><div class="line">        &#125;)).pipe(res)</div><div class="line">    &#125;</div><div class="line">&#125;).listen(process.argv[2])</div></pre></td></tr></table></figure></p>
+<h3 id="HTTP-JSON-API-SERVER-Exercise-13-of-13"><a href="#HTTP-JSON-API-SERVER-Exercise-13-of-13" class="headerlink" title="HTTP JSON API SERVER (Exercise 13 of 13)"></a>HTTP JSON API SERVER (Exercise 13 of 13)</h3><p> Write an HTTP server that serves JSON data when it receives a GET request<br> to the path ‘/api/parsetime’. Expect the request to contain a query string<br> with a key ‘iso’ and an ISO-format time as the value.</p>
+<p> For example:</p>
+<p> /api/parsetime?iso=2013-08-10T12:10:15.474Z</p>
+<p> The JSON response should contain only ‘hour’, ‘minute’ and ‘second’<br> properties. For example:</p>
+<pre><code>{
+  &quot;hour&quot;: 14,
+  &quot;minute&quot;: 23,
+  &quot;second&quot;: 15
+}
+</code></pre><p> Add second endpoint for the path ‘/api/unixtime’ which accepts the same<br> query string but returns UNIX epoch time in milliseconds (the number of<br> milliseconds since 1 Jan 1970 00:00:00 UTC) under the property ‘unixtime’.<br> For example:</p>
+<pre><code>{ &quot;unixtime&quot;: 1376136615474 }
+</code></pre><p> Your server should listen on the port provided by the first argument to<br> your program.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">let http = require(&quot;http&quot;)</div><div class="line">let url = require(&quot;url&quot;)</div><div class="line"></div><div class="line">http.createServer((req, res) =&gt; &#123;</div><div class="line">    let urlObj = url.parse(req.url, true)</div><div class="line">    let isoDate = urlObj.query.iso</div><div class="line">    let date = new Date(isoDate)</div><div class="line">    let result</div><div class="line">    if (urlObj.pathname == &quot;/api/parsetime&quot;) &#123;</div><div class="line">        result = res.end(JSON.stringify(&#123;</div><div class="line">            hour: date.getHours(),</div><div class="line">            minute: date.getMinutes(),</div><div class="line">            second: date.getSeconds()</div><div class="line">        &#125;))</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    if (urlObj.pathname == &quot;/api/unixtime&quot;) &#123;</div><div class="line">        result = res.end(JSON.stringify(&#123;</div><div class="line">            unixtime: date.getTime(),</div><div class="line">        &#125;))</div><div class="line">    &#125;</div><div class="line">    if (result) &#123;</div><div class="line">        res.writeHead(200, &#123;&apos;Content-Type&apos;: &apos;application/json&apos;&#125;)</div><div class="line">        res.end(result)</div><div class="line">    &#125;</div><div class="line">    else &#123;</div><div class="line">        res.writeHead(404)</div><div class="line">        res.end()</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;).listen(process.argv[2])</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;HELLO-WORLD-Exercise-1-of-13&quot;&gt;&lt;a href=&quot;#HELLO-WORLD-Exercise-1-of-13&quot; class=&quot;headerlink&quot; title=&quot;HELLO WORLD (Exercise 1 of 13)&quot;&gt;&lt;/a&gt;
+    
+    </summary>
+    
+      <category term="node.js" scheme="http://yoursite.com/categories/node-js/"/>
+    
+    
+      <category term="node.js" scheme="http://yoursite.com/tags/node-js/"/>
+    
+  </entry>
   
   <entry>
     <title>CardView源码解析-View阴影</title>
@@ -199,7 +276,7 @@
     <title>人生就像一盒巧克力：About me.</title>
     <link href="http://yoursite.com/2017/07/17/aboutme/"/>
     <id>http://yoursite.com/2017/07/17/aboutme/</id>
-    <published>2017-07-17T01:49:28.576Z</published>
+    <published>2017-07-17T01:49:28.577Z</published>
     <updated>2017-08-12T02:29:53.641Z</updated>
     
     <content type="html"><![CDATA[<p><img src="http://image.135editor.com/files/users/253/2537090/201707/XnwZsGz5_Sx2p.jpg" alt=""></p>
@@ -236,7 +313,7 @@
     <link href="http://yoursite.com/2017/07/14/APP%E5%A4%8D%E6%9D%82%E5%88%97%E8%A1%A8%E6%95%B0%E6%8D%AE%E8%A7%A3%E6%9E%90%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%8A%80%E5%B7%A7/"/>
     <id>http://yoursite.com/2017/07/14/APP复杂列表数据解析的一个小技巧/</id>
     <published>2017-07-14T09:27:29.105Z</published>
-    <updated>2017-08-12T02:29:50.999Z</updated>
+    <updated>2017-08-12T02:29:51.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="http://image.135editor.com/files/users/253/2537090/201707/vrhE2OwH_G6Gx.jpg" alt=""></p>
 <blockquote>
@@ -274,7 +351,7 @@
     <link href="http://yoursite.com/2017/07/14/%E5%9B%9E%E9%A1%BE%E8%BF%87%E5%8E%BB%EF%BC%8C%E5%B1%95%E6%9C%9B%E6%9C%AA%E6%9D%A5/"/>
     <id>http://yoursite.com/2017/07/14/回顾过去，展望未来/</id>
     <published>2017-07-14T02:55:42.965Z</published>
-    <updated>2017-08-12T02:29:45.683Z</updated>
+    <updated>2017-08-12T02:29:45.684Z</updated>
     
     <content type="html"><![CDATA[<p><img src="http://image.135editor.com/files/users/253/2537090/201707/TntLRZLb_DkI2.jpg" alt=""></p>
 <p>时间犹如白驹过隙，17年半年都过去了，还记得年初定的计划吗？现在的进展如何？当初信誓旦旦立下的承诺，如今是否还在坚持着。 所以我想写点文字，总结逝去的上半年，展望眼下的下半年。 这个公众号我开通也有段时间了，但直到最近才下定决心把它做下去，我想用它记录我的成长，同时做一些技术分享，虽然目前也没什么读者，但我相信我会慢慢结交到更多朋友的。 虽然现在做技术研发工作，具体点就是Android程序猿啦，但大学学的是地理专业，虽然是个211，但也就那样，感觉国内的大学除了985，其他学校都差不多吧！大学只不过是换个地方打游戏而已，还好我稍微有一点危机感，除了打游戏也规划了一下自己的职业方向。</p>
@@ -310,8 +387,8 @@
     <title>仿360市场下载按钮</title>
     <link href="http://yoursite.com/2017/05/16/%E4%BB%BF360%E5%B8%82%E5%9C%BA%E4%B8%8B%E8%BD%BD%E6%8C%89%E9%92%AE/"/>
     <id>http://yoursite.com/2017/05/16/仿360市场下载按钮/</id>
-    <published>2017-05-16T02:40:11.338Z</published>
-    <updated>2017-05-16T04:07:43.638Z</updated>
+    <published>2017-05-16T02:40:11.339Z</published>
+    <updated>2017-05-16T04:07:43.639Z</updated>
     
     <content type="html"><![CDATA[<p>先看一下效果：<br><img src="http://ohe81rx2w.bkt.clouddn.com/360downloadView.gif" alt=""></p>
 <p>无论多复杂的动画我们都是可以分割成小单元的，然后分步来实现。这个动画大概分为收缩，准备，加载，完成几个部分。为此定义一个枚举类来描述view的状态。<br><code>public enum Status {
@@ -346,7 +423,7 @@
     <title>Retrofit+Rxjava服务器IP轮询重试机制实现</title>
     <link href="http://yoursite.com/2016/12/12/Retrofit+Rxjava%E6%9C%8D%E5%8A%A1%E5%99%A8IP%E8%BD%AE%E8%AF%A2%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6%E5%AE%9E%E7%8E%B0/"/>
     <id>http://yoursite.com/2016/12/12/Retrofit+Rxjava服务器IP轮询重试机制实现/</id>
-    <published>2016-12-12T07:44:48.601Z</published>
+    <published>2016-12-12T07:44:48.602Z</published>
     <updated>2016-12-19T03:34:54.698Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -383,7 +460,7 @@
     <link href="http://yoursite.com/2016/12/12/android%E5%A4%9A%E6%B8%A0%E9%81%93%E6%89%93%E5%8C%85/"/>
     <id>http://yoursite.com/2016/12/12/android多渠道打包/</id>
     <published>2016-12-12T07:04:02.140Z</published>
-    <updated>2016-12-12T07:33:07.962Z</updated>
+    <updated>2016-12-12T07:33:07.963Z</updated>
     
     <content type="html"><![CDATA[<p>目前Android多渠道打包主要两种方式：</p>
 <h4 id="Gradle方式。"><a href="#Gradle方式。" class="headerlink" title="Gradle方式。"></a>Gradle方式。</h4><p>   在build.gradle配置:<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">productFlavors &#123;</div><div class="line">       huawei &#123;</div><div class="line">           manifestPlaceholders = [UMENG_CHANNEL_VALUE: <span class="string">"huawei"</span>]</div><div class="line">       &#125;</div><div class="line">       xiaomi &#123;</div><div class="line">           manifestPlaceholders = [UMENG_CHANNEL_VALUE: <span class="string">"xiaomi"</span>]</div><div class="line">       &#125;</div><div class="line">       ...</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
@@ -413,8 +490,8 @@
     <title>jenkins+gitlab+蒲公英实现android应用自动化打包分发</title>
     <link href="http://yoursite.com/2016/12/12/jenkins+gitlab+%E8%92%B2%E5%85%AC%E8%8B%B1%E5%AE%9E%E7%8E%B0android%E5%BA%94%E7%94%A8%E8%87%AA%E5%8A%A8%E5%8C%96%E6%89%93%E5%8C%85%E5%88%86%E5%8F%91/"/>
     <id>http://yoursite.com/2016/12/12/jenkins+gitlab+蒲公英实现android应用自动化打包分发/</id>
-    <published>2016-12-12T03:26:51.288Z</published>
-    <updated>2016-12-12T06:37:47.055Z</updated>
+    <published>2016-12-12T03:26:51.289Z</published>
+    <updated>2016-12-12T06:37:47.056Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>作为一名高效的开发者，要尽量避免的重复劳动实现自动化的流程。搭建本地jenkins服务器，实现自动化打包流程，从此测试包交给测试人员自己去打就好了，集成蒲公英等分发平台，实现二维码或短链接下载，也为运营人员提供了便捷。</p>
@@ -475,7 +552,7 @@
     <link href="http://yoursite.com/2016/11/29/dagger2%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/"/>
     <id>http://yoursite.com/2016/11/29/dagger2文档翻译/</id>
     <published>2016-11-29T07:16:16.949Z</published>
-    <updated>2016-12-12T07:41:36.745Z</updated>
+    <updated>2016-12-12T07:41:36.746Z</updated>
     
     <content type="html"><![CDATA[<p><strong><span id="top">目录</span></strong></p>
 <blockquote>
@@ -663,9 +740,9 @@
     
       <category term="android" scheme="http://yoursite.com/tags/android/"/>
     
-      <category term="dagger2" scheme="http://yoursite.com/tags/dagger2/"/>
-    
       <category term="依赖注入" scheme="http://yoursite.com/tags/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/"/>
+    
+      <category term="dagger2" scheme="http://yoursite.com/tags/dagger2/"/>
     
   </entry>
   
@@ -822,7 +899,7 @@
     <link href="http://yoursite.com/2016/11/29/as/"/>
     <id>http://yoursite.com/2016/11/29/as/</id>
     <published>2016-11-29T07:16:16.849Z</published>
-    <updated>2016-11-29T08:26:58.629Z</updated>
+    <updated>2016-11-29T08:26:58.630Z</updated>
     
     <content type="html"><![CDATA[<ul>
 <li><p><strong>shift + command + a</strong><br>查找动作<br><img src="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/83418817.jpg" alt=""><br>如上，我们可以快捷的打开java autoimport开关</p>
@@ -880,8 +957,8 @@
     <title>ReactNative环境搭建</title>
     <link href="http://yoursite.com/2016/11/29/React-Native/"/>
     <id>http://yoursite.com/2016/11/29/React-Native/</id>
-    <published>2016-11-29T07:16:16.332Z</published>
-    <updated>2016-11-29T08:38:03.195Z</updated>
+    <published>2016-11-29T07:16:16.333Z</published>
+    <updated>2016-11-29T08:38:03.196Z</updated>
     
     <content type="html"><![CDATA[<h4 id="Mac"><a href="#Mac" class="headerlink" title="Mac"></a>Mac</h4><h5 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h5><p>需要AndroidStudio、node.js、React Native command line tools和Watchman.<br>建议通过<a href="http://brew.sh/" target="_blank" rel="external">Homebrew</a>安装node和watchman. </p>
 <pre><code>brew install node
@@ -1284,9 +1361,9 @@ android{
     
       <category term="android" scheme="http://yoursite.com/tags/android/"/>
     
-      <category term="依赖注入" scheme="http://yoursite.com/tags/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/"/>
-    
       <category term="Dagger2" scheme="http://yoursite.com/tags/Dagger2/"/>
+    
+      <category term="依赖注入" scheme="http://yoursite.com/tags/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/"/>
     
   </entry>
   
@@ -1294,8 +1371,8 @@ android{
     <title>Windows下使用hexo+github搭建个人博客</title>
     <link href="http://yoursite.com/2016/11/29/hexo+github%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
     <id>http://yoursite.com/2016/11/29/hexo+github打造个人博客/</id>
-    <published>2016-11-29T01:58:05.767Z</published>
-    <updated>2016-11-30T05:39:42.387Z</updated>
+    <published>2016-11-29T01:58:05.768Z</published>
+    <updated>2016-11-30T05:39:42.388Z</updated>
     
     <content type="html"><![CDATA[<h4 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h4><ul>
 <li><p>下载安装Node.js<br>  前往<a href="https://nodejs.org/en/" target="_blank" rel="external">https://nodejs.org/en/</a>下载并安装Node.js.</p>

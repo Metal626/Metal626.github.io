@@ -261,6 +261,231 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/29/apk瘦身/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="子质">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="子质’s Notes">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="子质’s Notes" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/11/29/apk瘦身/" itemprop="url">
+                  apk瘦身的几个技巧 - Optimize your app
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-29T15:16:16+08:00">
+                2016-11-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/11/29/apk瘦身/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/29/apk瘦身/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/11/29/apk瘦身/" class="leancloud_visitors" data-flag-title="apk瘦身的几个技巧 - Optimize your app">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="使用VectorDrawable代替传统的png格式的ico"><a href="#使用VectorDrawable代替传统的png格式的ico" class="headerlink" title="使用VectorDrawable代替传统的png格式的ico"></a>使用VectorDrawable代替传统的png格式的ico</h3><p>Android 5.0开始提供了新的API <a href="https://developer.android.com/reference/android/graphics/drawable/VectorDrawable.html" target="_blank" rel="external">VectorDrawable</a> 可以使用SVG类型的资源，也就是矢量图。</p>
+<p>与矢量图相对应的是栅格图，png,jpg等格式的是栅格图，在android中因为要适配不同分辨率的机型，我们需要在不同的资源文件夹下放置不同尺寸的图片资源，因为栅格图形是有固定数量的像素组成，放大会导致图像失真模糊。</p>
+<p>现在有了矢量图的支持，我们只需要一套图标资源就OK了，而且更节省空间png格式要好几k，现在只需几百字节。那要怎么做呢？</p>
+<ul>
+<li><p>添加VectorDrawable兼容包</p>
+<pre><code>compile &apos;com.android.support:support-vector-drawable:24.1.0&apos;
+</code></pre></li>
+<li><p>将UI(UI使用Adobe Illustrator可以制作svg图)给你的svg图转换为VectorDrawable</p>
+<p>  <img src="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/49917257.jpg" alt=""><br>例如上面这个svg格式的icon用文本编辑器打开只这样的：</p>
+<pre><code class="xml">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+<span class="comment">&lt;!-- Generator: Adobe Illustrator 17.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  --&gt;</span>
+<span class="meta">&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;</span>
+<span class="tag">&lt;<span class="name">svg</span> <span class="attr">version</span>=<span class="string">"1.1"</span> <span class="attr">id</span>=<span class="string">"图层_1"</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/2000/svg"</span> <span class="attr">xmlns:xlink</span>=<span class="string">"http://www.w3.org/1999/xlink"</span> <span class="attr">x</span>=<span class="string">"0px"</span> <span class="attr">y</span>=<span class="string">"0px"</span>
+     <span class="attr">width</span>=<span class="string">"46.051px"</span> <span class="attr">height</span>=<span class="string">"46.051px"</span> <span class="attr">viewBox</span>=<span class="string">"0 0 46.051 46.051"</span> <span class="attr">enable-background</span>=<span class="string">"new 0 0 46.051 46.051"</span> <span class="attr">xml:space</span>=<span class="string">"preserve"</span>&gt;</span>
+<span class="tag">&lt;<span class="name">g</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">g</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">g</span> <span class="attr">id</span>=<span class="string">"XMLID_16_"</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">path</span> <span class="attr">fill</span>=<span class="string">"#040000"</span> <span class="attr">d</span>=<span class="string">"M36.219,10.212L21.707,8.94L3.025,27.407l15.799,15.618l18.681-18.467L36.219,10.212z M30.97,17.792
+                c-1.235,0-2.264-1.017-2.264-2.238c0-1.221,1.029-2.238,2.264-2.238c1.235,0,2.264,1.017,2.264,2.238
+                C33.235,16.825,32.205,17.792,30.97,17.792z"</span>/&gt;</span>
+        <span class="tag">&lt;/<span class="name">g</span>&gt;</span>
+        <span class="tag">&lt;<span class="name">g</span> <span class="attr">id</span>=<span class="string">"XMLID_15_"</span>&gt;</span>
+            <span class="tag">&lt;<span class="name">path</span> <span class="attr">fill</span>=<span class="string">"#040000"</span> <span class="attr">d</span>=<span class="string">"M35.653,17.601c-1.662,0-3.207-0.516-4.47-1.492l0.396-0.501c1.148,0.887,2.557,1.357,4.073,1.357
+                c3.71,0,6.729-2.984,6.729-6.652c0-3.668-3.019-6.652-6.729-6.652c-3.294,0-6.083,2.285-6.631,5.434l-0.634-0.108
+                c0.601-3.455,3.656-5.962,7.265-5.962c4.065,0,7.372,3.269,7.372,7.288S39.718,17.601,35.653,17.601z"</span>/&gt;</span>
+        <span class="tag">&lt;/<span class="name">g</span>&gt;</span>
+    <span class="tag">&lt;/<span class="name">g</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">g</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">svg</span>&gt;</span>
+</code></pre>
+</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;转换称VectorDrawable后是什么样呢？</p>
+<pre><code class="xml">    <span class="tag">&lt;<span class="name">vector</span> <span class="attr">android:height</span>=<span class="string">"20dp"</span> <span class="attr">android:viewportHeight</span>=<span class="string">"48.0"</span>
+    <span class="attr">android:viewportWidth</span>=<span class="string">"48.0"</span> <span class="attr">android:width</span>=<span class="string">"20dp"</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">path</span> <span class="attr">android:fillColor</span>=<span class="string">"#040000"</span> <span class="attr">android:pathData</span>=<span class="string">"M36.219,10.212L21.707,8.94L3.025,27.407l15.799,15.618l18.681-18.467L36.219,10.212z M30.97,17.792
+                c-1.235,0-2.264-1.017-2.264-2.238c0-1.221,1.029-2.238,2.264-2.238c1.235,0,2.264,1.017,2.264,2.238
+                C33.235,16.825,32.205,17.792,30.97,17.792z"</span>/&gt;</span>
+    <span class="tag">&lt;<span class="name">path</span> <span class="attr">android:fillColor</span>=<span class="string">"#040000"</span> <span class="attr">android:pathData</span>=<span class="string">"M35.653,17.601c-1.662,0-3.207-0.516-4.47-1.492l0.396-0.501c1.148,0.887,2.557,1.357,4.073,1.357
+                c3.71,0,6.729-2.984,6.729-6.652c0-3.668-3.019-6.652-6.729-6.652c-3.294,0-6.083,2.285-6.631,5.434l-0.634-0.108
+                c0.601-3.455,3.656-5.962,7.265-5.962c4.065,0,7.372,3.269,7.372,7.288S39.718,17.601,35.653,17.601z"</span>/&gt;</span>
+<span class="tag">&lt;/<span class="name">vector</span>&gt;</span>
+</code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;svg的path节点与VectorDrawable的path节点，fill属性对应fillColors属性，定义颜色，d属性对应pathData属性，我们只需要在res/drawable目录下创建xml文件，将svg中的对应属性值复制过来即可。<br>height和width属性定义绝对宽高，viewportWidth和viewportHeight属性定义画布大小，path超出画布部分就不显示了。<br>更多详情请移步：<br><a href="https://developer.android.com/training/material/drawables.html" target="_blank" rel="external">https://developer.android.com/training/material/drawables.html</a><br><a href="https://developer.android.com/reference/android/graphics/drawable/VectorDrawable.html" target="_blank" rel="external">https://developer.android.com/reference/android/graphics/drawable/VectorDrawable.html</a><br><a href="https://developer.android.com/reference/android/graphics/drawable/AnimatedVectorDrawable.html" target="_blank" rel="external">https://developer.android.com/reference/android/graphics/drawable/AnimatedVectorDrawable.html</a><br><a href="http://www.w3.org/TR/SVG11/paths.html#PathData" target="_blank" rel="external">http://www.w3.org/TR/SVG11/paths.html#PathData</a></p>
+<h3 id="大图使用webp格式"><a href="#大图使用webp格式" class="headerlink" title="大图使用webp格式"></a>大图使用webp格式</h3><p>对于大图，无论是png 还是 jpg格式的，可以将其转换为webp格式的。</p>
+<blockquote>
+<p>WebP格式，谷歌（google）开发的一种旨在加快图片加载速度的图片格式。图片压缩体积大约只有JPEG的2/3，并能节省大量的服务器带宽资源和数据空间。</p>
+</blockquote>
+<p>webp可以作为应用图片传输的格式，可以节省服务器的资源，用户流量消耗及客户端缓存空间占用，当然客户端的静态资源使用webp格式，好处是显而易见的，当然解析需要的cpu资源会增加，但相对于当前移动设备的硬件性能过剩，这就不算什么了。</p>
+<p>根据我个人的实验，转换格式的压缩率是波动的，最多可缩减70%多，少的可缩减1/3左右，对于一些只有十几k的图就不要转换格式了，反而会增加其大小。</p>
+<p>那么怎么转换格式呢？这里给大家一个网站(支持将文件转存到Dropbox和GoogleDrive)。将转换后的webp格式的图片直接放置到项目的mipmap目录中即可，android4.0以上是可以直接使用的，包括在xml中引用,但AndroidStudio好像没法预览。<br><a href="http://image.online-convert.com/convert-to-webp" target="_blank" rel="external">http://image.online-convert.com/convert-to-webp</a></p>
+<h3 id="对于其他的一些png图使用tinypng压缩"><a href="#对于其他的一些png图使用tinypng压缩" class="headerlink" title="对于其他的一些png图使用tinypng压缩"></a>对于其他的一些png图使用tinypng压缩</h3><p>这里给大家一个好用的网站：<br><a href="https://tinypng.com/" target="_blank" rel="external">https://tinypng.com/</a></p>
+<h3 id="去除冗余依赖"><a href="#去除冗余依赖" class="headerlink" title="去除冗余依赖"></a>去除冗余依赖</h3><p>谨慎引入开源库，因为一不小心就会导致你的app增加好几兆。<br>对于那些app中引入好几个网络框架，或图片加载框架，无力吐槽了，最好将引入的第三方框架进行封装，这样方便以后的迁移。<br>去除冗余的依赖，例如项目中要使用firebase分析，我只需要添加<br>    compile ‘com.google.android.gms:play-services-base:9.4.0’<br>而不是整个:play-services包<br>    compile ‘com.google.android.gms:play-services:9.4.0’</p>
+<h3 id="去除第三方sdk冗余so库"><a href="#去除第三方sdk冗余so库" class="headerlink" title="去除第三方sdk冗余so库"></a>去除第三方sdk冗余so库</h3><p>在build.gradle中android节点下添加</p>
+<pre><code class="gradle">packagingOptions {
+   ***
+   <span class="keyword">exclude</span> <span class="string">'lib/x86_64/libucrop.so'</span>
+   ***
+   }
+</code></pre>
+<p>去除用不上的so库，对于用到的只需保留arm64-v8a的即可，v8是兼容v7的。         </p>
+<h3 id="ShrinkResourcesGradle以及MinifyEnabled"><a href="#ShrinkResourcesGradle以及MinifyEnabled" class="headerlink" title="ShrinkResourcesGradle以及MinifyEnabled"></a>ShrinkResourcesGradle以及MinifyEnabled</h3><p>添加到代码中的库可能包含未使用的资源。在APP的build.gradle文件中启动shrinkResourcesGradle，它能自动替你删除这些资源。</p>
+<pre><code class="gradle">android{   
+    buildTypes{   
+        release{   
+            minifyEnabled <span class="keyword">true</span>   
+            shrinkResources <span class="keyword">true</span>   
+            proguardFiles getDefaultProguardFile(<span class="string">'proguard-android.txt'</span>),<span class="string">'proguard-rules.pro'</span>   
+       }   
+   }   
+}
+</code></pre>
+<p>为了使用shrinkResources，你必须启动代码压缩，将minifyEnabled设置为true。在构建的过程中，首先ProGuard会移除没有使用的代码，接着Gradle会移除没有使用的资源。<br>在Proguard中，是否保留符号表对APP的大小是有显著的影响的，可酌情注释下面这行代码，但是建议尽量保留，它可以用于保留调试信息。</p>
+<pre><code>-keepattributes SourceFile,LineNumberTable  
+</code></pre><h3 id="微信资源压缩打包"><a href="#微信资源压缩打包" class="headerlink" title="微信资源压缩打包"></a>微信资源压缩打包</h3><p>微信中的资源混淆工具主要为了混淆资源ID长度(例如将res/drawable/welcome.png混淆为r/s/a.png)，同时利用7zip深度压缩，大大减少了安装包体积，同时也增加了逼格，提升了反破解难度。效果非常的好。<br>实现原理请查看：<a href="http://www.iteye.com/topic/1141990" target="_blank" rel="external">http://www.iteye.com/topic/1141990</a><br>使用请查看：<a href="https://github.com/shwenzhang/AndResGuard" target="_blank" rel="external">https://github.com/shwenzhang/AndResGuard</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/29/pushwoosh集成/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1507,7 +1732,7 @@ android{
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-count">16</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1515,7 +1740,7 @@ android{
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1524,7 +1749,7 @@ android{
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

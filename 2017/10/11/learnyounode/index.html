@@ -1,0 +1,918 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="node.js," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="子质’s Notes" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="HELLO WORLD (Exercise 1 of 13)  Write a program that prints the text “HELLO WORLD” to the console  (stdout).  1console.log(&amp;quot;HELLO WORLD&amp;quot;)
+BABY STEPS (Exercise 2 of 13)  Write a program that">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Learning Node.js">
+<meta property="og:url" content="http://yoursite.com/2017/10/11/learnyounode/index.html">
+<meta property="og:site_name" content="子质’s Notes">
+<meta property="og:description" content="HELLO WORLD (Exercise 1 of 13)  Write a program that prints the text “HELLO WORLD” to the console  (stdout).  1console.log(&amp;quot;HELLO WORLD&amp;quot;)
+BABY STEPS (Exercise 2 of 13)  Write a program that">
+<meta property="og:updated_time" content="2017-10-11T08:25:19.861Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Learning Node.js">
+<meta name="twitter:description" content="HELLO WORLD (Exercise 1 of 13)  Write a program that prints the text “HELLO WORLD” to the console  (stdout).  1console.log(&amp;quot;HELLO WORLD&amp;quot;)
+BABY STEPS (Exercise 2 of 13)  Write a program that">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/11/learnyounode/"/>
+
+
+
+
+
+  <title> Learning Node.js | 子质’s Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?6f9256e19b7a628fa2646bc35feb03de";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">子质’s Notes</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/11/learnyounode/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="子质">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="子质’s Notes">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="子质’s Notes" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Learning Node.js
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-11T16:03:54+08:00">
+                2017-10-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/node-js/" itemprop="url" rel="index">
+                    <span itemprop="name">node.js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/10/11/learnyounode/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/11/learnyounode/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/10/11/learnyounode/" class="leancloud_visitors" data-flag-title="Learning Node.js">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="HELLO-WORLD-Exercise-1-of-13"><a href="#HELLO-WORLD-Exercise-1-of-13" class="headerlink" title="HELLO WORLD (Exercise 1 of 13)"></a>HELLO WORLD (Exercise 1 of 13)</h3><p>  Write a program that prints the text “HELLO WORLD” to the console<br>  (stdout).<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">console.log(&quot;HELLO WORLD&quot;)</div></pre></td></tr></table></figure></p>
+<h3 id="BABY-STEPS-Exercise-2-of-13"><a href="#BABY-STEPS-Exercise-2-of-13" class="headerlink" title="BABY STEPS (Exercise 2 of 13)"></a>BABY STEPS (Exercise 2 of 13)</h3><p>  Write a program that accepts one or more numbers as command-line arguments<br>  and prints the sum of those numbers to the console (stdout). </p>
+<figure class="highlight irpf90"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">let <span class="built_in">sum</span> = <span class="number">0</span></div><div class="line"></div><div class="line">process.argv.forEach((item,<span class="built_in">index</span>) =&gt; &#123;</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">index</span>&gt;<span class="number">1</span>)</div><div class="line">        <span class="built_in">sum</span>+=<span class="keyword">Number</span>(item)</div><div class="line">&#125;);</div><div class="line">console.<span class="built_in">log</span>(<span class="built_in">sum</span>)</div></pre></td></tr></table></figure>
+<h3 id="MY-FIRST-I-O-Exercise-3-of-13"><a href="#MY-FIRST-I-O-Exercise-3-of-13" class="headerlink" title="MY FIRST I/O! (Exercise 3 of 13)"></a>MY FIRST I/O! (Exercise 3 of 13)</h3><p>  Write a program that uses a single synchronous filesystem operation to<br>  read a file and print the number of newlines (\n) it contains to the<br>  console (stdout), similar to running cat file | wc -l.</p>
+<p>  The full path to the file to read will be provided as the first<br>  command-line argument (i.e., process.argv[2]). You do not need to make<br>  your own test file.<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">  let fs = require(&quot;fs&quot;)</div><div class="line"></div><div class="line">let data = fs.readFileSync(process.argv[2],&quot;utf-8&quot;);</div><div class="line">console.log(data.split(&quot;\n&quot;).length -1);</div></pre></td></tr></table></figure></p>
+<h3 id="MY-FIRST-ASYNC-I-O-Exercise-4-of-13"><a href="#MY-FIRST-ASYNC-I-O-Exercise-4-of-13" class="headerlink" title="MY FIRST ASYNC I/O! (Exercise 4 of 13)"></a>MY FIRST ASYNC I/O! (Exercise 4 of 13)</h3><p>  Write a program that uses a single asynchronous filesystem operation to<br>  read a file and print the number of newlines it contains to the console<br>  (stdout), similar to running cat file | wc -l.</p>
+<p>  The full path to the file to read will be provided as the first<br>  command-line argument.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">var fs = require(&quot;fs&quot;)</div><div class="line"></div><div class="line">fs.readFile(process.argv[2],&quot;utf-8&quot;,(err,data) =&gt; &#123;</div><div class="line">    let newlines = 0</div><div class="line">    if(err) console.error(err)</div><div class="line">    for (let codepoint of data)&#123;</div><div class="line"></div><div class="line">        if(codepoint===&quot;\n&quot;)</div><div class="line">            newlines++;</div><div class="line">    &#125;</div><div class="line">    console.log(newlines)</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h3 id="FILTERED-LS-Exercise-5-of-13"><a href="#FILTERED-LS-Exercise-5-of-13" class="headerlink" title="FILTERED LS (Exercise 5 of 13)"></a>FILTERED LS (Exercise 5 of 13)</h3><p>  Create a program that prints a list of files in a given directory,<br>  filtered by the extension of the files. You will be provided a directory<br>  name as the first argument to your program (e.g. ‘/path/to/dir/‘) and a<br>  file extension to filter by as the second argument.</p>
+<p>  For example, if you get ‘txt’ as the second argument then you will need to<br>  filter the list to only files that end with .txt. Note that the second<br>  argument will not come prefixed with a ‘.’.</p>
+<p>  Keep in mind that the first arguments of your program are not the first<br>  values of the process.argv array, as the first two values are reserved for<br>  system info by Node.</p>
+<p>  The list of files should be printed to the console, one file per line. You<br>  must use asynchronous I/O.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">let fs = require(&quot;fs&quot;)</div><div class="line"></div><div class="line">fs.readdir(process.argv[2], (err, list) =&gt; &#123;</div><div class="line">    if (err) return console.error(err)</div><div class="line">    list.forEach((item) =&gt; &#123;</div><div class="line">        if (item.endsWith(&quot;.&quot; + process.argv[3]))</div><div class="line">            console.log(item)</div><div class="line">    &#125;)</div><div class="line"></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h3 id="MAKE-IT-MODULAR-Exercise-6-of-13"><a href="#MAKE-IT-MODULAR-Exercise-6-of-13" class="headerlink" title="MAKE IT MODULAR (Exercise 6 of 13)"></a>MAKE IT MODULAR (Exercise 6 of 13)</h3><p>  This problem is the same as the previous but introduces the concept of<br>  modules. You will need to create two files to solve this.</p>
+<p>  Create a program that prints a list of files in a given directory,<br>  filtered by the extension of the files. The first argument is the<br>  directory name and the second argument is the extension filter. Print the<br>  list of files (one file per line) to the console. You must use<br>  asynchronous I/O.</p>
+<p>  You must write a module file to do most of the work. The module must<br>  export a single function that takes three arguments: the directory name,<br>  the filename extension string and a callback function, in that order. The<br>  filename extension argument must be the same as what was passed to your<br>  program. Don’t turn it into a RegExp or prefix with “.” or do anything<br>  except pass it to your module where you can do what you need to make your<br>  filter work.</p>
+<p>  The callback function must be called using the idiomatic node(err, data)<br>  convention. This convention stipulates that unless there’s an error, the<br>  first argument passed to the callback will be null, and the second will be<br>  your data. In this exercise, the data will be your filtered list of files,<br>  as an Array. If you receive an error, e.g. from your call to<br>  fs.readdir(), the callback must be called with the error, and only the<br>  error, as the first argument.</p>
+<p>  You must not print directly to the console from your module file, only<br>  from your original program.</p>
+<p>  In the case of an error bubbling up to your original program file, simply<br>  check for it and print an informative message to the console.</p>
+<p>  These four things are the contract that your module must follow.</p>
+<ol>
+<li>Export a single function that takes exactly the arguments described.</li>
+<li>Call the callback exactly once with an error or some data as described.</li>
+<li>Don’t change anything else, like global variables or stdout.</li>
+<li>Handle all the errors that may occur and pass them to the callback.</li>
+</ol>
+<p>The benefit of having a contract is that your module can be used by anyone<br>who expects this contract. So your module could be used by anyone else who<br>does learnyounode, or the verifier, and just work.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">let fs = require(&quot;fs&quot;)</div><div class="line"></div><div class="line">module.exports =  function foo(dir,ext,callback) &#123;</div><div class="line">    fs.readdir(dir, (err, data) =&gt; &#123;</div><div class="line">        if(err)  return callback(err)</div><div class="line">        let list = []</div><div class="line">        data.forEach((item) =&gt; &#123;</div><div class="line">            if (item.endsWith(&quot;.&quot; + ext))</div><div class="line">                list.push(item)</div><div class="line">        &#125;)</div><div class="line">        callback(null,list)</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">let foo = require(&apos;./module2.js&apos;);</div><div class="line"></div><div class="line">foo(process.argv[2],process.argv[3],(err,data) =&gt;&#123;</div><div class="line">    if(err)</div><div class="line">        return console.error(err)</div><div class="line">    data.forEach((item)=&gt;&#123;</div><div class="line">        console.log(item)</div><div class="line">    &#125;)</div><div class="line"></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="HTTP-CLIENT-Exercise-7-of-13"><a href="#HTTP-CLIENT-Exercise-7-of-13" class="headerlink" title="HTTP CLIENT (Exercise 7 of 13)"></a>HTTP CLIENT (Exercise 7 of 13)</h3><p> Write a program that performs an HTTP GET request to a URL provided to you<br>  as the first command-line argument. Write the String contents of each<br>  “data” event from the response to a new line on the console (stdout).<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">  let http = require(&apos;http&apos;)</div><div class="line"></div><div class="line">http.get(process.argv[2],(res)=&gt;&#123;</div><div class="line">    res.setEncoding(&apos;utf-8&apos;)</div><div class="line">    res.on(&apos;error&apos;,(error)=&gt;&#123;</div><div class="line">        return console.error(error)</div><div class="line">    &#125;)</div><div class="line">    res.on(&quot;data&quot;,(data)=&gt;&#123;</div><div class="line">        console.log(data)</div><div class="line">    &#125;)</div><div class="line">&#125;).on(&quot;error&quot;,console.error)</div></pre></td></tr></table></figure></p>
+<h3 id="HTTP-COLLECT-Exercise-8-of-13"><a href="#HTTP-COLLECT-Exercise-8-of-13" class="headerlink" title="HTTP COLLECT (Exercise 8 of 13)"></a>HTTP COLLECT (Exercise 8 of 13)</h3><p> Write a program that performs an HTTP GET request to a URL provided to you<br>  as the first command-line argument. Collect all data from the server (not<br>  just the first “data” event) and then write two lines to the console<br>  (stdout).</p>
+<p>  The first line you write should just be an integer representing the number<br>  of characters received from the server. The second line should contain the<br>  complete String of characters sent by the server.<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">  let http = require(&quot;http&quot;)</div><div class="line">let concatstream = require(&quot;concat-stream&quot;)</div><div class="line"></div><div class="line">http.get(process.argv[2], (res) =&gt; &#123;</div><div class="line"></div><div class="line">    res.on(&quot;error&quot;, console.error)</div><div class="line">    res.on(&quot;data&quot;, (data) =&gt; &#123;</div><div class="line"></div><div class="line">    &#125;)</div><div class="line">    res.pipe(concatstream((data) =&gt; &#123;</div><div class="line">        console.log(data.toString().length)</div><div class="line">        console.log(data.toString())</div><div class="line">    &#125;))</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<h3 id="JUGGLING-ASYNC-Exercise-9-of-13"><a href="#JUGGLING-ASYNC-Exercise-9-of-13" class="headerlink" title="JUGGLING ASYNC (Exercise 9 of 13)"></a>JUGGLING ASYNC (Exercise 9 of 13)</h3><p> This problem is the same as the previous problem (HTTP COLLECT) in that<br>  you need to use http.get(). However, this time you will be provided with<br>  three URLs as the first three command-line arguments.</p>
+<p>  You must collect the complete content provided to you by each of the URLs<br>  and print it to the console (stdout). You don’t need to print out the<br>  length, just the data as a String; one line per URL. The catch is that you<br>  must print them out in the same order as the URLs are provided to you as<br>  command-line arguments.  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">let http = require(&apos;http&apos;)</div><div class="line"></div><div class="line">const list = []</div><div class="line">list.push(process.argv[2])</div><div class="line">list.push(process.argv[3])</div><div class="line">list.push(process.argv[4])</div><div class="line">const data = []</div><div class="line"></div><div class="line"></div><div class="line">function fetch(url, callback) &#123;</div><div class="line">    http.get(url, res =&gt; &#123;</div><div class="line">        let buff = []</div><div class="line">        res.on(&quot;data&quot;, data =&gt; &#123;</div><div class="line">            buff += data</div><div class="line">        &#125;)</div><div class="line">        res.on(&quot;end&quot;, () =&gt; &#123;</div><div class="line">            data.push(buff.toString())</div><div class="line">            callback()</div><div class="line">        &#125;)</div><div class="line">    &#125;)</div><div class="line">&#125;</div><div class="line"></div><div class="line">fetch(list[0], () =&gt; &#123;</div><div class="line">    fetch(list[1], () =&gt; &#123;</div><div class="line">        fetch(list[2], () =&gt; &#123;</div><div class="line">            data.forEach(item =&gt; &#123;</div><div class="line">                console.log(item)</div><div class="line">            &#125;)</div><div class="line">        &#125;)</div><div class="line">    &#125;)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h3 id="TIME-SERVER-Exercise-10-of-13"><a href="#TIME-SERVER-Exercise-10-of-13" class="headerlink" title="TIME SERVER (Exercise 10 of 13)"></a>TIME SERVER (Exercise 10 of 13)</h3><p> Write a TCP time server!</p>
+<p> Your server should listen to TCP connections on the port provided by the<br> first argument to your program. For each connection you must write the<br> current date &amp; 24 hour time in the format:</p>
+<pre><code>&quot;YYYY-MM-DD hh:mm&quot;
+</code></pre><p> followed by a newline character. Month, day, hour and minute must be<br> zero-filled to 2 integers. For example:</p>
+<pre><code>&quot;2013-07-06 17:42&quot;
+</code></pre><p> After sending the string, close the connection.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">let net = require(&apos;net&apos;)</div><div class="line"></div><div class="line">net.createServer(socket =&gt; &#123;</div><div class="line">    let date = new Date()</div><div class="line">    &quot;x&quot;.padStart(3, &quot;0&quot;)</div><div class="line">    socket.end(date.getFullYear() + &quot;-&quot; + ((date.getMonth() + 1).toString().padStart(2, &quot;0&quot;))</div><div class="line">        + &quot;-&quot; + (date.getDate().toString().padStart(2, &quot;0&quot;)) + &quot; &quot; + date.getHours() + &quot;:&quot; + date.getMinutes()+&quot;\n&quot;)</div><div class="line">&#125;).listen(process.argv[2])</div></pre></td></tr></table></figure></p>
+<h3 id="HTTP-FILE-SERVER-Exercise-11-of-13"><a href="#HTTP-FILE-SERVER-Exercise-11-of-13" class="headerlink" title="HTTP FILE SERVER (Exercise 11 of 13)"></a>HTTP FILE SERVER (Exercise 11 of 13)</h3><p>Write an HTTP server that serves the same text file for each request it<br>receives.</p>
+<p>Your server should listen on the port provided by the first argument to<br>your program.</p>
+<p>You will be provided with the location of the file to serve as the second<br>command-line argument. You must use the fs.createReadStream() method to<br>stream the file contents to the response.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">let http = require(&quot;http&quot;)</div><div class="line">let fs = require(&quot;fs&quot;)</div><div class="line">const file = process.argv[3]</div><div class="line">console.log(file)</div><div class="line">http.createServer((req,res) =&gt; &#123;</div><div class="line">    fs.createReadStream(file).pipe(res)</div><div class="line">&#125;).listen(process.argv[2])</div></pre></td></tr></table></figure></p>
+<h3 id="HTTP-UPPERCASERER-Exercise-12-of-13"><a href="#HTTP-UPPERCASERER-Exercise-12-of-13" class="headerlink" title="HTTP UPPERCASERER (Exercise 12 of 13)"></a>HTTP UPPERCASERER (Exercise 12 of 13)</h3><p> Write an HTTP server that receives only POST requests and converts<br> incoming POST body characters to upper-case and returns it to the client.</p>
+<p> Your server should listen on the port provided by the first argument to<br> your program.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">let http = require(&quot;http&quot;)</div><div class="line">let map = require(&quot;through2-map&quot;)</div><div class="line"></div><div class="line">http.createServer((req, res) =&gt; &#123;</div><div class="line">    if (req.method == &quot;POST&quot;) &#123;</div><div class="line">        req.pipe(map(chunk =&gt; &#123;</div><div class="line">            return chunk.toString().toUpperCase()</div><div class="line">        &#125;)).pipe(res)</div><div class="line">    &#125;</div><div class="line">&#125;).listen(process.argv[2])</div></pre></td></tr></table></figure></p>
+<h3 id="HTTP-JSON-API-SERVER-Exercise-13-of-13"><a href="#HTTP-JSON-API-SERVER-Exercise-13-of-13" class="headerlink" title="HTTP JSON API SERVER (Exercise 13 of 13)"></a>HTTP JSON API SERVER (Exercise 13 of 13)</h3><p> Write an HTTP server that serves JSON data when it receives a GET request<br> to the path ‘/api/parsetime’. Expect the request to contain a query string<br> with a key ‘iso’ and an ISO-format time as the value.</p>
+<p> For example:</p>
+<p> /api/parsetime?iso=2013-08-10T12:10:15.474Z</p>
+<p> The JSON response should contain only ‘hour’, ‘minute’ and ‘second’<br> properties. For example:</p>
+<pre><code>{
+  &quot;hour&quot;: 14,
+  &quot;minute&quot;: 23,
+  &quot;second&quot;: 15
+}
+</code></pre><p> Add second endpoint for the path ‘/api/unixtime’ which accepts the same<br> query string but returns UNIX epoch time in milliseconds (the number of<br> milliseconds since 1 Jan 1970 00:00:00 UTC) under the property ‘unixtime’.<br> For example:</p>
+<pre><code>{ &quot;unixtime&quot;: 1376136615474 }
+</code></pre><p> Your server should listen on the port provided by the first argument to<br> your program.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">let http = require(&quot;http&quot;)</div><div class="line">let url = require(&quot;url&quot;)</div><div class="line"></div><div class="line">http.createServer((req, res) =&gt; &#123;</div><div class="line">    let urlObj = url.parse(req.url, true)</div><div class="line">    let isoDate = urlObj.query.iso</div><div class="line">    let date = new Date(isoDate)</div><div class="line">    let result</div><div class="line">    if (urlObj.pathname == &quot;/api/parsetime&quot;) &#123;</div><div class="line">        result = res.end(JSON.stringify(&#123;</div><div class="line">            hour: date.getHours(),</div><div class="line">            minute: date.getMinutes(),</div><div class="line">            second: date.getSeconds()</div><div class="line">        &#125;))</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    if (urlObj.pathname == &quot;/api/unixtime&quot;) &#123;</div><div class="line">        result = res.end(JSON.stringify(&#123;</div><div class="line">            unixtime: date.getTime(),</div><div class="line">        &#125;))</div><div class="line">    &#125;</div><div class="line">    if (result) &#123;</div><div class="line">        res.writeHead(200, &#123;&apos;Content-Type&apos;: &apos;application/json&apos;&#125;)</div><div class="line">        res.end(result)</div><div class="line">    &#125;</div><div class="line">    else &#123;</div><div class="line">        res.writeHead(404)</div><div class="line">        res.end()</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;).listen(process.argv[2])</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.png" alt="子质 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/node-js/" rel="tag"># node.js</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/14/Cardview源码解析/" rel="next" title="CardView源码解析-View阴影">
+                <i class="fa fa-chevron-left"></i> CardView源码解析-View阴影
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/10/11/learnyounode/"
+           data-title="Learning Node.js" data-url="http://yoursite.com/2017/10/11/learnyounode/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="子质" />
+          <p class="site-author-name" itemprop="name">子质</p>
+          <p class="site-description motion-element" itemprop="description">Learning is a gift , even when pain is your teacher.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/proton626" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/6069776913/profile?topnav=1&wvr=6&is_all=1" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/victheo" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/ff6ebd9b5d53/latest_articles" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#HELLO-WORLD-Exercise-1-of-13"><span class="nav-number">1.</span> <span class="nav-text">HELLO WORLD (Exercise 1 of 13)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BABY-STEPS-Exercise-2-of-13"><span class="nav-number">2.</span> <span class="nav-text">BABY STEPS (Exercise 2 of 13)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MY-FIRST-I-O-Exercise-3-of-13"><span class="nav-number">3.</span> <span class="nav-text">MY FIRST I/O! (Exercise 3 of 13)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MY-FIRST-ASYNC-I-O-Exercise-4-of-13"><span class="nav-number">4.</span> <span class="nav-text">MY FIRST ASYNC I/O! (Exercise 4 of 13)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FILTERED-LS-Exercise-5-of-13"><span class="nav-number">5.</span> <span class="nav-text">FILTERED LS (Exercise 5 of 13)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MAKE-IT-MODULAR-Exercise-6-of-13"><span class="nav-number">6.</span> <span class="nav-text">MAKE IT MODULAR (Exercise 6 of 13)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-CLIENT-Exercise-7-of-13"><span class="nav-number">7.</span> <span class="nav-text">HTTP CLIENT (Exercise 7 of 13)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-COLLECT-Exercise-8-of-13"><span class="nav-number">8.</span> <span class="nav-text">HTTP COLLECT (Exercise 8 of 13)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JUGGLING-ASYNC-Exercise-9-of-13"><span class="nav-number">9.</span> <span class="nav-text">JUGGLING ASYNC (Exercise 9 of 13)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TIME-SERVER-Exercise-10-of-13"><span class="nav-number">10.</span> <span class="nav-text">TIME SERVER (Exercise 10 of 13)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-FILE-SERVER-Exercise-11-of-13"><span class="nav-number">11.</span> <span class="nav-text">HTTP FILE SERVER (Exercise 11 of 13)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-UPPERCASERER-Exercise-12-of-13"><span class="nav-number">12.</span> <span class="nav-text">HTTP UPPERCASERER (Exercise 12 of 13)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-JSON-API-SERVER-Exercise-13-of-13"><span class="nav-number">13.</span> <span class="nav-text">HTTP JSON API SERVER (Exercise 13 of 13)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016-11 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">子质</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"Metal626"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("Y8y93MXpcqOE9wb5HAQs6lqf-gzGzoHsz", "YdeEwg5y5si4gx2QxCN6qjPe");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>
