@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="android,Android Studio,效率," />
+  <meta name="keywords" content="node.js,js,scope,closure," />
 
 
 
@@ -86,62 +86,16 @@
 
 
 
-<meta name="description" content="shift + command + a查找动作如上，我们可以快捷的打开java autoimport开关
-
-shift + shift全局查找可以方便的查找资源文件、类等
-
-control + space代码提示这个估计是IDE的最强feature了吧
-
-shift + control + space根据类型提示根据需要的类型提示，这个还是挺实用的
-
-command + d复制一整行
-
-alt">
+<meta name="description" content="ScopesThe main type of scope in Javascript is Lexical Scoping. Present in the languagefrom the very beginning, this is the scope created within a function, and theone most developers are familiar with">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于AndroidStudio你可能不知道的几个奇巧淫技">
-<meta property="og:url" content="http://yoursite.com/2016/11/29/as/index.html">
+<meta property="og:title" content="Scope Chains Closures">
+<meta property="og:url" content="http://yoursite.com/2017/10/13/scope_chains_closures/index.html">
 <meta property="og:site_name" content="子质’s Notes">
-<meta property="og:description" content="shift + command + a查找动作如上，我们可以快捷的打开java autoimport开关
-
-shift + shift全局查找可以方便的查找资源文件、类等
-
-control + space代码提示这个估计是IDE的最强feature了吧
-
-shift + control + space根据类型提示根据需要的类型提示，这个还是挺实用的
-
-command + d复制一整行
-
-alt">
-<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/83418817.jpg">
-<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/52204604.jpg">
-<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/59956682.jpg">
-<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/9493519.jpg">
-<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/52917980.jpg">
-<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/3792444.jpg">
-<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/81109010.jpg">
-<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/13160160.jpg">
-<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/61434024.jpg">
-<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/78218975.jpg">
-<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/log%20expression.gif">
-<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/debug%20template.gif">
-<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/search%20structurally.gif">
-<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/inspection.gif">
-<meta property="og:image" content="http://ohe81rx2w.bkt.clouddn.com/structurally%20replacement.gif">
-<meta property="og:updated_time" content="2016-11-29T08:26:58.630Z">
+<meta property="og:description" content="ScopesThe main type of scope in Javascript is Lexical Scoping. Present in the languagefrom the very beginning, this is the scope created within a function, and theone most developers are familiar with">
+<meta property="og:updated_time" content="2017-10-13T09:32:57.390Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于AndroidStudio你可能不知道的几个奇巧淫技">
-<meta name="twitter:description" content="shift + command + a查找动作如上，我们可以快捷的打开java autoimport开关
-
-shift + shift全局查找可以方便的查找资源文件、类等
-
-control + space代码提示这个估计是IDE的最强feature了吧
-
-shift + control + space根据类型提示根据需要的类型提示，这个还是挺实用的
-
-command + d复制一整行
-
-alt">
-<meta name="twitter:image" content="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/83418817.jpg">
+<meta name="twitter:title" content="Scope Chains Closures">
+<meta name="twitter:description" content="ScopesThe main type of scope in Javascript is Lexical Scoping. Present in the languagefrom the very beginning, this is the scope created within a function, and theone most developers are familiar with">
 
 
 
@@ -169,13 +123,13 @@ alt">
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/11/29/as/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/10/13/scope_chains_closures/"/>
 
 
 
 
 
-  <title> 关于AndroidStudio你可能不知道的几个奇巧淫技 | 子质’s Notes </title>
+  <title> Scope Chains Closures | 子质’s Notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -306,7 +260,7 @@ alt">
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/29/as/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/13/scope_chains_closures/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="子质">
@@ -330,7 +284,7 @@ alt">
             
             
               
-                关于AndroidStudio你可能不知道的几个奇巧淫技
+                Scope Chains Closures
               
             
           </h1>
@@ -343,8 +297,8 @@ alt">
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-29T15:16:16+08:00">
-                2016-11-29
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-13T17:27:35+08:00">
+                2017-10-13
               </time>
             
 
@@ -362,8 +316,8 @@ alt">
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android-Studio/" itemprop="url" rel="index">
-                    <span itemprop="name">Android Studio</span>
+                  <a href="/categories/node-js/" itemprop="url" rel="index">
+                    <span itemprop="name">node.js</span>
                   </a>
                 </span>
 
@@ -377,8 +331,8 @@ alt">
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/11/29/as/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/29/as/" itemprop="commentCount"></span>
+                <a href="/2017/10/13/scope_chains_closures/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/13/scope_chains_closures/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -388,7 +342,7 @@ alt">
 
           
           
-             <span id="/2016/11/29/as/" class="leancloud_visitors" data-flag-title="关于AndroidStudio你可能不知道的几个奇巧淫技">
+             <span id="/2017/10/13/scope_chains_closures/" class="leancloud_visitors" data-flag-title="Scope Chains Closures">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -413,39 +367,165 @@ alt">
       
 
       
-        <ul>
-<li><p><strong>shift + command + a</strong><br>查找动作<br><img src="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/83418817.jpg" alt=""><br>如上，我们可以快捷的打开java autoimport开关</p>
-</li>
-<li><p><strong>shift + shift</strong><br>全局查找<br><img src="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/52204604.jpg" alt=""><br>可以方便的查找资源文件、类等</p>
-</li>
-<li><p><strong>control + space</strong><br>代码提示<br><img src="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/59956682.jpg" alt=""><br>这个估计是IDE的最强feature了吧</p>
-</li>
-<li><p><strong>shift + control + space</strong><br>根据类型提示<br><img src="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/9493519.jpg" alt=""><br>根据需要的类型提示，这个还是挺实用的</p>
-</li>
-<li><p><strong>command + d</strong><br>复制一整行</p>
-</li>
-<li><p><strong>alt + right/left</strong><br>单词为单位移动光标<br><img src="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/52917980.jpg" alt=""><br>同时按住shift的话就可以在行内灵活选择了</p>
-</li>
-<li><p><strong>alt + up/down</strong><br>多行选择 扩大/缩小<br><img src="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/3792444.jpg" alt=""></p>
-</li>
-<li><p><strong>shift + alt + up/down</strong><br>移动当前行或选中的代码<br><img src="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/81109010.jpg" alt=""></p>
-</li>
-<li><p><strong>tab</strong><br>使用tab代替enter可以替换之前的代码<br><img src="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/13160160.jpg" alt=""></p>
-</li>
-<li><p><strong>使用模板</strong><br><img src="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/61434024.jpg" alt=""><br>as提供了很多模板，更多去设置中live templates中查看吧。</p>
-</li>
-<li><p><strong>自定义模板</strong><br><img src="http://ohe81rx2w.bkt.clouddn.com/public/16-11-29/78218975.jpg" alt=""><br>使用时只要使用缩写就能很方便的生成代码了。</p>
-</li>
-<li><p><strong>给断点设置表达式</strong><br>左键设置断点，右键唤出菜单<br><img src="http://ohe81rx2w.bkt.clouddn.com/log%20expression.gif" alt=""><br>debug运行后，会在console中打印表达式的值<br><img src="http://ohe81rx2w.bkt.clouddn.com/debug%20template.gif" alt=""></p>
-</li>
-<li><p><strong>结构化查找</strong><br>按照模板查找代码<br><img src="http://ohe81rx2w.bkt.clouddn.com/search%20structurally.gif" alt=""></p>
-</li>
-<li><p><strong>结构化检查</strong><br>按照指定模板检查代码，可以指定警告级别<br><img src="http://ohe81rx2w.bkt.clouddn.com/inspection.gif" alt=""></p>
-</li>
-<li><p><strong>结构化替换</strong><br><img src="http://ohe81rx2w.bkt.clouddn.com/structurally%20replacement.gif" alt=""></p>
-</li>
-</ul>
+        <h1 id="Scopes"><a href="#Scopes" class="headerlink" title="Scopes"></a>Scopes</h1><p>The main type of scope in Javascript is Lexical Scoping. Present in the language<br>from the very beginning, this is the scope created within a function, and the<br>one most developers are familiar with.[1]</p>
+<p>ES6 recently defined Block Scoping. This scope is created within curly braced<br>blocks.[2]</p>
+<h2 id="Intializing-Variables"><a href="#Intializing-Variables" class="headerlink" title="Intializing Variables"></a>Intializing Variables</h2><p>The way a variable is initialized determines which scope type it is:</p>
+<h3 id="Lexical-Scope"><a href="#Lexical-Scope" class="headerlink" title="Lexical Scope"></a>Lexical Scope</h3><p>var is used to denote a variable which is Lexically Scoped to the current<br>function:</p>
+<pre><code>function someFunc() {
+  var aVariable;
+}
+</code></pre><p>aVariable is lexically scoped within someFunc</p>
+<h3 id="Block-Scope"><a href="#Block-Scope" class="headerlink" title="Block Scope"></a>Block Scope</h3><p>let &amp; const are used to denote variables which are Block Scoped to the<br>current curly braced block:</p>
+<pre><code>if (true) {
+  let aVariable;
+}
+</code></pre><p>aVariable is block scoped within the if’s curly braces</p>
+<hr>
 
+<h1 id="Scope-Chains"><a href="#Scope-Chains" class="headerlink" title="Scope Chains"></a>Scope Chains</h1><h2 id="Nesting"><a href="#Nesting" class="headerlink" title="Nesting"></a>Nesting</h2><p>Scopes can be nested. Both Lexical and Block scopes can contain other scopes:</p>
+<pre><code>function someFunc() {
+  function inner() {
+  }
+}
+</code></pre><p>inner is a nested lexical scope inside the lexical scope of someFunc</p>
+<hr>
+<pre><code>if (true) {
+  while (false) {
+  }
+}
+</code></pre><p>The while is a nested block scope inside the block scope of if</p>
+<hr>
+<pre><code>function someFunc() {
+  if (true) {
+  }
+}
+</code></pre><p>The if is a nested block scope inside the lexical scope of someFunc</p>
+<hr>
+<h2 id="Scoped-Variable-Access"><a href="#Scoped-Variable-Access" class="headerlink" title="Scoped Variable Access"></a>Scoped Variable Access</h2><p>All nested scopes follow the same rule: Each nested inner scope has access to<br>outer scope variables, but NOT vice-versa.</p>
+<p>For example:</p>
+<pre><code>function someFunc() {
+  var outerVar = 1;
+  function inner() {
+    var innerVar = 2;
+  }
+}
+</code></pre><p>inner has access to both innerVar &amp; outerVar, but someFunc only has<br>access to outerVar</p>
+<h2 id="Multiple-Nested-Scopes"><a href="#Multiple-Nested-Scopes" class="headerlink" title="Multiple Nested Scopes"></a>Multiple Nested Scopes</h2><p>Nesting isn’t limited to a single inner scope, there can be multiple nested<br>scopes, each of which adhere to the Scoped Variable Access rule above. With<br>one addition: sibling scopes are also restricted from accessing each other’s<br>variables.</p>
+<p>For example:</p>
+<pre><code>function someFunc() {
+  function inner() {
+  }
+  function inner2() {
+  }
+}
+</code></pre><p>inner &amp; inner2 are both inner scopes of someFunc. Just as someFunc<br>cannot access inner’s variables, inner cannot access inner2’s variables<br>(and vice versa)</p>
+<h2 id="Scope-Tree"><a href="#Scope-Tree" class="headerlink" title="Scope Tree"></a>Scope Tree</h2><p>Looking at the nesting from top-down, a tree of scopes is formed.</p>
+<p>This code</p>
+<pre><code>function someFunc() {
+  function inner() {
+  }
+  function inner2() {
+    function foo() {
+    }
+  }
+}
+</code></pre><p>Produces this tree</p>
+<pre><code>   someFunc()
+       |
+      / \
+     /   \
+    /     \
+   ↓       ↓
+inner()  inner2()
+           |
+           ↓
+         foo()
+</code></pre><p>Remembering that inner scopes can access outer scope’s variables, but not<br>vice-versa (foo() can access inner2()’s variables, and inner2() can access<br>someFunc()’s variables), then it makes more sense to look at the tree from<br>bottom-up, which forms a chain, also known as…</p>
+<h2 id="Scope-Chains-1"><a href="#Scope-Chains-1" class="headerlink" title="Scope Chains"></a>Scope Chains</h2><p>Looking from most inner to most outer scope forms a Scope Chain.</p>
+<pre><code>someFunc()
+    ↑
+     \
+      \
+       \
+      inner2()
+        ↑
+        |
+      foo()
+</code></pre><hr>
+
+<h1 id="Global-Scope-amp-Shadowing"><a href="#Global-Scope-amp-Shadowing" class="headerlink" title="Global Scope &amp; Shadowing"></a>Global Scope &amp; Shadowing</h1><h2 id="Global-Scope"><a href="#Global-Scope" class="headerlink" title="Global Scope"></a>Global Scope</h2><p>Understanding where Scope Chains end is an important part of scoping. All<br>Javascript runtimes must implicitly create a Global Scope object (window in<br>the browser, global in node), which sits at the top of every scope chain:</p>
+<pre><code>    (global)
+       ↑
+       |
+   someFunc()
+       ↑
+      / \
+     /   \
+    /     \
+inner()  inner2()
+           ↑
+           |
+         foo()
+</code></pre><p>In Scopes we covered how usage of var or let dictates the scope of the<br>variable being defined. When assigning a variable without using either of var,<br>let, etc, the variable is assumed to exist in an outer scope.</p>
+<p>The javascript runtime follows these steps to assign a variable:</p>
+<p> 1) Search within the current scope.<br> 2) If not found, search in the immediately outer scope.<br> 3) If found, go to 6.<br> 4) If not found, repeat 2. Until the Global Scope is reached.<br> 5) If not found in Global Scope, create it (on window / global objects).<br> 6) Assign the value.</p>
+<p>In this way, it is possible to accidentally define a global variable (step 5).</p>
+<h3 id="Example-Global-Scope"><a href="#Example-Global-Scope" class="headerlink" title="Example Global Scope"></a>Example Global Scope</h3><p>Consider the following example:</p>
+<pre><code>function someFunc() {
+   var scopedVar = 1;
+   function inner() {
+      foo = 2;
+   }
+}
+</code></pre><p>Note the lack of var or let, etc for foo = 2. The Javascript runtime will<br>follow the above algorithm, first checking the scope of inner(), then of<br>someFunc(), then finally the Global Scope. Step 5 is then executed, so foo<br>becomes a variable in the Global Scope (window.foo / global.foo).</p>
+<p>Phrased another way: By accidentally forgetting to use var, the variable foo<br>which otherwise would have been only within the lexical scope of inner() is<br>now available to be modified by any scope. So, someFunc() now has access<br>where the developer may have meant for it not to.</p>
+<p>Remember: Only inner scopes can access variables of outer scopes. In this case<br>the someFunc() scope is an inner scope of the Global Scope, allowing access of<br>foo to someFunc().</p>
+<h2 id="Shadowing"><a href="#Shadowing" class="headerlink" title="Shadowing"></a>Shadowing</h2><p>A variable is created in a ‘Step 0)’ of the above algorithm: When var or let<br>is used. The variable is assigned to the correct scope, then execution moves on,<br>and any assignments to that variable follow the above algorithm.</p>
+<p>It is perfectly valid to define two different variables, in different scopes,<br>with the same name:</p>
+<pre><code>function someFunc() {
+   var foo = 1;
+}
+function anotherFunc() {
+   var foo = 2;
+}
+</code></pre><p>It is also valid to do this in nested scopes:</p>
+<pre><code>function someFunc() {
+   var foo = 1;
+   function inner() {
+      var foo = 2;
+   }
+}
+</code></pre><p>This is called Shadowing. The foo inside inner() is said to Shadow the foo<br>inside someFunc.</p>
+<p>Shadowing means that the inner() scope only has access to its own foo. There<br>is no way for it to access the foo defined in someFunc().</p>
+<p>This can also be an accidental source of bugs, especially when there is deep<br>nesting, or long functions.</p>
+<hr>
+
+<h1 id="Closures"><a href="#Closures" class="headerlink" title="Closures"></a>Closures</h1><p>Closures are an important part of the Javascript language. They are what enables<br>the callback-last programming most prominent in node, and provide an excellent<br>mechanism for handling the asynchronous nature of most Javascript tasks.</p>
+<p>To properly understand closures, let’s start with an example scope chain:</p>
+<pre><code>someFunc()
+    ↑
+    |
+ inner()
+    ↑
+    |
+  foo()
+</code></pre><p>Let’s say someFunc() declares a variable bar:</p>
+<pre><code>someFunc()
+ var bar
+    ↑
+    ⋮
+</code></pre><p>Given how nesting scope works, it’s possible for an inner scope within<br>someFunc() to access bar. In this example, let’s say inner() accesses<br>bar:</p>
+<pre><code>someFunc()
+ var bar
+    ↑
+    |
+ inner()
+alert(bar)
+    ↑
+    ⋮
+</code></pre><p>Then inner() is said to Close Over bar. Therefore inner() is a Closure.</p>
+<p>To power the callback style of programming, the closure will be maintained even<br>if inner() isn’t executed immediately. It is perfectly legal in Javascript to<br>pass inner around / return it from someFunc() for later execution. All the<br>while, bar will continue to be available.</p>
+<hr>
       
     </div>
 
@@ -473,11 +553,13 @@ alt">
       
         <div class="post-tags">
           
-            <a href="/tags/android/" rel="tag"># android</a>
+            <a href="/tags/node-js/" rel="tag"># node.js</a>
           
-            <a href="/tags/Android-Studio/" rel="tag"># Android Studio</a>
+            <a href="/tags/js/" rel="tag"># js</a>
           
-            <a href="/tags/效率/" rel="tag"># 效率</a>
+            <a href="/tags/scope/" rel="tag"># scope</a>
+          
+            <a href="/tags/closure/" rel="tag"># closure</a>
           
         </div>
       
@@ -486,8 +568,8 @@ alt">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/29/React-Native/" rel="next" title="ReactNative环境搭建">
-                <i class="fa fa-chevron-left"></i> ReactNative环境搭建
+              <a href="/2017/10/13/how_to_npm/" rel="next" title="How  to  npm">
+                <i class="fa fa-chevron-left"></i> How  to  npm
               </a>
             
           </div>
@@ -495,10 +577,6 @@ alt">
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/11/29/pushwoosh集成/" rel="prev" title="Pushwoosh集成-原生系统推送">
-                Pushwoosh集成-原生系统推送 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -524,8 +602,8 @@ alt">
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/11/29/as/"
-           data-title="关于AndroidStudio你可能不知道的几个奇巧淫技" data-url="http://yoursite.com/2016/11/29/as/">
+      <div class="ds-thread" data-thread-key="2017/10/13/scope_chains_closures/"
+           data-title="Scope Chains Closures" data-url="http://yoursite.com/2017/10/13/scope_chains_closures/">
       </div>
     
   </div>
@@ -549,8 +627,17 @@ alt">
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -648,6 +735,22 @@ alt">
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Scopes"><span class="nav-number">1.</span> <span class="nav-text">Scopes</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intializing-Variables"><span class="nav-number">1.1.</span> <span class="nav-text">Intializing Variables</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lexical-Scope"><span class="nav-number">1.1.1.</span> <span class="nav-text">Lexical Scope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Block-Scope"><span class="nav-number">1.1.2.</span> <span class="nav-text">Block Scope</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Scope-Chains"><span class="nav-number">2.</span> <span class="nav-text">Scope Chains</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Nesting"><span class="nav-number">2.1.</span> <span class="nav-text">Nesting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scoped-Variable-Access"><span class="nav-number">2.2.</span> <span class="nav-text">Scoped Variable Access</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multiple-Nested-Scopes"><span class="nav-number">2.3.</span> <span class="nav-text">Multiple Nested Scopes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scope-Tree"><span class="nav-number">2.4.</span> <span class="nav-text">Scope Tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scope-Chains-1"><span class="nav-number">2.5.</span> <span class="nav-text">Scope Chains</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Global-Scope-amp-Shadowing"><span class="nav-number">3.</span> <span class="nav-text">Global Scope & Shadowing</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Global-Scope"><span class="nav-number">3.1.</span> <span class="nav-text">Global Scope</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Example-Global-Scope"><span class="nav-number">3.1.1.</span> <span class="nav-text">Example Global Scope</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shadowing"><span class="nav-number">3.2.</span> <span class="nav-text">Shadowing</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Closures"><span class="nav-number">4.</span> <span class="nav-text">Closures</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>

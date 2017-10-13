@@ -261,6 +261,314 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/13/scope_chains_closures/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="子质">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="子质’s Notes">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="子质’s Notes" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/10/13/scope_chains_closures/" itemprop="url">
+                  Scope Chains Closures
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-13T17:27:35+08:00">
+                2017-10-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/node-js/" itemprop="url" rel="index">
+                    <span itemprop="name">node.js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/10/13/scope_chains_closures/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/13/scope_chains_closures/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/10/13/scope_chains_closures/" class="leancloud_visitors" data-flag-title="Scope Chains Closures">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Scopes"><a href="#Scopes" class="headerlink" title="Scopes"></a>Scopes</h1><p>The main type of scope in Javascript is Lexical Scoping. Present in the language<br>from the very beginning, this is the scope created within a function, and the<br>one most developers are familiar with.[1]</p>
+<p>ES6 recently defined Block Scoping. This scope is created within curly braced<br>blocks.[2]</p>
+<h2 id="Intializing-Variables"><a href="#Intializing-Variables" class="headerlink" title="Intializing Variables"></a>Intializing Variables</h2><p>The way a variable is initialized determines which scope type it is:</p>
+<h3 id="Lexical-Scope"><a href="#Lexical-Scope" class="headerlink" title="Lexical Scope"></a>Lexical Scope</h3><p>var is used to denote a variable which is Lexically Scoped to the current<br>function:</p>
+<pre><code>function someFunc() {
+  var aVariable;
+}
+</code></pre><p>aVariable is lexically scoped within someFunc</p>
+<h3 id="Block-Scope"><a href="#Block-Scope" class="headerlink" title="Block Scope"></a>Block Scope</h3><p>let &amp; const are used to denote variables which are Block Scoped to the<br>current curly braced block:</p>
+<pre><code>if (true) {
+  let aVariable;
+}
+</code></pre><p>aVariable is block scoped within the if’s curly braces</p>
+<hr>
+
+<h1 id="Scope-Chains"><a href="#Scope-Chains" class="headerlink" title="Scope Chains"></a>Scope Chains</h1><h2 id="Nesting"><a href="#Nesting" class="headerlink" title="Nesting"></a>Nesting</h2><p>Scopes can be nested. Both Lexical and Block scopes can contain other scopes:</p>
+<pre><code>function someFunc() {
+  function inner() {
+  }
+}
+</code></pre><p>inner is a nested lexical scope inside the lexical scope of someFunc</p>
+<hr>
+<pre><code>if (true) {
+  while (false) {
+  }
+}
+</code></pre><p>The while is a nested block scope inside the block scope of if</p>
+<hr>
+<pre><code>function someFunc() {
+  if (true) {
+  }
+}
+</code></pre><p>The if is a nested block scope inside the lexical scope of someFunc</p>
+<hr>
+<h2 id="Scoped-Variable-Access"><a href="#Scoped-Variable-Access" class="headerlink" title="Scoped Variable Access"></a>Scoped Variable Access</h2><p>All nested scopes follow the same rule: Each nested inner scope has access to<br>outer scope variables, but NOT vice-versa.</p>
+<p>For example:</p>
+<pre><code>function someFunc() {
+  var outerVar = 1;
+  function inner() {
+    var innerVar = 2;
+  }
+}
+</code></pre><p>inner has access to both innerVar &amp; outerVar, but someFunc only has<br>access to outerVar</p>
+<h2 id="Multiple-Nested-Scopes"><a href="#Multiple-Nested-Scopes" class="headerlink" title="Multiple Nested Scopes"></a>Multiple Nested Scopes</h2><p>Nesting isn’t limited to a single inner scope, there can be multiple nested<br>scopes, each of which adhere to the Scoped Variable Access rule above. With<br>one addition: sibling scopes are also restricted from accessing each other’s<br>variables.</p>
+<p>For example:</p>
+<pre><code>function someFunc() {
+  function inner() {
+  }
+  function inner2() {
+  }
+}
+</code></pre><p>inner &amp; inner2 are both inner scopes of someFunc. Just as someFunc<br>cannot access inner’s variables, inner cannot access inner2’s variables<br>(and vice versa)</p>
+<h2 id="Scope-Tree"><a href="#Scope-Tree" class="headerlink" title="Scope Tree"></a>Scope Tree</h2><p>Looking at the nesting from top-down, a tree of scopes is formed.</p>
+<p>This code</p>
+<pre><code>function someFunc() {
+  function inner() {
+  }
+  function inner2() {
+    function foo() {
+    }
+  }
+}
+</code></pre><p>Produces this tree</p>
+<pre><code>   someFunc()
+       |
+      / \
+     /   \
+    /     \
+   ↓       ↓
+inner()  inner2()
+           |
+           ↓
+         foo()
+</code></pre><p>Remembering that inner scopes can access outer scope’s variables, but not<br>vice-versa (foo() can access inner2()’s variables, and inner2() can access<br>someFunc()’s variables), then it makes more sense to look at the tree from<br>bottom-up, which forms a chain, also known as…</p>
+<h2 id="Scope-Chains-1"><a href="#Scope-Chains-1" class="headerlink" title="Scope Chains"></a>Scope Chains</h2><p>Looking from most inner to most outer scope forms a Scope Chain.</p>
+<pre><code>someFunc()
+    ↑
+     \
+      \
+       \
+      inner2()
+        ↑
+        |
+      foo()
+</code></pre><hr>
+
+<h1 id="Global-Scope-amp-Shadowing"><a href="#Global-Scope-amp-Shadowing" class="headerlink" title="Global Scope &amp; Shadowing"></a>Global Scope &amp; Shadowing</h1><h2 id="Global-Scope"><a href="#Global-Scope" class="headerlink" title="Global Scope"></a>Global Scope</h2><p>Understanding where Scope Chains end is an important part of scoping. All<br>Javascript runtimes must implicitly create a Global Scope object (window in<br>the browser, global in node), which sits at the top of every scope chain:</p>
+<pre><code>    (global)
+       ↑
+       |
+   someFunc()
+       ↑
+      / \
+     /   \
+    /     \
+inner()  inner2()
+           ↑
+           |
+         foo()
+</code></pre><p>In Scopes we covered how usage of var or let dictates the scope of the<br>variable being defined. When assigning a variable without using either of var,<br>let, etc, the variable is assumed to exist in an outer scope.</p>
+<p>The javascript runtime follows these steps to assign a variable:</p>
+<p> 1) Search within the current scope.<br> 2) If not found, search in the immediately outer scope.<br> 3) If found, go to 6.<br> 4) If not found, repeat 2. Until the Global Scope is reached.<br> 5) If not found in Global Scope, create it (on window / global objects).<br> 6) Assign the value.</p>
+<p>In this way, it is possible to accidentally define a global variable (step 5).</p>
+<h3 id="Example-Global-Scope"><a href="#Example-Global-Scope" class="headerlink" title="Example Global Scope"></a>Example Global Scope</h3><p>Consider the following example:</p>
+<pre><code>function someFunc() {
+   var scopedVar = 1;
+   function inner() {
+      foo = 2;
+   }
+}
+</code></pre><p>Note the lack of var or let, etc for foo = 2. The Javascript runtime will<br>follow the above algorithm, first checking the scope of inner(), then of<br>someFunc(), then finally the Global Scope. Step 5 is then executed, so foo<br>becomes a variable in the Global Scope (window.foo / global.foo).</p>
+<p>Phrased another way: By accidentally forgetting to use var, the variable foo<br>which otherwise would have been only within the lexical scope of inner() is<br>now available to be modified by any scope. So, someFunc() now has access<br>where the developer may have meant for it not to.</p>
+<p>Remember: Only inner scopes can access variables of outer scopes. In this case<br>the someFunc() scope is an inner scope of the Global Scope, allowing access of<br>foo to someFunc().</p>
+<h2 id="Shadowing"><a href="#Shadowing" class="headerlink" title="Shadowing"></a>Shadowing</h2><p>A variable is created in a ‘Step 0)’ of the above algorithm: When var or let<br>is used. The variable is assigned to the correct scope, then execution moves on,<br>and any assignments to that variable follow the above algorithm.</p>
+<p>It is perfectly valid to define two different variables, in different scopes,<br>with the same name:</p>
+<pre><code>function someFunc() {
+   var foo = 1;
+}
+function anotherFunc() {
+   var foo = 2;
+}
+</code></pre><p>It is also valid to do this in nested scopes:</p>
+<pre><code>function someFunc() {
+   var foo = 1;
+   function inner() {
+      var foo = 2;
+   }
+}
+</code></pre><p>This is called Shadowing. The foo inside inner() is said to Shadow the foo<br>inside someFunc.</p>
+<p>Shadowing means that the inner() scope only has access to its own foo. There<br>is no way for it to access the foo defined in someFunc().</p>
+<p>This can also be an accidental source of bugs, especially when there is deep<br>nesting, or long functions.</p>
+<hr>
+
+<h1 id="Closures"><a href="#Closures" class="headerlink" title="Closures"></a>Closures</h1><p>Closures are an important part of the Javascript language. They are what enables<br>the callback-last programming most prominent in node, and provide an excellent<br>mechanism for handling the asynchronous nature of most Javascript tasks.</p>
+<p>To properly understand closures, let’s start with an example scope chain:</p>
+<pre><code>someFunc()
+    ↑
+    |
+ inner()
+    ↑
+    |
+  foo()
+</code></pre><p>Let’s say someFunc() declares a variable bar:</p>
+<pre><code>someFunc()
+ var bar
+    ↑
+    ⋮
+</code></pre><p>Given how nesting scope works, it’s possible for an inner scope within<br>someFunc() to access bar. In this example, let’s say inner() accesses<br>bar:</p>
+<pre><code>someFunc()
+ var bar
+    ↑
+    |
+ inner()
+alert(bar)
+    ↑
+    ⋮
+</code></pre><p>Then inner() is said to Close Over bar. Therefore inner() is a Closure.</p>
+<p>To power the callback style of programming, the closure will be maintained even<br>if inner() isn’t executed immediately. It is perfectly legal in Javascript to<br>pass inner around / return it from someFunc() for later execution. All the<br>while, bar will continue to be available.</p>
+<hr>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/13/how_to_npm/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1890,193 +2198,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/12/jenkins+gitlab+蒲公英实现android应用自动化打包分发/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="子质">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="子质’s Notes">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="子质’s Notes" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/12/jenkins+gitlab+蒲公英实现android应用自动化打包分发/" itemprop="url">
-                  jenkins+gitlab+蒲公英实现android应用自动化打包分发
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-12T11:26:51+08:00">
-                2016-12-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index">
-                    <span itemprop="name">android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2016/12/12/jenkins+gitlab+蒲公英实现android应用自动化打包分发/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/12/jenkins+gitlab+蒲公英实现android应用自动化打包分发/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/12/12/jenkins+gitlab+蒲公英实现android应用自动化打包分发/" class="leancloud_visitors" data-flag-title="jenkins+gitlab+蒲公英实现android应用自动化打包分发">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>作为一名高效的开发者，要尽量避免的重复劳动实现自动化的流程。搭建本地jenkins服务器，实现自动化打包流程，从此测试包交给测试人员自己去打就好了，集成蒲公英等分发平台，实现二维码或短链接下载，也为运营人员提供了便捷。</p>
-</blockquote>
-<h3 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h3><p>前往<a href="https://jenkins.io/" target="_blank" rel="external">https://jenkins.io/</a>下载对应系统版本的jenkins包，本文以windows为例，两种方式：</p>
-<ol>
-<li>下载windows对应的安装包，安装后jenkins作为windows服务占用本地8080端口;在浏览器输入<code>localhost:8080</code>即可访问。</li>
-<li>下载tomcat服务器，然后下载jenkins war包，将其部署到tomcat webapps 目录下,启动tomcat后，在浏览器使用<code>localhost:8080/jenkins</code>访问。</li>
-</ol>
-<p>启动后，会看到jenkins初始配置页面，这里需要选择安装的插件，例如：我要集成gitlab，所以选择gitlab的插件，如果你是集成github，则选择github插件，大体流程相同，插件可以后期根据需要再安装。</p>
-<p><img src="http://ohe81rx2w.bkt.clouddn.com/16-12-12/80636207-file_1481523650297_1148a.png" alt=""></p>
-<p>进入主页后，点击系统管理-&gt;Global Tool Configuration，设置jdk、git及gradle等。</p>
-<h3 id="配置参数"><a href="#配置参数" class="headerlink" title="配置参数"></a>配置参数</h3><p>新建自由风格的软件项目</p>
-<p><img src="http://ohe81rx2w.bkt.clouddn.com/16-12-12/13268849-file_1481515797721_8498.png" alt=""></p>
-<p>进入配置页面</p>
-<p><img src="http://ohe81rx2w.bkt.clouddn.com/16-12-12/49682489-file_1481516027421_13068.png" alt=""></p>
-<p>配置Gernal模块。选中参数化构建过程选项，配置如下：</p>
-<p><img src="http://ohe81rx2w.bkt.clouddn.com/16-12-12/50399692-file_1481516484754_87d.png" alt=""></p>
-<p>配置源码管理。设置远程仓库的地址，http方式和ssh方式都是支持的。</p>
-<p><img src="http://ohe81rx2w.bkt.clouddn.com/16-12-12/31227347-file_1481516862467_9231.png" alt=""><br><strong>ps:</strong>如果没有git选项，可能git环境设置不成功，请去首页-系统管理-Global Tool Configuration页，设置jdk、git及gradle等。</p>
-<p>构建触发器。这里有两个选项：</p>
-<ol>
-<li><p>Poll SCM：定时检查源码变更（根据SCM软件的版本号），如果有更新就checkout最新code下来，然后执行构建动作。我的配置如下：<br><em>/5 </em> <em> </em> *  （每5分钟检查一次源码变化）</p>
-</li>
-<li><p>Build periodically：周期进行项目构建（它不care源码是否发生变化），我的配置如下：<br>0 2 <em> </em> *  （每天2:00 必须build一次源码）<br>这里只是向大家说明，本案例因为android每次按照版本及渠道发包，所以不做配置。</p>
-</li>
-</ol>
-<p>构建模块配置</p>
-<p><img src="http://ohe81rx2w.bkt.clouddn.com/16-12-12/27064469-file_1481520970804_6f71.png" alt=""><br>选择项目所使用gradle版本，gradle任务：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">-PIS_JENKINS=$&#123;IS_JENKINS&#125; -PAPP_VERSION=$&#123;APP_VERSION&#125; -PJENKINS_TIME=$&#123;JENKINS_TIME&#125;</div><div class="line">assemble$&#123;PRODUCT_FLAVOR_BUILD&#125;$&#123;ENVIRONMENT&#125;</div><div class="line">--stacktrace</div><div class="line">--debug</div><div class="line">--info</div></pre></td></tr></table></figure></p>
-<p>集成到蒲公英。点击增加构建后步骤，windows选择execute Windows batch command,添加命令：<br><code>curl -k -F &quot;file=@D:\env\android-v%APP_VERSION%-%PRODUCT_FLAVOR_BUILD%-%JENKINS_TIME%-%ENVIRONMENT%.apk&quot; -F &quot;uKey=your ukey&quot; -F &quot;_api_key=your api key&quot; https://www.pgyer.com/apiv1/app/upload</code><br>这里的u key和api key是你在蒲公英平台注册开发者获得。文件的地址要跟你在项目build.gradle中配置的一样。</p>
-<p>项目build.gradle配置如下：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">android&#123;</div><div class="line">...</div><div class="line">    defaultConfig &#123;</div><div class="line">    ...</div><div class="line">        versionName APP_VERSION</div><div class="line">        resValue(<span class="string">"string"</span>, <span class="string">'app_version'</span>, APP_VERSION)</div><div class="line">        manifestPlaceholders = [UMENG_CHANNEL_VALUE: <span class="string">"common"</span>]</div><div class="line">    ...    </div><div class="line">    &#125;</div><div class="line">     productFlavors &#123;</div><div class="line">        huawei &#123;</div><div class="line">            manifestPlaceholders = [UMENG_CHANNEL_VALUE: <span class="string">"huawei"</span>]</div><div class="line">        &#125;</div><div class="line">        xiaomi &#123;</div><div class="line">            manifestPlaceholders = [UMENG_CHANNEL_VALUE: <span class="string">"xiaomi"</span>]</div><div class="line">        &#125;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//修改生成的apk名字及输出目录</span></div><div class="line">     applicationVariants.all &#123; variant -&gt;</div><div class="line">        variant.outputs.<span class="keyword">each</span> &#123; output -&gt;</div><div class="line">            <span class="keyword">def</span> newName</div><div class="line">            <span class="keyword">def</span> timeNow</div><div class="line">            <span class="keyword">def</span> oldFile = output.outputFile</div><div class="line">            <span class="keyword">def</span> outDirectory = oldFile.parent</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (IS_JENKINS) &#123;</div><div class="line">                timeNow = JENKINS_TIME</div><div class="line">                outDirectory = <span class="string">'D:/env'</span></div><div class="line">                newName = <span class="string">'android-v'</span> +</div><div class="line">                        APP_VERSION + <span class="string">'-'</span> + variant.productFlavors[<span class="number">0</span>].name + <span class="string">'-'</span>+ timeNow + <span class="string">'-'</span> + variant.buildType.name + <span class="string">'.apk'</span></div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                timeNow = getDate()</div><div class="line">                <span class="keyword">if</span> (variant.buildType.name.equals(<span class="string">'debug'</span>)) &#123;</div><div class="line">                    newName = <span class="string">"android-v$&#123;APP_VERSION&#125;-debug.apk"</span></div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    newName = <span class="string">'android-v'</span> +</div><div class="line">                            APP_VERSION + <span class="string">'-'</span> + variant.productFlavors[<span class="number">0</span>].name + <span class="string">'-'</span>+timeNow + <span class="string">'-'</span> + variant.buildType.name + <span class="string">'.apk'</span></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            output.outputFile = <span class="keyword">new</span> <span class="keyword">File</span>(outDirectory, newName)</div><div class="line"></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="开始构建任务"><a href="#开始构建任务" class="headerlink" title="开始构建任务"></a>开始构建任务</h3><p>配置完参数，保存后回到主页，点击项目后的run图标选择各项动态参数，开始任务。</p>
-<p><img src="http://ohe81rx2w.bkt.clouddn.com/16-12-12/4088147-file_1481522181446_bd3c.png" alt=""></p>
-<p><img src="http://ohe81rx2w.bkt.clouddn.com/16-12-12/79583275-file_1481521944640_12019.png" alt=""></p>
-<p>点击构建历史中当前条目，进入Console Output，可查看此次构建任务的log信息。如果构建失败，请去查看log信息，根据错误信息纠错。</p>
-<p><strong>notice:</strong> 项目gradle.properties也要添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">APP_VERSION=2.4.0</div><div class="line">IS_JENKINS=false</div><div class="line">JENKINS_TIME=&apos;&apos;</div></pre></td></tr></table></figure></p>
-<p>服务器上的sdk也要跟本地保持一致。</p>
-<p>jenkins最近推出了blue ocean项目，提供了更好的用户体验，具体细节在<a href="https://jenkins.io/projects/blueocean/" target="_blank" rel="external">https://jenkins.io/projects/blueocean/</a>，你也可以在可选插件里搜索BlueOcean beta,安装体验。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2122,7 +2243,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-count">18</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2139,7 +2260,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
