@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="node.js,npm," />
+  <meta name="keywords" content="npm,node.js," />
 
 
 
@@ -236,16 +236,6 @@ Install A Module1npm install &amp;lt;modulename&amp;">
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-sitemap">
-          <a href="/sitemap.xml" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
-            
-            站点地图
           </a>
         </li>
       
@@ -443,9 +433,9 @@ Install A Module1npm install &amp;lt;modulename&amp;">
       
         <div class="post-tags">
           
-            <a href="/tags/node-js/" rel="tag"># node.js</a>
-          
             <a href="/tags/npm/" rel="tag"># npm</a>
+          
+            <a href="/tags/node-js/" rel="tag"># node.js</a>
           
         </div>
       
@@ -843,17 +833,17 @@ Install A Module1npm install &amp;lt;modulename&amp;">
       function renderGitment(){
         var gitment = new Gitmint({
             id: window.location.pathname, 
-            owner: 'Proton626# MUST HAVE, Your Github ID',
-            repo: 'https://github.com/Proton626/Proton626.github.io# MUST HAVE, The repo you use to store Gitment comments',
+            owner: 'Proton626',
+            repo: 'https://github.com/Proton626/Proton626.github.io',
             
             lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
             
             oauth: {
             
             
-                client_secret: '7ceb9ab0233b6b2a980f007674ffa0a12072baea# EITHER this or proxy_gateway, Github access secret token for the Gitment',
+                client_secret: '7ceb9ab0233b6b2a980f007674ffa0a12072baea',
             
-                client_id: 'd4e0a1d0091ae34107ab# MUST HAVE, Github client id for the Gitment'
+                client_id: 'd4e0a1d0091ae34107ab'
             }});
         gitment.render('gitment-container');
       }

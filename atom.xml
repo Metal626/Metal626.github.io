@@ -314,9 +314,9 @@ alert(bar)
       <category term="node.js" scheme="http://yoursite.com/categories/node-js/"/>
     
     
-      <category term="node.js" scheme="http://yoursite.com/tags/node-js/"/>
-    
       <category term="npm" scheme="http://yoursite.com/tags/npm/"/>
+    
+      <category term="node.js" scheme="http://yoursite.com/tags/node-js/"/>
     
   </entry>
   
@@ -1045,9 +1045,9 @@ alert(bar)
     
       <category term="android" scheme="http://yoursite.com/tags/android/"/>
     
-      <category term="依赖注入" scheme="http://yoursite.com/tags/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/"/>
-    
       <category term="dagger2" scheme="http://yoursite.com/tags/dagger2/"/>
+    
+      <category term="依赖注入" scheme="http://yoursite.com/tags/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/"/>
     
   </entry>
   
@@ -1351,9 +1351,9 @@ org.gradle.daemon=true
       <category term="ReactNative" scheme="http://yoursite.com/categories/ReactNative/"/>
     
     
-      <category term="ReactNative" scheme="http://yoursite.com/tags/ReactNative/"/>
-    
       <category term="android" scheme="http://yoursite.com/tags/android/"/>
+    
+      <category term="ReactNative" scheme="http://yoursite.com/tags/ReactNative/"/>
     
   </entry>
   
@@ -1666,9 +1666,9 @@ android{
     
       <category term="android" scheme="http://yoursite.com/tags/android/"/>
     
-      <category term="Dagger2" scheme="http://yoursite.com/tags/Dagger2/"/>
-    
       <category term="依赖注入" scheme="http://yoursite.com/tags/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/"/>
+    
+      <category term="Dagger2" scheme="http://yoursite.com/tags/Dagger2/"/>
     
   </entry>
   
