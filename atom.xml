@@ -314,9 +314,9 @@ alert(bar)
       <category term="node.js" scheme="http://yoursite.com/categories/node-js/"/>
     
     
-      <category term="npm" scheme="http://yoursite.com/tags/npm/"/>
-    
       <category term="node.js" scheme="http://yoursite.com/tags/node-js/"/>
+    
+      <category term="npm" scheme="http://yoursite.com/tags/npm/"/>
     
   </entry>
   
@@ -1351,9 +1351,9 @@ org.gradle.daemon=true
       <category term="ReactNative" scheme="http://yoursite.com/categories/ReactNative/"/>
     
     
-      <category term="android" scheme="http://yoursite.com/tags/android/"/>
-    
       <category term="ReactNative" scheme="http://yoursite.com/tags/ReactNative/"/>
+    
+      <category term="android" scheme="http://yoursite.com/tags/android/"/>
     
   </entry>
   
