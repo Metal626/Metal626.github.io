@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-23T06:09:13.996Z</updated>
+  <updated>2018-03-23T08:08:31.135Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,33 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title></title>
+    <link href="http://yoursite.com/2018/03/23/%E5%B7%A5%E4%BD%9C%E9%9A%8F%E6%89%8B%E8%AE%B0/"/>
+    <id>http://yoursite.com/2018/03/23/工作随手记/</id>
+    <published>2018-03-23T06:27:11.336Z</published>
+    <updated>2018-03-23T08:08:31.135Z</updated>
+    
+    <content type="html"><![CDATA[<p>1  开发的点歌系统需要连接局域网的mysql服务器实现检索，导入mysqljdbc的驱动jar包，编译一直报错，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Error:Error converting bytecode to dex:</div><div class="line">Cause: Dex cannot parse version 52 byte code.</div><div class="line">This is caused by library dependencies that have been compiled using Java 8 or above.</div><div class="line">If you are using the &apos;java&apos; gradle plugin in a library submodule add </div><div class="line">targetCompatibility = &apos;1.7&apos;</div><div class="line">sourceCompatibility = &apos;1.7&apos;</div><div class="line">to that submodule&apos;s build.gradle file.</div></pre></td></tr></table></figure></p>
+<p>按照网上的方法，修改gradle文件，在android{}中 添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">compileOptions &#123;</div><div class="line">        sourceCompatibility JavaVersion.VERSION_1_7</div><div class="line">        targetCompatibility JavaVersion.VERSION_1_7</div><div class="line">		&#125;</div></pre></td></tr></table></figure></p>
+<p>  亦或是在项目的buld.gradle文件下，allprojects{}添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">tasks.withType(JavaCompile) &#123;</div><div class="line">        sourceCompatibility = &apos;1.7&apos;</div><div class="line">        targetCompatibility = &apos;1.7&apos;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>都没能解决问题，最后我通过新建一个library的module,然后将jar包放到改library的libs目录下，成功解决，如果你也遇到相同问题，希望有所帮助。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;1  开发的点歌系统需要连接局域网的mysql服务器实现检索，导入mysqljdbc的驱动jar包，编译一直报错，&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div clas
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Vultr搭建Shadowsocks科学上网</title>
     <link href="http://yoursite.com/2018/03/23/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E7%AC%94%E8%AE%B0/"/>
     <id>http://yoursite.com/2018/03/23/科学上网笔记/</id>
     <published>2018-03-23T04:18:52.153Z</published>
-    <updated>2018-03-23T06:09:13.996Z</updated>
+    <updated>2018-03-23T06:12:38.382Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>因为工作原因，要经常去Google搜索资料，在VPS上搭建Shadowsocks实现科学上网。</p>
@@ -1329,9 +1351,9 @@ org.gradle.daemon=true
       <category term="ReactNative" scheme="http://yoursite.com/categories/ReactNative/"/>
     
     
-      <category term="ReactNative" scheme="http://yoursite.com/tags/ReactNative/"/>
-    
       <category term="android" scheme="http://yoursite.com/tags/android/"/>
+    
+      <category term="ReactNative" scheme="http://yoursite.com/tags/ReactNative/"/>
     
   </entry>
   
