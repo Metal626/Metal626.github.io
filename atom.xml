@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-10-13T09:32:57.390Z</updated>
+  <updated>2018-03-23T06:09:13.996Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,63 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Vultr搭建Shadowsocks科学上网</title>
+    <link href="http://yoursite.com/2018/03/23/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E7%AC%94%E8%AE%B0/"/>
+    <id>http://yoursite.com/2018/03/23/科学上网笔记/</id>
+    <published>2018-03-23T04:18:52.153Z</published>
+    <updated>2018-03-23T06:09:13.996Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>因为工作原因，要经常去Google搜索资料，在VPS上搭建Shadowsocks实现科学上网。</p>
+<p>Vultr的服务器性价比比较高，并且支持支付宝充值，还是很方便的，一般的服务器是$5/m，部分服务器最低<br>$2.5/m，ipPing不通，换个服务器只要1分钱，snapshot功能换服务器也很简单。</p>
+</blockquote>
+<h3 id="1-购买服务器"><a href="#1-购买服务器" class="headerlink" title="1.购买服务器"></a>1.购买服务器</h3><ul>
+<li>注册Vultr，地址[<a href="https://www.vultr.com/" target="_blank" rel="external">https://www.vultr.com/</a>]</li>
+<li>充值，选择左侧Billing，支持支付宝充值，按照网站向导走即可。</li>
+<li>部署服务器。选择左侧栏的Servers，网上说Server Location是Los Angels和Tokyo的比较好，我在配置的时候发现都ping不同，所以我选了新加坡的服务器，延迟还可以接受，YouTube也没压力，Server Type选择Ubuntu 16.04，Server Size根据需求选择，Additional Features中勾选Enable IPv6。其他都可以默认，然后选择Deploy Now就可以了。<h3 id="2-配置Shadowsocks"><a href="#2-配置Shadowsocks" class="headerlink" title="2.配置Shadowsocks"></a>2.配置Shadowsocks</h3></li>
+<li><p>连接远程服务器。<br>  Windows使用xshell,在xshell中新建连接，输入vps的ip地址，连接成功后输入vultr网站上部署的服务器的用户名和密码。</p>
+<p>相比于Windows使用Xshell连接远程Linux服务器，Mac OS系统上可以直接用终端Terminal实现，不需要借助第三方软件，ssh端口非默认的22也可以直接登录。<br>直接打开Terminal终端，输入：ssh root@ip地址，之后输入你的密码就可以登录了（输入密码的时候屏幕上不会有显示）如果你的ssh端口不是默认的22，那么就用-p参数接上你的ssh端口，例如你的VPS的ssh端口是1234，那么命令就是：ssh root@ip地址 -p 1234</p>
+<p>如果连接不上，在命令行窗口试试看能不能ping通服务器地址，如果不通的话，可将服务器删除，重新部署试试，此步骤可以多试几次。</p>
+</li>
+<li><p>搭建shadowsocks<br>以下的步骤都是在服务器上以root权限进行的（Vultr也默认是root用户），如果不是root，自行加sudo管理员权限执行。</p>
+<p>更新软件源<br><code>apt-get update</code></p>
+<p>安装pip环境<br><code>apt-get install python-pip</code></p>
+<p>更新pip版本<br><code>pip install --upgrade pip</code></p>
+<p>安装setuptools模块<br><code>pip install setuptools</code></p>
+<p>安装shadowsocks<br><code>pip install shadowsocks</code></p>
+<p>编辑配置文件<br><code>vim /etc/shadowsocks.json</code><br>{<br>  “server”:”0.0.0.0”,<br>  “server_port”:1024,<br>  “local_address”: “127.0.0.1”,<br>  “local_port”:1080,<br>  “password”:”mypassword”,<br>  “timeout”:300,<br>  “method”:”aes-256-cfb”<br>}</p>
+<p>将其中的mypassword换成你想设置的密码（不需要跟你的VPS密码一致，这个密码你用来在客户端连接服务器ss的），server可以是0.0.0.0，也可以是你VPS的IP。</p>
+<p>赋予shadowsocks配置文件权限<br><code>chmod 755 /etc/shadowsocks.json</code></p>
+<p>安装以支持这些加密方式<br><code>apt-get install python-m2crypto</code></p>
+<p>后台运行shadowsocks<br><code>ssserver -c /etc/shadowsocks.json -d start</code><br>设置shadowsocks开机自启动</p>
+<figure class="highlight vim"><figcaption><span>/etc/rc.local```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"> 在<span class="keyword">exit</span> <span class="number">0</span>前面加上ss的启动命令：</div><div class="line"></div><div class="line">``` awk</div><div class="line">#!/bin/<span class="keyword">sh</span> -<span class="keyword">e</span></div><div class="line">#</div><div class="line"># rc.local</div><div class="line">#</div><div class="line"># This script <span class="keyword">is</span> executed at the end of each multiuser runlevel.</div><div class="line"># Make sure that the script will <span class="string">"exit 0"</span> <span class="keyword">on</span> success <span class="built_in">or</span> any other</div><div class="line"># value <span class="keyword">on</span> error.</div><div class="line">#</div><div class="line"># In order <span class="keyword">to</span> enable <span class="built_in">or</span> disable this script just <span class="keyword">change</span> the execution</div><div class="line"># bits.</div><div class="line">#</div><div class="line"># By default this script does nothing.</div><div class="line">ssserver -<span class="keyword">c</span> /etc/shadowsocks.json -d start</div><div class="line"><span class="keyword">exit</span> <span class="number">0</span></div></pre></td></tr></table></figure>
+<p> 如果想停止shadowsocks可使用<br><code>ssserver -c /etc/shadowsocks.json -d stop</code></p>
+</li>
+</ul>
+<h3 id="3-本机上搭建代理"><a href="#3-本机上搭建代理" class="headerlink" title="3.本机上搭建代理"></a>3.本机上搭建代理</h3><p><a href="https://github.com/shadowsocks" target="_blank" rel="external">shadowsocks下载</a>，启动程序后，Windows系统在状态栏右击shadowsocks客户端，勾选开机启动和启动系统代理，在系统代理模式中选择PAC模式，服务器-&gt;编辑服务器，用shadowsocks.json中配置的密码、加密方法以及你VPS的IP填好，保存即可。</p>
+<h3 id="4-开启BBR加速"><a href="#4-开启BBR加速" class="headerlink" title="4.开启BBR加速"></a>4.开启BBR加速</h3><p>BBR是一款Google开发的TCP拥塞控制算法，目的是尽量跑满带宽，加速效果不比锐速差，都是基于VPS内核加速的。</p>
+<ul>
+<li><p>Ubuntu内核升级<br>Ubuntu开启BBR加速的前提是内核高于4.9，所以先检查内核版本：<br><code>uname -a</code><br>如果版本高于4.9，那就可以直接开启BBR，如果低于，则按照以下步骤先更新内核版本（root权限）<br>1.首先确定你的系统是32位还是64位的：<br>getconf LONG_BIT<br>2.直接通过wget命令，去<a href="http://kernel.ubuntu.com/~kernel-ppa/mainline/去下载最新的程序包，例如我去下载64位的4.10.2的内核：" target="_blank" rel="external">http://kernel.ubuntu.com/~kernel-ppa/mainline/去下载最新的程序包，例如我去下载64位的4.10.2的内核：</a><br>wget <a href="http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.10.2/linux-image-4.10.2-041002-generic_4.10.2-041002.201703120131_amd64.deb" target="_blank" rel="external">http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.10.2/linux-image-4.10.2-041002-generic_4.10.2-041002.201703120131_amd64.deb</a><br>3.切换到你的文件下载目录，执行下面的命令进行升级：<br>dpkg -i linux-image-4.10.2-041002-generic_4.10.2-041002.201703120131_amd64.deb<br>4.更新grub引导装入程序：<br>update-grub<br>5.重启机器：<br>reboot<br>再查看自己的内核版本就会发现已经更新到4.10.2了~</p>
+</li>
+<li><p>开启TCP BBR加速<br>1.修改系统变量：<br>echo “net.core.default_qdisc=fq” &gt;&gt; /etc/sysctl.conf<br>echo “net.ipv4.tcp_congestion_control=bbr” &gt;&gt; /etc/sysctl.conf<br>如果执行以上命令时显示拒绝访问则可以尝试使用如下命令：<br>sudo bash -c ‘echo “net.core.default_qdisc=fq” &gt;&gt; /etc/sysctl.conf’<br>sudo bash -c ‘echo “net.ipv4.tcp_congestion_control=bbr” &gt;&gt; /etc/sysctl.conf’<br>2.保存生效：<br>sysctl -p<br>3.查看是否开启成功<br>执行如下命令：<br>sysctl net.ipv4.tcp_available_congestion_control<br>如果返回结果为：et.ipv4.tcp_available_congestion_control = bbr cubic reno，那么恭喜你BBR开启成功了。</p>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;因为工作原因，要经常去Google搜索资料，在VPS上搭建Shadowsocks实现科学上网。&lt;/p&gt;
+&lt;p&gt;Vultr的服务器性价比比较高，并且支持支付宝充值，还是很方便的，一般的服务器是$5/m，部分服务器最低&lt;br&gt;$2.5/m，ipPing
+    
+    </summary>
+    
+    
+      <category term="vultrl,shadowsocks,科学上网" scheme="http://yoursite.com/tags/vultrl-shadowsocks-%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/"/>
+    
+  </entry>
   
   <entry>
     <title>Scope Chains Closures</title>
@@ -235,9 +292,9 @@ alert(bar)
       <category term="node.js" scheme="http://yoursite.com/categories/node-js/"/>
     
     
-      <category term="npm" scheme="http://yoursite.com/tags/npm/"/>
-    
       <category term="node.js" scheme="http://yoursite.com/tags/node-js/"/>
+    
+      <category term="npm" scheme="http://yoursite.com/tags/npm/"/>
     
   </entry>
   
@@ -966,9 +1023,9 @@ alert(bar)
     
       <category term="android" scheme="http://yoursite.com/tags/android/"/>
     
-      <category term="dagger2" scheme="http://yoursite.com/tags/dagger2/"/>
-    
       <category term="依赖注入" scheme="http://yoursite.com/tags/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/"/>
+    
+      <category term="dagger2" scheme="http://yoursite.com/tags/dagger2/"/>
     
   </entry>
   
@@ -1272,9 +1329,9 @@ org.gradle.daemon=true
       <category term="ReactNative" scheme="http://yoursite.com/categories/ReactNative/"/>
     
     
-      <category term="android" scheme="http://yoursite.com/tags/android/"/>
-    
       <category term="ReactNative" scheme="http://yoursite.com/tags/ReactNative/"/>
+    
+      <category term="android" scheme="http://yoursite.com/tags/android/"/>
     
   </entry>
   
@@ -1587,9 +1644,9 @@ android{
     
       <category term="android" scheme="http://yoursite.com/tags/android/"/>
     
-      <category term="依赖注入" scheme="http://yoursite.com/tags/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/"/>
-    
       <category term="Dagger2" scheme="http://yoursite.com/tags/Dagger2/"/>
+    
+      <category term="依赖注入" scheme="http://yoursite.com/tags/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/"/>
     
   </entry>
   

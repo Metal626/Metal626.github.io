@@ -68,10 +68,12 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="人生,感悟," />
+  <meta name="keywords" content="vultrl,shadowsocks,科学上网," />
 
 
 
+
+  
 
 
   <link rel="alternate" href="/atom.xml" title="子质’s Notes" type="application/atom+xml" />
@@ -86,25 +88,31 @@
 
 
 
-<meta name="description" content="90后程序猿，感觉这个搭配有点绝情，为什么这么说呢？有人说90后垮掉的一代，有人说程序猿是吃青春饭，是不是有点同情我，但我要说这个世界最不缺就是偏见，时间会证明一切。
-在大厂当过螺丝钉，也在小创挑过大梁，俗话说干一行爱一行，但我觉得我是爱一行干一行，沉迷代码无药可救，如果可怜我，介绍个对象也是可以的，嘿嘿。
-吊车尾211本科一枚，非科班出身，当然我也是有外企工作经历的，在世界500强干过，肯德基">
+<meta name="description" content="因为工作原因，要经常去Google搜索资料，在VPS上搭建Shadowsocks实现科学上网。
+Vultr的服务器性价比比较高，并且支持支付宝充值，还是很方便的，一般的服务器是$5/m，部分服务器最低$2.5/m，ipPing不通，换个服务器只要1分钱，snapshot功能换服务器也很简单。
+
+1.购买服务器
+注册Vultr，地址[https://www.vultr.com/]
+充值，选择左侧B">
 <meta property="og:type" content="article">
-<meta property="og:title" content="人生就像一盒巧克力：About me.">
-<meta property="og:url" content="http://yoursite.com/2017/07/17/aboutme/index.html">
+<meta property="og:title" content="Vultr搭建Shadowsocks科学上网">
+<meta property="og:url" content="http://yoursite.com/2018/03/23/科学上网笔记/index.html">
 <meta property="og:site_name" content="子质’s Notes">
-<meta property="og:description" content="90后程序猿，感觉这个搭配有点绝情，为什么这么说呢？有人说90后垮掉的一代，有人说程序猿是吃青春饭，是不是有点同情我，但我要说这个世界最不缺就是偏见，时间会证明一切。
-在大厂当过螺丝钉，也在小创挑过大梁，俗话说干一行爱一行，但我觉得我是爱一行干一行，沉迷代码无药可救，如果可怜我，介绍个对象也是可以的，嘿嘿。
-吊车尾211本科一枚，非科班出身，当然我也是有外企工作经历的，在世界500强干过，肯德基">
-<meta property="og:image" content="http://image.135editor.com/files/users/253/2537090/201707/XnwZsGz5_Sx2p.jpg">
-<meta property="og:image" content="http://image.135editor.com/files/users/253/2537090/201707/q9WpmjCC_Wj84.jpg">
-<meta property="og:updated_time" content="2017-08-12T02:29:53.641Z">
+<meta property="og:description" content="因为工作原因，要经常去Google搜索资料，在VPS上搭建Shadowsocks实现科学上网。
+Vultr的服务器性价比比较高，并且支持支付宝充值，还是很方便的，一般的服务器是$5/m，部分服务器最低$2.5/m，ipPing不通，换个服务器只要1分钱，snapshot功能换服务器也很简单。
+
+1.购买服务器
+注册Vultr，地址[https://www.vultr.com/]
+充值，选择左侧B">
+<meta property="og:updated_time" content="2018-03-23T06:09:13.996Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="人生就像一盒巧克力：About me.">
-<meta name="twitter:description" content="90后程序猿，感觉这个搭配有点绝情，为什么这么说呢？有人说90后垮掉的一代，有人说程序猿是吃青春饭，是不是有点同情我，但我要说这个世界最不缺就是偏见，时间会证明一切。
-在大厂当过螺丝钉，也在小创挑过大梁，俗话说干一行爱一行，但我觉得我是爱一行干一行，沉迷代码无药可救，如果可怜我，介绍个对象也是可以的，嘿嘿。
-吊车尾211本科一枚，非科班出身，当然我也是有外企工作经历的，在世界500强干过，肯德基">
-<meta name="twitter:image" content="http://image.135editor.com/files/users/253/2537090/201707/XnwZsGz5_Sx2p.jpg">
+<meta name="twitter:title" content="Vultr搭建Shadowsocks科学上网">
+<meta name="twitter:description" content="因为工作原因，要经常去Google搜索资料，在VPS上搭建Shadowsocks实现科学上网。
+Vultr的服务器性价比比较高，并且支持支付宝充值，还是很方便的，一般的服务器是$5/m，部分服务器最低$2.5/m，ipPing不通，换个服务器只要1分钱，snapshot功能换服务器也很简单。
+
+1.购买服务器
+注册Vultr，地址[https://www.vultr.com/]
+充值，选择左侧B">
 
 
 
@@ -132,13 +140,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/07/17/aboutme/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/23/科学上网笔记/"/>
 
 
 
 
 
-  <title> 人生就像一盒巧克力：About me. | 子质’s Notes </title>
+  <title> Vultr搭建Shadowsocks科学上网 | 子质’s Notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -269,7 +277,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/aboutme/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/23/科学上网笔记/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="子质">
@@ -293,7 +301,7 @@
             
             
               
-                人生就像一盒巧克力：About me.
+                Vultr搭建Shadowsocks科学上网
               
             
           </h1>
@@ -306,8 +314,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-17T09:49:28+08:00">
-                2017-07-17
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-23T12:18:52+08:00">
+                2018-03-23
               </time>
             
 
@@ -317,31 +325,13 @@
           </span>
 
           
-            <span class="post-category" >
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随心记/" itemprop="url" rel="index">
-                    <span itemprop="name">随心记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/07/17/aboutme/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/17/aboutme/" itemprop="commentCount"></span>
+                <a href="/2018/03/23/科学上网笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/03/23/科学上网笔记/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -351,7 +341,7 @@
 
           
           
-             <span id="/2017/07/17/aboutme/" class="leancloud_visitors" data-flag-title="人生就像一盒巧克力：About me.">
+             <span id="/2018/03/23/科学上网笔记/" class="leancloud_visitors" data-flag-title="Vultr搭建Shadowsocks科学上网">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -376,17 +366,41 @@
       
 
       
-        <p><img src="http://image.135editor.com/files/users/253/2537090/201707/XnwZsGz5_Sx2p.jpg" alt=""></p>
-<p>90后程序猿，感觉这个搭配有点绝情，为什么这么说呢？有人说90后垮掉的一代，有人说程序猿是吃青春饭，是不是有点同情我，但我要说这个世界最不缺就是偏见，时间会证明一切。</p>
-<p>在大厂当过螺丝钉，也在小创挑过大梁，俗话说干一行爱一行，但我觉得我是爱一行干一行，沉迷代码无药可救，如果可怜我，介绍个对象也是可以的，嘿嘿。</p>
-<p>吊车尾211本科一枚，非科班出身，当然我也是有外企工作经历的，在世界500强干过，肯德基后厨做汉堡，难忘的经历，发过传单干过销售，做过遥感数据处理，现在专心写代码，具体点就是Android程序猿，但我向来认为软件工程师就不能定义的那么狭隘，如果老板今天让我去后台写Python，我敢说不吗？当然上啊！</p>
-<p>有幸共事过的人有斯坦福大牛、名校硕博，当然还有法语专业转来搬砖的，接触的人越多越觉得自己渺小，越能客观的与人相处，感觉人也是符合冰山理论的，仅靠水面上的一角来下定论是有偏颇的。发现大家经常喜欢下意识地拿薪水来界定程序猿地技术水平，薪资一定程度会显示技术但并不是绝对的，行内人都懂的，展开来讲就啰嗦了。</p>
-<p><img src="http://image.135editor.com/files/users/253/2537090/201707/q9WpmjCC_Wj84.jpg" alt=""></p>
-<p>程序猿不等于屌丝，当然前提是资产不是界定屌丝的标准。</p>
-<p>除了代码我还喜欢健身，目前身上的腱子肉也是很可观的，有机会爆照，哈哈，欢迎交流。</p>
-<p>猫瘾晚期，一天不撸猫就喘不过气睡不着觉，目前家中供养着一只英短蓝猫，偶尔指点我写代码，这些代码若被老板看见，估计我得被叫去问话了:公司雇你来是写bug的吗？</p>
-<p>“财迷”一个，此处指的理财，人的收入是分为两部分的，主动收入和被动收入，要想实现财务自由不理财怎么能行，互金、基金、股票等，欢迎交流经验，就像老罗说的，知识要做爱才能产生新的灵感。</p>
-<p>个人公众号上可能会发技术分享、职场感悟、理财相关等等，欢迎关注我，也欢迎和我互动，如果觉得我是贱人就是矫情，随时取关也是可以的，如果不嫌麻烦给我发个消息埋汰一两句，也是OK的。<br><br></p>
+        <blockquote>
+<p>因为工作原因，要经常去Google搜索资料，在VPS上搭建Shadowsocks实现科学上网。</p>
+<p>Vultr的服务器性价比比较高，并且支持支付宝充值，还是很方便的，一般的服务器是$5/m，部分服务器最低<br>$2.5/m，ipPing不通，换个服务器只要1分钱，snapshot功能换服务器也很简单。</p>
+</blockquote>
+<h3 id="1-购买服务器"><a href="#1-购买服务器" class="headerlink" title="1.购买服务器"></a>1.购买服务器</h3><ul>
+<li>注册Vultr，地址[<a href="https://www.vultr.com/" target="_blank" rel="external">https://www.vultr.com/</a>]</li>
+<li>充值，选择左侧Billing，支持支付宝充值，按照网站向导走即可。</li>
+<li>部署服务器。选择左侧栏的Servers，网上说Server Location是Los Angels和Tokyo的比较好，我在配置的时候发现都ping不同，所以我选了新加坡的服务器，延迟还可以接受，YouTube也没压力，Server Type选择Ubuntu 16.04，Server Size根据需求选择，Additional Features中勾选Enable IPv6。其他都可以默认，然后选择Deploy Now就可以了。<h3 id="2-配置Shadowsocks"><a href="#2-配置Shadowsocks" class="headerlink" title="2.配置Shadowsocks"></a>2.配置Shadowsocks</h3></li>
+<li><p>连接远程服务器。<br>  Windows使用xshell,在xshell中新建连接，输入vps的ip地址，连接成功后输入vultr网站上部署的服务器的用户名和密码。</p>
+<p>相比于Windows使用Xshell连接远程Linux服务器，Mac OS系统上可以直接用终端Terminal实现，不需要借助第三方软件，ssh端口非默认的22也可以直接登录。<br>直接打开Terminal终端，输入：ssh root@ip地址，之后输入你的密码就可以登录了（输入密码的时候屏幕上不会有显示）如果你的ssh端口不是默认的22，那么就用-p参数接上你的ssh端口，例如你的VPS的ssh端口是1234，那么命令就是：ssh root@ip地址 -p 1234</p>
+<p>如果连接不上，在命令行窗口试试看能不能ping通服务器地址，如果不通的话，可将服务器删除，重新部署试试，此步骤可以多试几次。</p>
+</li>
+<li><p>搭建shadowsocks<br>以下的步骤都是在服务器上以root权限进行的（Vultr也默认是root用户），如果不是root，自行加sudo管理员权限执行。</p>
+<p>更新软件源<br><code>apt-get update</code></p>
+<p>安装pip环境<br><code>apt-get install python-pip</code></p>
+<p>更新pip版本<br><code>pip install --upgrade pip</code></p>
+<p>安装setuptools模块<br><code>pip install setuptools</code></p>
+<p>安装shadowsocks<br><code>pip install shadowsocks</code></p>
+<p>编辑配置文件<br><code>vim /etc/shadowsocks.json</code><br>{<br>  “server”:”0.0.0.0”,<br>  “server_port”:1024,<br>  “local_address”: “127.0.0.1”,<br>  “local_port”:1080,<br>  “password”:”mypassword”,<br>  “timeout”:300,<br>  “method”:”aes-256-cfb”<br>}</p>
+<p>将其中的mypassword换成你想设置的密码（不需要跟你的VPS密码一致，这个密码你用来在客户端连接服务器ss的），server可以是0.0.0.0，也可以是你VPS的IP。</p>
+<p>赋予shadowsocks配置文件权限<br><code>chmod 755 /etc/shadowsocks.json</code></p>
+<p>安装以支持这些加密方式<br><code>apt-get install python-m2crypto</code></p>
+<p>后台运行shadowsocks<br><code>ssserver -c /etc/shadowsocks.json -d start</code><br>设置shadowsocks开机自启动</p>
+<figure class="highlight vim"><figcaption><span>/etc/rc.local```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"> 在<span class="keyword">exit</span> <span class="number">0</span>前面加上ss的启动命令：</div><div class="line"></div><div class="line">``` awk</div><div class="line">#!/bin/<span class="keyword">sh</span> -<span class="keyword">e</span></div><div class="line">#</div><div class="line"># rc.local</div><div class="line">#</div><div class="line"># This script <span class="keyword">is</span> executed at the end of each multiuser runlevel.</div><div class="line"># Make sure that the script will <span class="string">"exit 0"</span> <span class="keyword">on</span> success <span class="built_in">or</span> any other</div><div class="line"># value <span class="keyword">on</span> error.</div><div class="line">#</div><div class="line"># In order <span class="keyword">to</span> enable <span class="built_in">or</span> disable this script just <span class="keyword">change</span> the execution</div><div class="line"># bits.</div><div class="line">#</div><div class="line"># By default this script does nothing.</div><div class="line">ssserver -<span class="keyword">c</span> /etc/shadowsocks.json -d start</div><div class="line"><span class="keyword">exit</span> <span class="number">0</span></div></pre></td></tr></table></figure>
+<p> 如果想停止shadowsocks可使用<br><code>ssserver -c /etc/shadowsocks.json -d stop</code></p>
+</li>
+</ul>
+<h3 id="3-本机上搭建代理"><a href="#3-本机上搭建代理" class="headerlink" title="3.本机上搭建代理"></a>3.本机上搭建代理</h3><p><a href="https://github.com/shadowsocks" target="_blank" rel="external">shadowsocks下载</a>，启动程序后，Windows系统在状态栏右击shadowsocks客户端，勾选开机启动和启动系统代理，在系统代理模式中选择PAC模式，服务器-&gt;编辑服务器，用shadowsocks.json中配置的密码、加密方法以及你VPS的IP填好，保存即可。</p>
+<h3 id="4-开启BBR加速"><a href="#4-开启BBR加速" class="headerlink" title="4.开启BBR加速"></a>4.开启BBR加速</h3><p>BBR是一款Google开发的TCP拥塞控制算法，目的是尽量跑满带宽，加速效果不比锐速差，都是基于VPS内核加速的。</p>
+<ul>
+<li><p>Ubuntu内核升级<br>Ubuntu开启BBR加速的前提是内核高于4.9，所以先检查内核版本：<br><code>uname -a</code><br>如果版本高于4.9，那就可以直接开启BBR，如果低于，则按照以下步骤先更新内核版本（root权限）<br>1.首先确定你的系统是32位还是64位的：<br>getconf LONG_BIT<br>2.直接通过wget命令，去<a href="http://kernel.ubuntu.com/~kernel-ppa/mainline/去下载最新的程序包，例如我去下载64位的4.10.2的内核：" target="_blank" rel="external">http://kernel.ubuntu.com/~kernel-ppa/mainline/去下载最新的程序包，例如我去下载64位的4.10.2的内核：</a><br>wget <a href="http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.10.2/linux-image-4.10.2-041002-generic_4.10.2-041002.201703120131_amd64.deb" target="_blank" rel="external">http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.10.2/linux-image-4.10.2-041002-generic_4.10.2-041002.201703120131_amd64.deb</a><br>3.切换到你的文件下载目录，执行下面的命令进行升级：<br>dpkg -i linux-image-4.10.2-041002-generic_4.10.2-041002.201703120131_amd64.deb<br>4.更新grub引导装入程序：<br>update-grub<br>5.重启机器：<br>reboot<br>再查看自己的内核版本就会发现已经更新到4.10.2了~</p>
+</li>
+<li><p>开启TCP BBR加速<br>1.修改系统变量：<br>echo “net.core.default_qdisc=fq” &gt;&gt; /etc/sysctl.conf<br>echo “net.ipv4.tcp_congestion_control=bbr” &gt;&gt; /etc/sysctl.conf<br>如果执行以上命令时显示拒绝访问则可以尝试使用如下命令：<br>sudo bash -c ‘echo “net.core.default_qdisc=fq” &gt;&gt; /etc/sysctl.conf’<br>sudo bash -c ‘echo “net.ipv4.tcp_congestion_control=bbr” &gt;&gt; /etc/sysctl.conf’<br>2.保存生效：<br>sysctl -p<br>3.查看是否开启成功<br>执行如下命令：<br>sysctl net.ipv4.tcp_available_congestion_control<br>如果返回结果为：et.ipv4.tcp_available_congestion_control = bbr cubic reno，那么恭喜你BBR开启成功了。</p>
+</li>
+</ul>
 
       
     </div>
@@ -415,9 +429,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/人生/" rel="tag"># 人生</a>
-          
-            <a href="/tags/感悟/" rel="tag"># 感悟</a>
+            <a href="/tags/vultrl-shadowsocks-科学上网/" rel="tag"># vultrl,shadowsocks,科学上网</a>
           
         </div>
       
@@ -426,8 +438,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/14/APP复杂列表数据解析的一个小技巧/" rel="next" title="APP复杂列表数据解析的一个小技巧">
-                <i class="fa fa-chevron-left"></i> APP复杂列表数据解析的一个小技巧
+              <a href="/2017/10/13/scope_chains_closures/" rel="next" title="Scope Chains Closures">
+                <i class="fa fa-chevron-left"></i> Scope Chains Closures
               </a>
             
           </div>
@@ -435,10 +447,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/08/14/Cardview源码解析/" rel="prev" title="CardView源码解析-View阴影">
-                CardView源码解析-View阴影 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -464,8 +472,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/07/17/aboutme/"
-           data-title="人生就像一盒巧克力：About me." data-url="http://yoursite.com/2017/07/17/aboutme/">
+      <div class="ds-thread" data-thread-key="2018/03/23/科学上网笔记/"
+           data-title="Vultr搭建Shadowsocks科学上网" data-url="http://yoursite.com/2018/03/23/科学上网笔记/">
       </div>
     
   </div>
@@ -489,8 +497,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -588,6 +605,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-购买服务器"><span class="nav-number">1.</span> <span class="nav-text">1.购买服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-配置Shadowsocks"><span class="nav-number">2.</span> <span class="nav-text">2.配置Shadowsocks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-本机上搭建代理"><span class="nav-number">3.</span> <span class="nav-text">3.本机上搭建代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-开启BBR加速"><span class="nav-number">4.</span> <span class="nav-text">4.开启BBR加速</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
